@@ -1,5 +1,0 @@
-right after fork(), in the child, before execve(), you need to reset SIGINT/SIGQUIT back to SIG_DFL.
-
-Approach A: read loop in the parent (no fork)
-
-Approach B: fork a dedicated child to collect the heredoc
