@@ -15,7 +15,18 @@
 
 # include "libft/libft.h"
 # include "libft/ft_printf/ft_printf.h"
-# include "signal.h"
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <limits.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <dirent.h>
+# include <errno.h>
 
 //LEXER ENUM AND STRUCT
 typedef enum e_token_type
@@ -67,6 +78,29 @@ typedef struct s_cmd
 	t_redir			*redirections;
 	struct s_cmd	*next;
 }			t_cmd;
+
+/*Executor*/
+typedef enum e_builtin
+{
+	NOT_BUILTIN,
+	BUILTIN_ECHO,
+	BUILTIN_CD,
+	BUILTIN_PWD,
+	BUILTIN_EXPORT,
+	BUILTIN_UNSET,
+	BUILTIN_ENV,
+	BUILTIN_EXIT
+}	t_builtin;
+
+/*Shell structure*/
+typedef struct s_shell
+{
+	char	*line;
+	t_token	*tokens;
+	t_cmd	*cmds;
+	char	**env;
+	int		exit_status;
+}	t_shell;
 
 //LEXER
 t_token	*lexer(char *input);
