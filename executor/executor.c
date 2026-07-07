@@ -6,15 +6,55 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/06 23:35:43 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/07 21:33:57 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_exec_external(t_cmd *cmds, t_shell *shell)
+int	ft_exec_external(t_cmd *cmd, t_shell *shell)
 {
+	pid_t	pid;
+	char	*path;
+	int		status;
 
+	path = ft_find_path(cmd, shell);
+	if (!path)
+		return (127);
+	pid = fork();
+	if (pid == -1)
+		return (-1);
+	if (pid == 0)
+	{
+		execve(path, cmd->args, shell->env);
+		free (path);
+		return (-1);
+	}
+	if (pid > 0)
+	{
+		waitpid(pid, &status, 0);
+		free (path);
+		return (WEXITSTATUS(status));
+	}
+}
+
+int	ft_exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin)
+{
+	if (builtin == BUILTIN_ECHO)
+		return (ft_builtin_echo(cmd, shell));
+	if (builtin == BUILTIN_CD)
+		return (ft_builtin_cd(cmd, shell));
+	if (builtin == BUILTIN_PWD)
+		return (ft_builtin_pwd(cmd, shell));
+	if (builtin == BUILTIN_EXPORT)
+		return (ft_builtin_export(cmd, shell));
+	if (builtin == BUILTIN_UNSET)
+		return (ft_builtin_unset(cmd, shell));
+	if (builtin == BUILTIN_ENV)
+		return (ft_builtin_env(cmd, shell));
+	if (builtin == BUILTIN_EXIT)
+		return (ft_builtin_exit(cmd, shell));
+	return (1);
 }
 
 int	ft_executor(t_cmd *cmds, t_shell *shell)

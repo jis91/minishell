@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:22:32 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/06 23:35:48 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/07 19:59:55 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,34 @@ t_builtin	ft_check_builtin(t_cmd *cmd)
 	return (NOT_BUILTIN);
 }
 
+char	*ft_verify_path(char **directories, t_cmd *cmd)
+{
+	char	*tmp;
+	char	*path;
+	int		i;
+
+	i = 0;
+	while (directories[i])
+	{
+		tmp = ft_strjoin(directories[i], "/");
+		path = ft_strjoin(tmp, cmd->args[0]);
+		free(tmp);
+		if (access(path, X_OK) == 0)
+			return (path);
+		free(path);
+		i++;
+	}
+	return (NULL);
+}
+
 char	*ft_find_path(t_cmd *cmd, t_shell *shell)
 {
 	int	i;
 	char	**directories;
+	char	*path;
 
 	i = 0;
+	directories = NULL;
 	while (shell->env[i])
 	{
 		if (ft_strncmp(shell->env[i], "PATH=", 5) == 0)
@@ -64,4 +86,9 @@ char	*ft_find_path(t_cmd *cmd, t_shell *shell)
 	}
 	if (!directories)
 		return (NULL);
+	path = ft_verify_path(directories, cmd);
+	ft_free_tab(directories);
+	if (!path)
+		ft_error("command not found");
+	return (path);
 }
