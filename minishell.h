@@ -121,4 +121,13 @@ int		parse_redir(t_token **tokens, t_cmd *current);
 void	free_cmds(t_cmd *cmd);
 void	free_redirs(t_redir *redirections);
 int		syntax_error(void);
+//EXECUTOR
+int			exec_external(t_cmd *cmd, t_shell *shell);
+int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
+int			executor(t_cmd *cmds, t_shell *shell);
+int			count_cmds(t_cmd *cmds);
+t_builtin	check_builtin(t_cmd *cmd);
+char		*verify_path(char **directories, t_cmd *cmd);
+char		*find_path(t_cmd *cmd, t_shell *shell);
+int			**ft_create_pipes(int count, t_shell *shell);
 #endif

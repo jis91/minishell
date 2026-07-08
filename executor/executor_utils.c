@@ -6,13 +6,13 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:22:32 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/07 19:59:55 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/08 12:44:48 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_count_cmds(t_cmd *cmds)
+int	count_cmds(t_cmd *cmds)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ int	ft_count_cmds(t_cmd *cmds)
 	return (i);
 }
 
-t_builtin	ft_check_builtin(t_cmd *cmd)
+t_builtin	check_builtin(t_cmd *cmd)
 {
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return (NOT_BUILTIN);
@@ -46,7 +46,7 @@ t_builtin	ft_check_builtin(t_cmd *cmd)
 	return (NOT_BUILTIN);
 }
 
-char	*ft_verify_path(char **directories, t_cmd *cmd)
+char	*verify_path(char **directories, t_cmd *cmd)
 {
 	char	*tmp;
 	char	*path;
@@ -66,9 +66,9 @@ char	*ft_verify_path(char **directories, t_cmd *cmd)
 	return (NULL);
 }
 
-char	*ft_find_path(t_cmd *cmd, t_shell *shell)
+char	*find_path(t_cmd *cmd, t_shell *shell)
 {
-	int	i;
+	int		i;
 	char	**directories;
 	char	*path;
 
@@ -80,14 +80,13 @@ char	*ft_find_path(t_cmd *cmd, t_shell *shell)
 		{
 			directories = ft_split(shell->env[i] + 5, ':');
 			break;
-
 		}
 		i++;
 	}
 	if (!directories)
 		return (NULL);
-	path = ft_verify_path(directories, cmd);
-	ft_free_tab(directories);
+	path = verify_path(directories, cmd);
+	free_tab(directories);
 	if (!path)
 		ft_error("command not found");
 	return (path);
