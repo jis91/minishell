@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/07 19:51:46 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/07 19:54:43 by aganz            ###   ########.fr       */
+/*   Created: 2026/07/08 13:51:52 by jefferson         #+#    #+#             */
+/*   Updated: 2026/07/08 14:44:26 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	ft_free_tab(char **tab)
+#include "../minishell.h"
+int	syntax_error(void)
 {
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	ft_printf("minishell: syntax error near unexpected token\n");
+	return (1);
 }
+
+mallocerror();

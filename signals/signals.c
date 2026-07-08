@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+
 volatile	sig_atomic_t	g_signal = 0;
 
 void	handle_sigint(int sig)
@@ -14,12 +15,16 @@ void	handle_sigint(int sig)
 
 void	setup_prompt_signals(void)
 {
-	struct	sigaction	sa;
+	struct sigaction	sa_int;
+	struct sigaction	sa_quit;
 
 	rl_catch_signals = 0;
-	sa.sa_handler = handle_sigint;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
+	sa_int.sa_handler = handle_sigint;
+	sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_flags = 0;
+	sigaction(SIGINT, &sa_int, NULL);
+	sa_quit.sa_handler = SIG_IGN;
+	sigemptyset(&sa_quit.sa_mask);
+	sa_quit.sa_flags = 0;
+	sigaction(SIGQUIT, &sa_quit, NULL);
 }

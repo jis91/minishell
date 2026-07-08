@@ -1,6 +1,6 @@
 right after fork(), in the child, before execve(), you need to reset SIGINT/SIGQUIT back to SIG_DFL.
 
-Approach A: read loop in the parent (no fork)
+Approach Chosenn : read loop in the parent (no fork just one pipe)
 
 SIG_ATOMIC_T :
 
@@ -21,8 +21,15 @@ volatile sig_atomic_t signal_g = 0;
 while (signal_g == 0)
 	handler();
 
+Ctrl-C : Generates SIGINT
+Ctrl-\ : Generates SIGQUIT
+Ctrl-D : Signals end-of-file on the input stream — no signal at all
+
+ both signals reset to default in the child (symmetric), and at the prompt, 
+ SIGQUIT is ignored while SIGINT gets a real handler (asymmetric)
 
 SIGQUIT :
+signal(SIGQUIT, SIG_DFL)
 
 Once a foreground child is running — you've launched cat, sleep 100, whatever — SIGQUIT needs 
 to go back to its real, default, terminate-and-dump behavior for that child, which is exactly 
@@ -30,3 +37,11 @@ why the child resets it with signal(SIGQUIT, SIG_DFL) right after fork(), before
 Try Ctrl-\ on cat sometime: it dies immediately and prints Quit (core dumped) — that message 
 comes from your shell detecting the child died via that specific signal and reporting it, not 
 from the child itself printing anything (a killed process doesn't get to print a farewell message).
+
+SIGINT :
+sigaction(SIGINT, &sa, NULL);
+
+
+
+
+

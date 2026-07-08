@@ -52,6 +52,7 @@ int	parse_redir(t_token **tokens, t_cmd *current)
 		new_redir->next = NULL;
 		new_redir->type = (*tokens)->type;
 		new_redir->file = (*tokens)->next->value;
+		new_redir->heredoc_fd = -1;
 		while (*tmp)
 			tmp = &(*tmp)->next;
 		*tmp = new_redir;
@@ -61,36 +62,4 @@ int	parse_redir(t_token **tokens, t_cmd *current)
 	else
 		return (syntax_error());
 	return (0);
-}
-
-void	free_cmds(t_cmd *cmd)
-{
-	t_cmd	*tmp;
-
-	while (cmd)
-	{
-		tmp = cmd->next;
-		free(cmd->args);
-		free_redirs(cmd->redirections);
-		free(cmd);
-		cmd = tmp;
-	}
-}
-
-void	free_redirs(t_redir *redirections)
-{
-	t_redir	*tmp;
-
-	while (redirections)
-	{
-		tmp = redirections->next;
-		free(redirections);
-		redirections = tmp;
-	}
-}
-
-int	syntax_error(void)
-{
-	ft_printf("minishell: syntax error near unexpected token\n");
-	return (1);
 }
