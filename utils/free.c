@@ -3,21 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 19:51:46 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/08 14:44:19 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/10 14:27:05 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_free_tab(char **tab)
+void	free_char_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
 	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+void	free_int_tab(int **tab, int	size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
 	{
 		free(tab[i]);
 		i++;

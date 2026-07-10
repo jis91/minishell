@@ -80,6 +80,15 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }			t_cmd;
 
+//EXECUTOR/PIPE STRUCT
+typedef struct s_pipe_ctx
+{
+	int		**pipes;
+	pid_t	*pids;
+	int		count;
+	int		index;
+}	t_pipe_ctx;
+
 /*Executor*/
 typedef enum e_builtin
 {
@@ -131,4 +140,10 @@ t_builtin	check_builtin(t_cmd *cmd);
 char		*verify_path(char **directories, t_cmd *cmd);
 char		*find_path(t_cmd *cmd, t_shell *shell);
 int			**ft_create_pipes(int count, t_shell *shell);
+
+//UTILS
+void	free_char_tab(char **tab);
+void	free_int_tab(int **tab, int	size);
+
+
 #endif
