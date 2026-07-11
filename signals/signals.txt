@@ -29,6 +29,7 @@ Ctrl-D : Signals end-of-file on the input stream — no signal at all
  SIGQUIT is ignored while SIGINT gets a real handler (asymmetric)
 
 SIGQUIT :
+Ctrl - /
 signal(SIGQUIT, SIG_DFL)
 
 Once a foreground child is running — you've launched cat, sleep 100, whatever — SIGQUIT needs 
@@ -39,6 +40,7 @@ comes from your shell detecting the child died via that specific signal and repo
 from the child itself printing anything (a killed process doesn't get to print a farewell message).
 
 SIGINT :
+Ctrl - C
 sigaction(SIGINT, &sa, NULL);
 
 

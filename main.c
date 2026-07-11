@@ -29,19 +29,6 @@ static char	*token_type_str(t_token_type type)
 	return ("UNKNOWN");
 }
 
-void	free_tokens(t_token *tokens)
-{
-	t_token	*tmp;
-
-	while (tokens)
-	{
-		tmp = tokens->next;
-		free(tokens->value);
-		free(tokens);
-		tokens = tmp;
-	}
-}
-
 static void	print_cmds(t_cmd *cmds)
 {
 	t_cmd	*tmp;

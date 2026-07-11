@@ -1,22 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/11 08:58:12 by jefferson         #+#    #+#             */
+/*   Updated: 2026/07/11 09:37:00 by jefferson        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
-
-void	handle_heredoc(int sig)
-{
-	(void)sig;
-	g_signal = SIGINT;
-	write(STDOUT_FILENO, "\n", 1);
-}
-
-void	setup_heredoc_signals(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = handle_heredoc;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-}
 
 int	collect_heredoc(t_cmd *cmd_list)
 {
@@ -31,8 +25,8 @@ int	collect_heredoc(t_cmd *cmd_list)
 		while (redir)
 		{
 			if (redir->type == TOKEN_HEREDOC)
-			{	
-				if (read_one_heredoc(redir->file) == -1)
+			{
+				if (read_one_heredoc(redir) == -1)
 					return (-1);
 			}
 			redir = redir->next;
@@ -42,38 +36,73 @@ int	collect_heredoc(t_cmd *cmd_list)
 	return (0);
 }
 
-int	read_one_heredoc(t_redir *redir)
+static int	read_one_heredoc(t_redir *redir)
 {
 	char	*line;
-	int		fd[2];
-	size_t	line_len;
+	int		fd_write;
+	int		fd_read;
 
-	if (pipe(fd) == -1)
+	if (open_fd(&fd_write, &fd_read))
 		return (-1);
 	while (1)
 	{
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			break ;
-		if (g_signal == SIGINT)
-		{
-			free(line);
-			close(fd[0]);
-			close(fd[1]);
+		if (check_heredoc_signal(line, fd_write, fd_read))
 			return (-1);
-		}
-		line_len = ft_strlen(line);
-		if (line_len > 0 && line[line_len -1] == '\n')
-			line_len--;
-		if(!ft_strncmp(line, redir->file, line_len) && line_len == ft_strlen(redir->file))	
+		if (compare_line_to_redir(line, redir))
 		{
 			free(line);
-			break;
+			break ;
 		}
-		write(fd[1], line, ft_strlen(line));
+		write(fd_write, line, ft_strlen(line));
 		free(line);
 	}
-	close(fd[1]);
-	redir->heredoc_fd = fd[0];
+	close(fd_write);
+	redir->heredoc_fd = fd_read;
+	return (0);
+}
+
+static int	open_fd(int *fd_write, int *fd_read)
+{
+	*fd_write = open("/tmp/.minishell_heredoc", O_CREAT
+			| O_RDWR | O_TRUNC, 0600);
+	*fd_read = open("/tmp/.minishell_heredoc", O_RDONLY);
+	unlink("/tmp/.minishell_heredoc");
+	if (*fd_write == -1 || *fd_read == -1)
+	{
+		if (*fd_write != -1)
+			close(*fd_write);
+		if (*fd_read != -1)
+			close(*fd_read);
+		return (-1);
+	}
+	return (0);
+}
+
+static int	compare_line_to_redir(char *line, t_redir *redir)
+{
+	size_t	line_length;
+
+	line_length = ft_strlen(line);
+	if (line_length > 0 && line[line_length -1] == '\n')
+		line_length--;
+	if (!ft_strncmp(line, redir->file, line_length)
+		&& line_length == ft_strlen(redir->file))
+		return (1);
+	return (0);
+}
+
+static int	check_heredoc_signal(char *line, int fd_write, int fd_read)
+{
+	if (g_signal == SIGINT)
+	{
+		free(line);
+		g_signal = 0;
+		close(fd_write);
+		close(fd_read);
+		return (-1);
+	}
 	return (0);
 }

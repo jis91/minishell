@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 19:51:46 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/10 14:27:05 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/11 09:42:24 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,19 @@ void	free_int_tab(int **tab, int	size)
 	free(tab);
 }
 
+void	free_tokens(t_token *tokens)
+{
+	t_token	*tmp;
+
+	while (tokens)
+	{
+		tmp = tokens->next;
+		free(tokens->value);
+		free(tokens);
+		tokens = tmp;
+	}
+}
+
 void	free_cmds(t_cmd *cmd)
 {
 	t_cmd	*tmp;
@@ -62,4 +75,10 @@ void	free_redirs(t_redir *redirections)
 		free(redirections);
 		redirections = tmp;
 	}
+}
+
+void cleanup_cycle(t_token *tokens, t_cmd *cmd)
+{
+    free_tokens(tokens);
+    free_cmds(cmd);
 }
