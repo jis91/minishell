@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/11 13:46:20 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/12 14:31:48 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	init_shell(t_shell *shell, char **envp)
 {
 	int		i;
-	char 	**shell_env;
+	char	**shell_env;
 	int		env_length;
 
 	i = 0;
@@ -23,9 +23,9 @@ int	init_shell(t_shell *shell, char **envp)
 		i++;
 	env_length = i;
 	i = 0;
-	shell_env = ft_calloc(sizeof(char*), (env_length + 1));
+	shell_env = ft_calloc(sizeof(char *), (env_length + 1));
 	if (!shell_env)
-		return (1); 
+		return (1);
 	while (envp[i])
 	{
 		shell_env[i] = ft_strdup(envp[i]);
@@ -39,6 +39,24 @@ int	init_shell(t_shell *shell, char **envp)
 	shell_env[i] = NULL;
 	shell->env = shell_env;
 	return (0);
+}
+
+static void	process_line(char *line, t_shell *shell)
+{
+	t_token	*tokens;
+	t_cmd	*cmd;
+
+	tokens = lexer(line);
+	free(line);
+	cmd = parser(tokens);
+	if (!cmd)
+		return ;
+	if (!collect_heredoc(cmd))
+	{
+		expander();
+		executor();
+	}
+	cleanup_cycle(tokens, cmd);
 }
 
 void	shell_loop(t_shell *shell)
@@ -62,22 +80,4 @@ void	shell_loop(t_shell *shell)
 			add_history(line);
 		process_line(line, shell);
 	}
-}
-
-static void	process_line(char *line, t_shell *shell)
-{
-	t_token	*tokens;
-	t_cmd	*cmd;
-
-	tokens = lexer(line);
-	free(line);
-	cmd = parser(tokens);
-	if (!cmd)
-		return ;
-	if (!collect_heredoc(cmd))
-	{
-		expander();
-		executor();
-	}
-	cleanup_cycle(tokens, cmd);
 }

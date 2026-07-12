@@ -112,6 +112,7 @@ typedef struct s_shell
 }	t_shell;
 
 //SHELL
+int			init_shell(t_shell *shell, char **envp);
 void		shell_loop(t_shell *shell);
 //LEXER
 t_token		*lexer(char *input);
@@ -136,6 +137,7 @@ int			collect_heredoc(t_cmd *cmd_list);
 //EXECUTOR
 int			exec_external(t_cmd *cmd, t_shell *shell);
 int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
+int			ft_builtin_echo(t_cmd *cmd, t_shell *shell);
 int			executor(t_cmd *cmds, t_shell *shell);
 int			count_cmds(t_cmd *cmds);
 t_builtin	check_builtin(t_cmd *cmd);
@@ -149,6 +151,7 @@ void		free_int_tab(int **tab, int size);
 void		free_tokens(t_token *tokens);
 void		free_cmds(t_cmd *cmd);
 void		free_redirs(t_redir *redirections);
+void		cleanup_cycle(t_token *tokens, t_cmd *cmd);
 int			syntax_error(void);
 
 #endif
