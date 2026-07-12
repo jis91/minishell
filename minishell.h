@@ -28,7 +28,7 @@
 # include <dirent.h>
 # include <errno.h>
 
-extern volatile sig_atomic_t g_signal;
+extern volatile sig_atomic_t	g_signal;
 
 //LEXER ENUM AND STRUCT
 typedef enum e_token_type
@@ -107,34 +107,32 @@ typedef enum e_builtin
 /*Shell structure*/
 typedef struct s_shell
 {
-	char	*line;
-	t_token	*tokens;
-	t_cmd	*cmds;
 	char	**env;
 	int		exit_status;
 }	t_shell;
 
 //SHELL
-void	shell_loop(t_shell *shell);
+void		shell_loop(t_shell *shell);
 //LEXER
-t_token	*lexer(char *input);
-void	handle_quotes(t_lexer *lexer);
-void	handle_normal(t_lexer *lexer);
-void	handle_operator(t_lexer *lexer);
-void	add_token(t_lexer *lexer, t_token_type type);
-void	flush_buffer(t_lexer *lexer, t_token_type type);
+t_token		*lexer(char *input);
+void		handle_quotes(t_lexer *lexer);
+void		handle_normal(t_lexer *lexer);
+void		handle_operator(t_lexer *lexer);
+void		add_token(t_lexer *lexer, t_token_type type);
+void		flush_buffer(t_lexer *lexer, t_token_type type);
 // PARSER
-t_cmd	*parser(t_token *tokens);
-int		count_token(t_token *tokens);
-t_cmd	*init_cmd(int total_token);
-int		validate_cmd(t_cmd *current);
-t_cmd	*cleanup_parser(t_cmd *head, t_token *tokens);
-int		parse_token(t_token **tokens, t_cmd **current, int *i, int total_token);
-int		parse_redir(t_token **tokens, t_cmd *current);
+t_cmd		*parser(t_token *tokens);
+int			count_token(t_token *tokens);
+t_cmd		*init_cmd(int total_token);
+int			validate_cmd(t_cmd *current);
+t_cmd		*cleanup_parser(t_cmd *head, t_token *tokens);
+int			parse_token(t_token **tokens,
+				t_cmd **current, int *i, int total_token);
+int			parse_redir(t_token **tokens, t_cmd *current);
 // SIGNALS AND HEREDOC
-void	setup_prompt_signals(void);
-void	setup_heredoc_signals(void);
-int		collect_heredoc(t_cmd *cmd_list);
+void		setup_prompt_signals(void);
+void		setup_heredoc_signals(void);
+int			collect_heredoc(t_cmd *cmd_list);
 //EXECUTOR
 int			exec_external(t_cmd *cmd, t_shell *shell);
 int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
@@ -146,12 +144,11 @@ char		*find_path(t_cmd *cmd, t_shell *shell);
 int			**ft_create_pipes(int count, t_shell *shell);
 
 //UTILS
-void	free_char_tab(char **tab);
-void	free_int_tab(int **tab, int	size);
-void	free_tokens(t_token *tokens);
-void	free_cmds(t_cmd *cmd);
-void	free_redirs(t_redir *redirections);
-int		syntax_error(void);
-
+void		free_char_tab(char **tab);
+void		free_int_tab(int **tab, int size);
+void		free_tokens(t_token *tokens);
+void		free_cmds(t_cmd *cmd);
+void		free_redirs(t_redir *redirections);
+int			syntax_error(void);
 
 #endif

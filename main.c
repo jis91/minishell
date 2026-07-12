@@ -55,26 +55,15 @@ static void	print_cmds(t_cmd *cmds)
 	}
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
-	t_token	*tokens;
-	t_token	*current;
-	t_cmd	*cmds;
-
-	if (argc != 2)
+	t_shell	minishell;
+	
+	(void)argc;
+	(void)argv;
+	if (init_shell(&minishell, envp))
 		return (1);
-	tokens = lexer(argv[1]);
-	current = tokens;
-	while (current)
-	{
-		ft_printf("[%s] : %s\n", token_type_str(current->type), current->value);
-		current = current->next;
-	}
-	cmds = parser(tokens);
-	if (!cmds)
-		return (1);
-	print_cmds(cmds);
-	free_cmds(cmds);
-	free_tokens(tokens);
+	shell_loop(&minishell);
 	return (0);
 }
+
