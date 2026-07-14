@@ -133,6 +133,8 @@ int			parse_redir(t_token **tokens, t_cmd *current);
 // SIGNALS AND HEREDOC
 void		setup_prompt_signals(void);
 void		setup_heredoc_signals(void);
+void		setup_exec_signals(void);
+void		reset_child_signals(void);
 int			collect_heredoc(t_cmd *cmd_list);
 //EXECUTOR
 int			exec_external(t_cmd *cmd, t_shell *shell);
@@ -141,10 +143,10 @@ int			ft_builtin_echo(t_cmd *cmd, t_shell *shell);
 int			executor(t_cmd *cmds, t_shell *shell);
 int			count_cmds(t_cmd *cmds);
 t_builtin	check_builtin(t_cmd *cmd);
+int			find_env_index(char **env, char *name);
 char		*verify_path(char **directories, t_cmd *cmd);
 char		*find_path(t_cmd *cmd, t_shell *shell);
 int			**create_pipes(int count, t_shell *shell);
-int			exec_pipeline(t_cmd *cmds, t_shell *shell);
 void		init_pipe_ctx(t_pipe_ctx *ctx);
 int			fork_cmds(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell);
 int			wait_cmds(t_pipe_ctx *ctx);

@@ -6,11 +6,21 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/12 14:31:48 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/14 14:46:16 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	count_env_length(char **envp)
+{
+	int		i;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	return (i);
+}
 
 int	init_shell(t_shell *shell, char **envp)
 {
@@ -18,10 +28,7 @@ int	init_shell(t_shell *shell, char **envp)
 	char	**shell_env;
 	int		env_length;
 
-	i = 0;
-	while (envp[i])
-		i++;
-	env_length = i;
+	env_length = count_env_length(envp);
 	i = 0;
 	shell_env = ft_calloc(sizeof(char *), (env_length + 1));
 	if (!shell_env)
@@ -38,6 +45,7 @@ int	init_shell(t_shell *shell, char **envp)
 	}
 	shell_env[i] = NULL;
 	shell->env = shell_env;
+	shell->exit_status = 0;
 	return (0);
 }
 
@@ -53,8 +61,8 @@ static void	process_line(char *line, t_shell *shell)
 		return ;
 	if (!collect_heredoc(cmd))
 	{
-		expander();
-		executor();
+		// expander(); TODO, COMMENT IS HERE AS PLACEHOLDER.
+		executor(cmd, shell);
 	}
 	cleanup_cycle(tokens, cmd);
 }

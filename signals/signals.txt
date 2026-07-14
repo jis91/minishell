@@ -44,6 +44,9 @@ Ctrl - C
 sigaction(SIGINT, &sa, NULL);
 
 
-
+After waitpid(), before setting shell->exit_status: check WIFSIGNALED(status). If true, exit_status
+should be 128 + WTERMSIG(status) instead of WEXITSTATUS(status). Also, if the signal is SIGQUIT, 
+print Quit (core dumped) to stderr — matches bash's behavior for Ctrl-\ during a foreground command.
+SIGINT should print nothing extra.
 
 

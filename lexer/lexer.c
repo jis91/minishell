@@ -12,22 +12,29 @@
 
 #include "../minishell.h"
 
-static void	init_lexer(t_lexer *lexer, char *input)
+static int	init_lexer(t_lexer *lexer, char *input)
 {
 	lexer->input = input;
-	lexer->buffer = malloc(ft_strlen(input) + 1);
 	lexer->state = NORMAL;
 	lexer->i = 0;
 	lexer->buffer_index = 0;
 	lexer->head = NULL;
 	lexer->tail = NULL;
+	lexer->buffer = malloc(ft_strlen(input) + 1);
+	if (!lexer->buffer)
+		return (0);
+	return (1);
 }
 
 t_token	*lexer(char *input)
 {
 	t_lexer	lexer;
 
-	init_lexer(&lexer, input);
+	if (!init_lexer(&lexer, input))
+	{
+		ft_printf("malloc lexer failed\n");
+		return (NULL);
+	}
 	while (lexer.input[lexer.i] != '\0')
 	{
 		if (lexer.state == NORMAL)
