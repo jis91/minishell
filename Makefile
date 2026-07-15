@@ -9,12 +9,13 @@ SRCS	=	main.c shell_loop.c \
 			signals/signals.c signals/signals_exec.c \
 			heredoc/heredoc.c \
 			utils/error.c utils/free.c \
-			executor/executor.c executor/executor_utils.c executor/exec_pipeline.c \
-			executor/apply_redir.c \
+			environment/environment.c \
 			executor/builtins/builtin_cd.c executor/builtins/builtin_echo.c \
 			executor/builtins/builtin_env.c executor/builtins/builtin_exit.c \
 			executor/builtins/builtin_export.c executor/builtins/builtin_pwd.c \
-			executor/builtins/builtin_unset.c
+			executor/builtins/builtin_unset.c \
+			executor/executor.c executor/executor_utils.c executor/exec_pipeline.c \
+			executor/apply_redir.c \
 			
 OBJS_DIR = obj/
 

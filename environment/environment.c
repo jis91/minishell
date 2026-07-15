@@ -6,11 +6,22 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 14:24:01 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/15 15:37:22 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/15 17:23:46 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	count_env_length(char **envp)
+{
+	int		i;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	return (i);
+}
+
 int	find_env_index(char **env, char *name)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 16:19:15 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/15 17:08:15 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/15 17:19:56 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int		builtin_export(t_cmd *cmd, t_shell *shell)
 	char	*value;
 
 	if (cmd->args[1] == NULL)
-		return (ft_builtin_env(shell));
+		return (builtin_env(shell));
 	i = 1;
 	exit_code = 1;
 	while (cmd->args[i])

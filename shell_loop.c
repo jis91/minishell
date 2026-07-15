@@ -6,21 +6,11 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/14 14:46:16 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/15 17:23:35 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	count_env_length(char **envp)
-{
-	int		i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	return (i);
-}
 
 int	init_shell(t_shell *shell, char **envp)
 {

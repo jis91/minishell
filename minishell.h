@@ -167,6 +167,7 @@ int			builtin_export(t_cmd *cmd, t_shell *shell);
 int			builtin_pwd(void);
 int			builtin_unset(t_cmd *cmd, t_shell *shell);
 //ENVIRONMENT
+int			count_env_length(char **envp);
 int			find_env_index(char **env, char *name);
 int			add_env_var(t_shell *shell, char *name, char *value);
 
