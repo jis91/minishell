@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:22:32 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/08 12:44:48 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/15 22:43:32 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,15 @@ char	*find_path(t_cmd *cmd, t_shell *shell)
 		if (ft_strncmp(shell->env[i], "PATH=", 5) == 0)
 		{
 			directories = ft_split(shell->env[i] + 5, ':');
-			break;
+			break ;
 		}
 		i++;
 	}
 	if (!directories)
 		return (NULL);
 	path = verify_path(directories, cmd);
-	free_tab(directories);
+	free_char_tab(directories);
 	if (!path)
-		ft_error("command not found");
+		syntax_error();
 	return (path);
 }

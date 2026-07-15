@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 16:19:15 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/15 17:19:56 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/15 21:52:55 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	legit_export_arguments(char *name)
 
 	i = 1;
 	if (!ft_isalpha(name[0]) && name[0] != '_')
-		return(0);
+		return (0);
 	while (name[i])
 	{
 		if (!ft_isalnum(name[i]) && name[i] != '_')
@@ -49,7 +49,7 @@ static int	trim_arg_value(char *arg, char **value, char **name)
 		if (!*name)
 			return (0);
 		*value = ft_strdup(equals + 1);
-		if (!verify_value(*value, *name)) 
+		if (!verify_value(*value, *name))
 			return (0);
 	}
 	else
@@ -69,7 +69,7 @@ static int	apply_to_env(t_shell *shell, char *name, char *value)
 	int		idx;
 	char	*tmp;
 	char	*env;
-	
+
 	idx = find_env_index(shell->env, name);
 	if (idx >= 0)
 	{
@@ -81,17 +81,17 @@ static int	apply_to_env(t_shell *shell, char *name, char *value)
 	}
 	else
 	{
-		if(!add_env_var(shell, name, value))
+		if (!add_env_var(shell, name, value))
 			return (0);
 	}
 	return (1);
 }
 
-int		builtin_export(t_cmd *cmd, t_shell *shell)
+int	builtin_export(t_cmd *cmd, t_shell *shell)
 {
 	int		i;
 	int		exit_code;
-	char 	*name;
+	char	*name;
 	char	*value;
 
 	if (cmd->args[1] == NULL)
@@ -100,10 +100,10 @@ int		builtin_export(t_cmd *cmd, t_shell *shell)
 	exit_code = 1;
 	while (cmd->args[i])
 	{
-		if(!trim_arg_value(cmd->args[i], &value, &name))
+		if (!trim_arg_value(cmd->args[i], &value, &name))
 		{
 			exit_code = 0;
-			break;
+			break ;
 		}
 		if (!legit_export_arguments(name) || !apply_to_env(shell, name, value))
 			exit_code = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/15 17:12:48 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/15 22:41:33 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	exec_external(t_cmd *cmd, t_shell *shell)
 		free (path);
 		return (WEXITSTATUS(status));
 	}
+	return (1);
 }
 
 int	exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin)
@@ -45,7 +46,7 @@ int	exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin)
 	if (builtin == BUILTIN_CD)
 		return (builtin_cd(cmd));
 	if (builtin == BUILTIN_PWD)
-		return (builtin_pwd);
+		return (builtin_pwd());
 	if (builtin == BUILTIN_EXPORT)
 		return (builtin_export(cmd, shell));
 	if (builtin == BUILTIN_UNSET)
@@ -59,26 +60,25 @@ int	exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin)
 
 int	executor(t_cmd *cmds, t_shell *shell)
 {
-	t_cmd		*current;
 	int			count;
 	t_builtin	builtin;
+	t_pipe_ctx	ctx;
 
-	count = count_cmds(cmds);
-	current = cmds;
 	if (!cmds)
 		return (1);
-		builtin = check_builtin(cmds);
+	count = count_cmds(cmds);
 	if (count == 1)
 	{
+		builtin = check_builtin(cmds);
 		if (builtin != NOT_BUILTIN)
-			exec_builtin(cmds, shell, builtin);
+			return (exec_builtin(cmds, shell, builtin));
 		else
-			exec_external(cmds, shell);
+			return (exec_external(cmds, shell));
 	}
 	else
 	{
-		while (current)
-		// code
-		current = current->next;
+		init_pipe_ctx(&ctx);
+		return (exec_pipeline(cmds, &ctx, shell));
 	}
+	return (0);
 }

@@ -15,8 +15,9 @@ SRCS	=	main.c shell_loop.c \
 			executor/builtins/builtin_export.c executor/builtins/builtin_pwd.c \
 			executor/builtins/builtin_unset.c \
 			executor/executor.c executor/executor_utils.c executor/exec_pipeline.c \
-			executor/apply_redir.c \
-			
+			executor/apply_redir.c executor/apply_redir_functions.c \
+			executor/pipe_utils.c \
+
 OBJS_DIR = obj/
 
 OBJS	= $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))

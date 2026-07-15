@@ -156,6 +156,7 @@ int			apply_redir_in(t_redir *redir, t_shell *shell);
 int			apply_redir_out(t_redir *redir, t_shell *shell);
 int			apply_redir_append(t_redir *redir, t_shell *shell);
 int			apply_redir_heredoc(t_redir *redir, t_shell *shell);
+int			apply_single_redir(t_redir *redir, t_shell *shell);
 int			apply_redirections(t_cmd *cmd, t_shell *shell);
 //BUILTINS
 t_builtin	check_builtin(t_cmd *cmd);

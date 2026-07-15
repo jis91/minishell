@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 14:55:10 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/15 16:29:32 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/15 21:50:16 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,11 @@ int	builtin_cd(t_cmd *cmd)
 	{
 		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
 		return (0);
-	} 
+	}
 	if (chdir(cmd->args[1]))
 	{
 		cd_error(cmd->args[1]);
 		return (0);
 	}
-	return (1); 
+	return (1);
 }
-

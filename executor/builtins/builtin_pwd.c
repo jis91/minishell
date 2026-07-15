@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 13:04:13 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/15 16:30:03 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/15 23:02:38 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 int	builtin_pwd(void)
 {
 	size_t	size;
-	char 	result[PATH_MAX];
+	char	result[PATH_MAX];
 
 	if (!getcwd(result, PATH_MAX))
 	{
 		perror("pwd");
-		return(1);
+		return (1);
 	}
 	size = ft_strlen(result);
-	write (STDOUT_FILENO, result, size);
+	write(STDOUT_FILENO, result, size);
+	write(STDOUT_FILENO, "\n", 1);
 	return (0);
 }

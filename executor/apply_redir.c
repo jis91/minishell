@@ -10,77 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	apply_redir_in(t_redir *redir, t_shell *shell)
+int	apply_single_redir(t_redir *redir, t_shell *shell)
 {
-	int	fd;
-
-	(void)shell;
-	fd = open(redir->file, O_RDONLY);
-	if (fd == -1)
+	if (redir->type == TOKEN_REDIR_IN)
 	{
-		perror(redir->file);
-		return (-1);
+		if (apply_redir_in(redir, shell) == -1)
+			return (-1);
 	}
-	if (dup2(fd, 0) == -1)
+	else if (redir->type == TOKEN_REDIR_OUT)
 	{
-		close(fd);
-		return (-1);
+		if (apply_redir_out(redir, shell) == -1)
+			return (-1);
 	}
-	close(fd);
-	return (0);
-}
-
-int	apply_redir_out(t_redir *redir, t_shell *shell)
-{
-	int	fd;
-
-	(void)shell;
-	fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
+	else if (redir->type == TOKEN_REDIR_APP)
 	{
-		perror(redir->file);
-		return (-1);
+		if (apply_redir_append(redir, shell) == -1)
+			return (-1);
 	}
-	if (dup2(fd, 1) == -1)
+	else if (redir->type == TOKEN_HEREDOC)
 	{
-		close(fd);
-		return (-1);
+		if (apply_redir_heredoc(redir, shell) == -1)
+			return (-1);
 	}
-	close(fd);
-	return (0);
-}
-
-int	apply_redir_append(t_redir *redir, t_shell *shell)
-{
-	int	fd;
-
-	(void)shell;
-	fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1)
-	{
-		perror(redir->file);
-		return (-1);
-	}
-	if (dup2(fd, 1) == -1)
-	{
-		close(fd);
-		return (-1);
-	}
-	close(fd);
-	return (0);
-}
-
-int	apply_redir_heredoc(t_redir *redir, t_shell *shell)
-{
-	(void)shell;
-	if (dup2(redir->heredoc_fd, 0) == -1)
-	{
-		close(redir->heredoc_fd);
-		return (-1);
-	}
-	close(redir->heredoc_fd);
 	return (0);
 }
 
@@ -91,26 +44,8 @@ int	apply_redirections(t_cmd *cmd, t_shell *shell)
 	redir = cmd->redirections;
 	while (redir)
 	{
-		if (redir->type == TOKEN_REDIR_IN)
-		{
-			if (apply_redir_in(redir, shell) == -1)
-				return (-1);
-		}
-		else if (redir->type == TOKEN_REDIR_OUT)
-		{
-			if (apply_redir_out(redir, shell) == -1)
-				return (-1);
-		}
-		else if (redir->type == TOKEN_REDIR_APP)
-		{
-			if (apply_redir_append(redir, shell) == -1)
-				return (-1);
-		}
-		else if (redir->type == TOKEN_HEREDOC)
-		{
-			if (apply_redir_heredoc(redir, shell) == -1)
-				return (-1);
-		}
+		if (apply_single_redir(redir, shell) == -1)
+			return (-1);
 		redir = redir->next;
 	}
 	return (0);
