@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 16:19:15 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/14 16:04:00 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/15 11:15:03 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	verify_value(char *value, char *name)
 static int	trim_arg_value(char *arg, char **value, char **name)
 {
 	char	*equals;
-	
+
 	equals = ft_strchr(arg, '=');
 	if (equals)
 	{
@@ -63,7 +63,7 @@ static int	trim_arg_value(char *arg, char **value, char **name)
 	}
 	return (1);
 }
-	
+
 int	find_env_index(char **env, char *name)
 {
 	int	i;
