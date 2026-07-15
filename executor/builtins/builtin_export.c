@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 16:19:15 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/15 11:15:03 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/15 17:08:15 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 static int	legit_export_arguments(char *name)
 {
@@ -49,7 +49,7 @@ static int	trim_arg_value(char *arg, char **value, char **name)
 		if (!*name)
 			return (0);
 		*value = ft_strdup(equals + 1);
-		if (!verify_value(*value, *name))
+		if (!verify_value(*value, *name)) 
 			return (0);
 	}
 	else
@@ -64,17 +64,52 @@ static int	trim_arg_value(char *arg, char **value, char **name)
 	return (1);
 }
 
-int	find_env_index(char **env, char *name)
+static int	apply_to_env(t_shell *shell, char *name, char *value)
 {
-	int	i;
-
-	i = 0;
-	while (env[i])
+	int		idx;
+	char	*tmp;
+	char	*env;
+	
+	idx = find_env_index(shell->env, name);
+	if (idx >= 0)
 	{
-		if (ft_strncmp(env[i], name, ft_strlen(name)) == 0 &&
-				env[i][ft_strlen(name)] == '=')
-			return (i);
+		tmp = ft_strjoin(name, "=");
+		env = ft_strjoin(tmp, value);
+		free(tmp);
+		free(shell->env[idx]);
+		shell->env[idx] = env;
+	}
+	else
+	{
+		if(!add_env_var(shell, name, value))
+			return (0);
+	}
+	return (1);
+}
+
+int		builtin_export(t_cmd *cmd, t_shell *shell)
+{
+	int		i;
+	int		exit_code;
+	char 	*name;
+	char	*value;
+
+	if (cmd->args[1] == NULL)
+		return (ft_builtin_env(shell));
+	i = 1;
+	exit_code = 1;
+	while (cmd->args[i])
+	{
+		if(!trim_arg_value(cmd->args[i], &value, &name))
+		{
+			exit_code = 0;
+			break;
+		}
+		if (!legit_export_arguments(name) || !apply_to_env(shell, name, value))
+			exit_code = 0;
+		free(name);
+		free(value);
 		i++;
 	}
-	return (-1);
+	return (exit_code);
 }

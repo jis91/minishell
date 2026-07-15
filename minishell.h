@@ -15,6 +15,7 @@
 
 # include "libft/libft.h"
 # include "libft/ft_printf/ft_printf.h"
+# include "libft/get_next_line/get_next_line_bonus.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -139,11 +140,8 @@ int			collect_heredoc(t_cmd *cmd_list);
 //EXECUTOR
 int			exec_external(t_cmd *cmd, t_shell *shell);
 int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
-int			ft_builtin_echo(t_cmd *cmd, t_shell *shell);
 int			executor(t_cmd *cmds, t_shell *shell);
 int			count_cmds(t_cmd *cmds);
-t_builtin	check_builtin(t_cmd *cmd);
-int			find_env_index(char **env, char *name);
 char		*verify_path(char **directories, t_cmd *cmd);
 char		*find_path(t_cmd *cmd, t_shell *shell);
 int			**create_pipes(int count, t_shell *shell);
@@ -153,11 +151,24 @@ int			wait_cmds(t_pipe_ctx *ctx);
 void		close_pipes(t_pipe_ctx *ctx);
 int			exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell);
 int			exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell);
+// APPLY REDIRECTIONS
 int			apply_redir_in(t_redir *redir, t_shell *shell);
 int			apply_redir_out(t_redir *redir, t_shell *shell);
 int			apply_redir_append(t_redir *redir, t_shell *shell);
 int			apply_redir_heredoc(t_redir *redir, t_shell *shell);
 int			apply_redirections(t_cmd *cmd, t_shell *shell);
+//BUILTINS
+t_builtin	check_builtin(t_cmd *cmd);
+int			builtin_cd(t_cmd *cmd);
+int			builtin_echo(t_cmd *cmd);
+int			builtin_env(t_shell *shell);
+int			builtin_exit(t_cmd *cmd, t_shell *shell);
+int			builtin_export(t_cmd *cmd, t_shell *shell);
+int			builtin_pwd(void);
+int			builtin_unset(t_cmd *cmd, t_shell *shell);
+//ENVIRONMENT
+int			find_env_index(char **env, char *name);
+int			add_env_var(t_shell *shell, char *name, char *value);
 
 //UTILS
 void		free_char_tab(char **tab);

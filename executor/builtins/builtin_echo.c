@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 14:25:33 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/12 13:55:47 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/15 17:10:53 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 static int	is_n_flag(char *arg)
 {
@@ -40,13 +40,12 @@ static void	parse_flag(t_cmd *cmd, int *i, int *flag)
 	}
 }
 
-int	ft_builtin_echo(t_cmd *cmd, t_shell *shell)
+int	builtin_echo(t_cmd *cmd)
 {
 	int		i;
 	int		flag;
 	int		first_word;
 
-	(void) shell;
 	i = 1;
 	flag = 0;
 	first_word = 1;
@@ -61,5 +60,5 @@ int	ft_builtin_echo(t_cmd *cmd, t_shell *shell)
 	}
 	if (!flag)
 		write(STDOUT_FILENO, "\n", 1);
-	return (0);
+	return (1);
 }

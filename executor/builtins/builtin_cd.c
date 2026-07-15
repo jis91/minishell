@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 14:55:10 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/13 15:10:28 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/15 16:29:32 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 static void	cd_error(char *path)
 {
@@ -21,24 +21,23 @@ static void	cd_error(char *path)
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
-int	ft_builtin_cd(t_cmd *cmd, t_shell *shell)
+int	builtin_cd(t_cmd *cmd)
 {
-	(void) shell;
 	if (cmd->args[1] == NULL)
 	{
 		ft_putstr_fd("cd: no arguments\n", STDERR_FILENO);
-		return (1);
+		return (0);
 	}
 	if (cmd->args[2] != NULL)
 	{
 		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
-		return (1);
+		return (0);
 	} 
 	if (chdir(cmd->args[1]))
 	{
 		cd_error(cmd->args[1]);
-		return (1);
+		return (0);
 	}
-	return (0); 
+	return (1); 
 }
 

@@ -6,13 +6,16 @@ CFLAGS	= -Wall -Wextra -Werror -MMD -MP
 SRCS	=	main.c shell_loop.c \
 			lexer/lexer.c lexer/lexer_utils.c \
 			parser/parser.c parser/parser_utils.c \
-			executor/executor.c executor/executor_utils.c executor/exec_pipeline.c \
-			executor/apply_redir.c executor/builtin_cd.c executor/builtin_echo.c \
-			executor/builtin_export.c executor/builtin_pwd.c \
 			signals/signals.c signals/signals_exec.c \
 			heredoc/heredoc.c \
-			utils/error.c utils/free.c
-
+			utils/error.c utils/free.c \
+			executor/executor.c executor/executor_utils.c executor/exec_pipeline.c \
+			executor/apply_redir.c \
+			executor/builtins/builtin_cd.c executor/builtins/builtin_echo.c \
+			executor/builtins/builtin_env.c executor/builtins/builtin_exit.c \
+			executor/builtins/builtin_export.c executor/builtins/builtin_pwd.c \
+			executor/builtins/builtin_unset.c
+			
 OBJS_DIR = obj/
 
 OBJS	= $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))

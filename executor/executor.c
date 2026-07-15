@@ -6,11 +6,11 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/13 14:54:51 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/15 17:12:48 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	exec_external(t_cmd *cmd, t_shell *shell)
 {
@@ -41,20 +41,20 @@ int	exec_external(t_cmd *cmd, t_shell *shell)
 int	exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin)
 {
 	if (builtin == BUILTIN_ECHO)
-		return (ft_builtin_echo(cmd, shell));
+		return (builtin_echo(cmd));
 	if (builtin == BUILTIN_CD)
-		return (ft_builtin_cd(cmd, shell));
+		return (builtin_cd(cmd));
 	if (builtin == BUILTIN_PWD)
-		return (ft_builtin_pwd(cmd, shell));
+		return (builtin_pwd);
 	if (builtin == BUILTIN_EXPORT)
-		return (ft_builtin_export(cmd, shell));
+		return (builtin_export(cmd, shell));
 	if (builtin == BUILTIN_UNSET)
-		return (ft_builtin_unset(cmd, shell));
+		return (builtin_unset(cmd, shell));
 	if (builtin == BUILTIN_ENV)
-		return (ft_builtin_env(cmd, shell));
+		return (builtin_env(shell));
 	if (builtin == BUILTIN_EXIT)
-		return (ft_builtin_exit(cmd, shell));
-	return (1);
+		return (builtin_exit(cmd, shell));
+	return (0);
 }
 
 int	executor(t_cmd *cmds, t_shell *shell)
@@ -71,9 +71,9 @@ int	executor(t_cmd *cmds, t_shell *shell)
 	if (count == 1)
 	{
 		if (builtin != NOT_BUILTIN)
-			exec_builtin()
+			exec_builtin(cmds, shell, builtin);
 		else
-			exec_external()
+			exec_external(cmds, shell);
 	}
 	else
 	{
