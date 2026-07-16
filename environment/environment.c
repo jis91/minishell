@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 14:24:01 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/15 17:23:46 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/16 10:47:40 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	add_env_var(t_shell *shell, char *name, char *value)
 	env_length = count_env_length(shell->env);
 	new_shell_env = malloc(sizeof(char *) * (env_length + 2));
 	if (!new_shell_env)
-		return (0);
+		return (1);
 	while (shell->env[i])
 	{
 		new_shell_env[i] = shell->env[i];
@@ -61,5 +61,28 @@ int	add_env_var(t_shell *shell, char *name, char *value)
 	new_shell_env[i] = NULL;
 	free(shell->env);
 	shell->env = new_shell_env;
-	return (1);
+	return (0);
+}
+
+int	apply_to_env(t_shell *shell, char *name, char *value)
+{
+	int		idx;
+	char	*tmp;
+	char	*env;
+
+	idx = find_env_index(shell->env, name);
+	if (idx >= 0)
+	{
+		tmp = ft_strjoin(name, "=");
+		env = ft_strjoin(tmp, value);
+		free(tmp);
+		free(shell->env[idx]);
+		shell->env[idx] = env;
+	}
+	else
+	{
+		if (add_env_var(shell, name, value))
+			return (1);
+	}
+	return (0);
 }

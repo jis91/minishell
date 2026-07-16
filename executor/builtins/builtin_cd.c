@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 14:55:10 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/15 21:50:16 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/16 10:56:16 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,33 @@ static void	cd_error(char *path)
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
-int	builtin_cd(t_cmd *cmd)
+int	builtin_cd(t_cmd *cmd, t_shell *shell)
 {
+	char old_pwd[PATH_MAX];
+	char new_pwd[PATH_MAX];
+	
 	if (cmd->args[1] == NULL)
 	{
 		ft_putstr_fd("cd: no arguments\n", STDERR_FILENO);
-		return (0);
+		return (1);
 	}
 	if (cmd->args[2] != NULL)
 	{
 		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
-		return (0);
+		return (1);
 	}
+	if (!getcwd(old_pwd, PATH_MAX))
+		return (1);
 	if (chdir(cmd->args[1]))
 	{
 		cd_error(cmd->args[1]);
-		return (0);
+		return (1);
 	}
-	return (1);
+	if (!getcwd(new_pwd, PATH_MAX))
+		return(1);
+	if (apply_to_env(shell, "OLDPWD", old_pwd))
+		return(1);
+	if (apply_to_env(shell, "PWD", new_pwd))
+		return(1);
+	return (0);
 }

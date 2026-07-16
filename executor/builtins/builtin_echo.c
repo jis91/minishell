@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 14:25:33 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/15 17:10:53 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/16 10:37:57 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	is_n_flag(char *arg)
 
 	i = 1;
 	if (arg[0] != '-' || arg[1] == '\0')
-		return (0);
+		return (1);
 	while (arg[i])
 	{
 		if (arg[i] != 'n')
@@ -60,5 +60,5 @@ int	builtin_echo(t_cmd *cmd)
 	}
 	if (!flag)
 		write(STDOUT_FILENO, "\n", 1);
-	return (1);
+	return (0);
 }

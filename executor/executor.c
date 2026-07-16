@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/15 22:41:33 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/16 10:58:19 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin)
 	if (builtin == BUILTIN_ECHO)
 		return (builtin_echo(cmd));
 	if (builtin == BUILTIN_CD)
-		return (builtin_cd(cmd));
+		return (builtin_cd(cmd, shell));
 	if (builtin == BUILTIN_PWD)
 		return (builtin_pwd());
 	if (builtin == BUILTIN_EXPORT)

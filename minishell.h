@@ -160,7 +160,7 @@ int			apply_single_redir(t_redir *redir, t_shell *shell);
 int			apply_redirections(t_cmd *cmd, t_shell *shell);
 //BUILTINS
 t_builtin	check_builtin(t_cmd *cmd);
-int			builtin_cd(t_cmd *cmd);
+int			builtin_cd(t_cmd *cmd, t_shell *shell);
 int			builtin_echo(t_cmd *cmd);
 int			builtin_env(t_shell *shell);
 int			builtin_exit(t_cmd *cmd, t_shell *shell);
@@ -171,6 +171,7 @@ int			builtin_unset(t_cmd *cmd, t_shell *shell);
 int			count_env_length(char **envp);
 int			find_env_index(char **env, char *name);
 int			add_env_var(t_shell *shell, char *name, char *value);
+int			apply_to_env(t_shell *shell, char *name, char *value);
 
 //UTILS
 void		free_char_tab(char **tab);
