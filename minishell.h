@@ -181,5 +181,7 @@ void		free_cmds(t_cmd *cmd);
 void		free_redirs(t_redir *redirections);
 void		cleanup_cycle(t_token *tokens, t_cmd *cmd);
 int			syntax_error(void);
+int			error(char *context, char *msg, int code);
+void		fatal_error(char *context, char *msg, int code);
 
 #endif

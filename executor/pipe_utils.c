@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 21:57:12 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/15 22:55:24 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/16 16:44:48 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ int	**create_pipes(int count, t_shell *shell)
 		pipes[i] = malloc(sizeof(int) * 2);
 		if (!pipes[i])
 		{
-			while (i > 0)
-			{
-				i--;
-				free(pipes[i]);
-			}
-			free(pipes);
+			free_int_tab(pipes, i);
+			return (NULL);
+		}
+		if (pipe(pipes[i]) == -1)
+		{
+			perror("pipe");
+			free(pipes[i]);
+			free_int_tab(pipes, i);
 			return (NULL);
 		}
 		i++;

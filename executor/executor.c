@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/16 10:58:19 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/16 17:09:36 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	exec_external(t_cmd *cmd, t_shell *shell)
+/*int	exec_external(t_cmd *cmd, t_shell *shell)
 {
 	pid_t	pid;
 	char	*path;
@@ -23,20 +23,36 @@ int	exec_external(t_cmd *cmd, t_shell *shell)
 		return (127);
 	pid = fork();
 	if (pid == -1)
+	{
+		free(path);
 		return (-1);
+	}
 	if (pid == 0)
 	{
+		reset_child_signals();
 		execve(path, cmd->args, shell->env);
 		free (path);
-		return (-1);
+		exit (127);
 	}
-	if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		free (path);
-		return (WEXITSTATUS(status));
-	}
-	return (1);
+	waitpid(pid, &status, 0);
+	free (path);
+	return (WEXITSTATUS(status));
+}*/
+
+void	exec_external(t_cmd *cmd, t_shell *shell)
+{
+	char	*path;
+
+	reset_child_signals();
+	if (apply_redirections(cmd, shell) == -1)
+		exit(1);
+	path = find_path(cmd, shell);
+	if (!path)
+		exit (127);
+	execve(path, cmd->args, shell->env);
+	perror(cmd->args[0]);
+	free (path);
+	exit (127);
 }
 
 int	exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin)
@@ -58,7 +74,7 @@ int	exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin)
 	return (0);
 }
 
-int	executor(t_cmd *cmds, t_shell *shell)
+/*int	executor(t_cmd *cmds, t_shell *shell)
 {
 	int			count;
 	t_builtin	builtin;
@@ -81,4 +97,33 @@ int	executor(t_cmd *cmds, t_shell *shell)
 		return (exec_pipeline(cmds, &ctx, shell));
 	}
 	return (0);
+}*/
+
+int	executor(t_cmd *cmds, t_shell *shell)
+{
+	int			count;
+	int			status;
+	pid_t		pid;
+	t_builtin	builtin;
+	t_pipe_ctx	ctx;
+
+	if (!cmds)
+		return (1);
+	count = count_cmds(cmds);
+	if (count == 1)
+	{
+		builtin = check_builtin(cmds);
+		if (builtin != NOT_BUILTIN)
+			return (exec_builtin(cmds, shell, builtin));
+		pid = fork();
+		if (pid == -1)
+			return (-1);
+		if (pid == 0)
+			exec_external(cmds, shell);
+		waitpid(pid, &status, 0);
+		return (WEXITSTATUS(status));
+	}
+	init_pipe_ctx(&ctx);
+	return (exec_pipeline(cmds, &ctx, shell));
 }
+

@@ -16,7 +16,9 @@ int	parse_token(t_token **tokens, t_cmd **current, int *i, int total_token)
 {
 	if ((*tokens)->type == TOKEN_WORD)
 	{
-		(*current)->args[*i] = (*tokens)->value;
+		(*current)->args[*i] = ft_strdup((*tokens)->value);
+		if (!(*current)->args[*i])
+			return (1);
 		(*i)++;
 		(*tokens) = (*tokens)->next;
 	}
