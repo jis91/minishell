@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 14:24:01 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/16 10:47:40 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/17 09:32:14 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,21 @@ int	apply_to_env(t_shell *shell, char *name, char *value)
 			return (1);
 	}
 	return (0);
+}
+
+char	*get_env_value(char **env, char *name)
+{
+	int		index;
+	int		name_length;
+	int		envindex_length;
+	char	*result;
+	
+	name_length = ft_strlen(name);
+	name_length++;
+	index = find_env_index(env, name);
+	if (index == -1)
+		return (NULL);
+	envindex_length = ft_strlen(env[index]);
+	result = ft_substr(env[index], name_length, envindex_length - name_length);
+	return (result);
 }

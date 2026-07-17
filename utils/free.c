@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 19:51:46 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/14 12:04:33 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/17 13:48:12 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,17 @@ void	free_tokens(t_token *tokens)
 void	free_cmds(t_cmd *cmd)
 {
 	t_cmd	*tmp;
+	int		i;
 
 	while (cmd)
 	{
 		tmp = cmd->next;
+		i = 0;
+		while(cmd->args[i])
+		{
+			free(cmd->args[i]);
+			i++;
+		}
 		free(cmd->args);
 		free_redirs(cmd->redirections);
 		free(cmd);
@@ -79,8 +86,8 @@ void	free_redirs(t_redir *redirections)
 	}
 }
 
-void cleanup_cycle(t_token *tokens, t_cmd *cmd)
+void	cleanup_cycle(t_token *tokens, t_cmd *cmd)
 {
-    free_tokens(tokens);
-    free_cmds(cmd);
+	free_tokens(tokens);
+	free_cmds(cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/15 17:23:35 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/17 13:50:09 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ static void	process_line(char *line, t_shell *shell)
 	free(line);
 	cmd = parser(tokens);
 	if (!cmd)
+	{
+		free_tokens(tokens);
 		return ;
+	}
 	if (!collect_heredoc(cmd))
 	{
 		// expander(); TODO, COMMENT IS HERE AS PLACEHOLDER.
@@ -73,7 +76,10 @@ void	shell_loop(t_shell *shell)
 			continue ;
 		}
 		if (!line)
+		{
+			free_char_tab(shell->env);
 			exit(shell->exit_status);
+		}
 		if (ft_strlen(line) > 0)
 			add_history(line);
 		process_line(line, shell);

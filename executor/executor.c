@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/16 17:09:36 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/17 14:17:36 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	executor(t_cmd *cmds, t_shell *shell)
 		if (pid == -1)
 			return (-1);
 		if (pid == 0)
-			exec_external(cmds, shell);
+			return (exec_external(cmds, shell));
 		waitpid(pid, &status, 0);
 		return (WEXITSTATUS(status));
 	}

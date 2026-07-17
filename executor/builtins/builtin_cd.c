@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 14:55:10 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/16 10:56:16 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/17 12:48:39 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,49 @@ static void	cd_error(char *path)
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
+static int	update_cd_pwd(t_shell *shell, char *prev, char *curr, char *target)
+{
+	if (!getcwd(prev, PATH_MAX))
+		return (1);
+	if (chdir(target))
+	{
+		cd_error(target);
+		return (1);
+	}
+	if (!getcwd(curr, PATH_MAX))
+		return (1);
+	if (apply_to_env(shell, "OLDPWD", prev))
+		return (1);
+	if (apply_to_env(shell, "PWD", curr))
+		return (1);
+	return (0);
+}
+
 int	builtin_cd(t_cmd *cmd, t_shell *shell)
 {
-	char old_pwd[PATH_MAX];
-	char new_pwd[PATH_MAX];
-	
-	if (cmd->args[1] == NULL)
+	char	old_pwd[PATH_MAX];
+	char	new_pwd[PATH_MAX];
+	char	*value;
+	char	*target;
+
+	target = cmd->args[1];
+	if (target == NULL)
 	{
-		ft_putstr_fd("cd: no arguments\n", STDERR_FILENO);
-		return (1);
+		value = get_env_value(shell->env, "HOME");
+		if (!value)
+			return (1);
+		target = value;
 	}
-	if (cmd->args[2] != NULL)
+	else
 	{
-		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
-		return (1);
+		if (cmd->args[2] != NULL)
+		{
+			ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
+			return (1);
+		}
 	}
-	if (!getcwd(old_pwd, PATH_MAX))
+	if (update_cd_pwd(shell, old_pwd, new_pwd, target))
 		return (1);
-	if (chdir(cmd->args[1]))
-	{
-		cd_error(cmd->args[1]);
-		return (1);
-	}
-	if (!getcwd(new_pwd, PATH_MAX))
-		return(1);
-	if (apply_to_env(shell, "OLDPWD", old_pwd))
-		return(1);
-	if (apply_to_env(shell, "PWD", new_pwd))
-		return(1);
+	free(value);
 	return (0);
 }

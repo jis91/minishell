@@ -138,7 +138,7 @@ void		setup_exec_signals(void);
 void		reset_child_signals(void);
 int			collect_heredoc(t_cmd *cmd_list);
 //EXECUTOR
-int			exec_external(t_cmd *cmd, t_shell *shell);
+void			exec_external(t_cmd *cmd, t_shell *shell);
 int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
 int			executor(t_cmd *cmds, t_shell *shell);
 int			count_cmds(t_cmd *cmds);
@@ -172,6 +172,7 @@ int			count_env_length(char **envp);
 int			find_env_index(char **env, char *name);
 int			add_env_var(t_shell *shell, char *name, char *value);
 int			apply_to_env(t_shell *shell, char *name, char *value);
+char		*get_env_value(char **env, char *name);
 
 //UTILS
 void		free_char_tab(char **tab);
