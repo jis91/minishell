@@ -90,7 +90,7 @@ void	add_token(t_lexer *lexer, t_token_type type)
 	token = malloc(sizeof(t_token));
 	if (!token)
 	{
-		ft_printf("minishell: Malloc failed\n");
+		fatal_error(NULL, "malloc failed", 1);
 		free(lexer->buffer);
 		return ;
 	}
@@ -116,7 +116,7 @@ void	flush_buffer(t_lexer *lexer, t_token_type type)
 	token = malloc(sizeof(t_token));
 	if (!token)
 	{
-		ft_printf("minishell: Malloc failed\n");
+		fatal_error(NULL, "malloc failed", 1);
 		free(lexer->buffer);
 		return ;
 	}

@@ -62,6 +62,6 @@ int	parse_redir(t_token **tokens, t_cmd *current)
 		(*tokens) = (*tokens)->next;
 	}
 	else
-		return (syntax_error());
+		return (error(NULL, "syntax error near unexpected token", 2));
 	return (0);
 }

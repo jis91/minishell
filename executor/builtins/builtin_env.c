@@ -19,7 +19,7 @@ int	builtin_env(t_shell *shell)
 	i = 0;
 	while (shell->env[i])
 	{
-		ft_putendl_fd(shell->env[i], 1);
+		ft_putendl_fd(shell->env[i], STDOUT_FILENO);
 		i++;
 	}
 	return (0);

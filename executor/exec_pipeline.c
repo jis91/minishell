@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 21:40:49 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/17 09:47:58 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/17 15:02:19 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	fork_cmds(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 		if (ctx->pids[i] == -1)
 		{
 			free_int_tab(ctx->pipes, ctx->count - 1);
-			perror("malloc failed");
+			perror("fork");
 			exit(1);
 		}
 		if (ctx->pids[i] == 0)
@@ -58,8 +58,7 @@ int	exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 	if (!ctx->pids)
 	{
 		free_int_tab(ctx->pipes, ctx->count - 1);
-		perror("malloc failed");
-		exit(1);
+		fatal_error(NULL, "malloc failed", 1);
 	}
 	fork_cmds(cmds, ctx, shell);
 	close_pipes(ctx);

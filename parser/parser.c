@@ -70,7 +70,7 @@ t_cmd	*init_cmd(int total_token)
 int	validate_cmd(t_cmd *current)
 {
 	if (current->args[0] == NULL)
-		return (syntax_error());
+		return (error(NULL, "syntax error near unexpected token", 2));
 	return (0);
 }
 

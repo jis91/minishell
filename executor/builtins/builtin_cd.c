@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 14:55:10 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/17 12:48:39 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/17 15:52:00 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	cd_error(char *path)
 {
-	ft_putstr_fd("cd: ", STDERR_FILENO);
+	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
 	ft_putstr_fd(path, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putstr_fd(strerror(errno), STDERR_FILENO);
@@ -24,14 +24,20 @@ static void	cd_error(char *path)
 static int	update_cd_pwd(t_shell *shell, char *prev, char *curr, char *target)
 {
 	if (!getcwd(prev, PATH_MAX))
+	{
+		perror("getcwd");
 		return (1);
+	}
 	if (chdir(target))
 	{
 		cd_error(target);
 		return (1);
 	}
 	if (!getcwd(curr, PATH_MAX))
+	{
+		perror("getcwd");
 		return (1);
+	}
 	if (apply_to_env(shell, "OLDPWD", prev))
 		return (1);
 	if (apply_to_env(shell, "PWD", curr))
@@ -58,7 +64,7 @@ int	builtin_cd(t_cmd *cmd, t_shell *shell)
 	{
 		if (cmd->args[2] != NULL)
 		{
-			ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
+			error("cd", "too many arguments", 1);
 			return (1);
 		}
 	}

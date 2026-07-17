@@ -31,10 +31,7 @@ t_token	*lexer(char *input)
 	t_lexer	lexer;
 
 	if (!init_lexer(&lexer, input))
-	{
-		ft_printf("malloc lexer failed\n");
-		return (NULL);
-	}
+		fatal_error(NULL, "malloc failed", 1);
 	while (lexer.input[lexer.i] != '\0')
 	{
 		if (lexer.state == NORMAL)
@@ -44,7 +41,7 @@ t_token	*lexer(char *input)
 	}
 	if (lexer.state != NORMAL)
 	{
-		ft_printf("minishell: unclosed quote\n");
+		error(NULL, "unclosed quote", 1);
 		free(lexer.buffer);
 		return (NULL);
 	}
