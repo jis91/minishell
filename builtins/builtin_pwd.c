@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 13:04:13 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/15 23:02:38 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/18 08:36:34 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
 int	builtin_pwd(void)
 {

@@ -6,11 +6,11 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 16:19:15 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/17 13:23:34 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/18 08:36:30 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
 static int	legit_export_arguments(char *name)
 {

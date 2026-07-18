@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_unset.c                                    :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/15 10:46:10 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/15 10:46:10 by aganz            ###   ########.fr       */
+/*   Created: 2026/07/15 10:21:13 by aganz             #+#    #+#             */
+/*   Updated: 2026/07/15 10:21:13 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
-int	builtin_unset(t_cmd *cmd, t_shell *shell)
+int	builtin_exit(t_cmd *cmd, t_shell *shell)
 {
-	int	index;
-
-	index = find_env_index(shell->env, cmd->args[1]);
-	if (index == -1)
-		return (0);
-	free(shell->env[index]);
-	while (shell->env[index + 1])
+	if (cmd->args[1] == NULL)
+		exit(shell->exit_status);
+	else if (cmd->args[2] != NULL)
 	{
-		shell->env[index] = shell->env[index + 1];
-		index++;
+		ft_putendl_fd("exit: too many arguments", 2);
+		return (1);
 	}
-	shell->env[index] = NULL;
+	else if (!ft_isdigit(cmd->args[1][0]) && cmd->args[1][0] != '-')
+	{
+		ft_putendl_fd("exit: numeric argument required", 2);
+		exit(255);
+	}
+	else
+		exit(ft_atoi(cmd->args[1]));
 	return (0);
 }

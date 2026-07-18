@@ -6,17 +6,16 @@ CFLAGS	= -Wall -Wextra -Werror -MMD -MP
 SRCS	=	main.c shell_loop.c \
 			lexer/lexer.c lexer/lexer_utils.c \
 			parser/parser.c parser/parser_utils.c \
+			expander/expand_env.c \
 			signals/signals.c signals/signals_exec.c \
 			heredoc/heredoc.c \
 			utils/error.c utils/free.c \
 			environment/environment.c \
-			executor/builtins/builtin_cd.c executor/builtins/builtin_echo.c \
-			executor/builtins/builtin_env.c executor/builtins/builtin_exit.c \
-			executor/builtins/builtin_export.c executor/builtins/builtin_pwd.c \
-			executor/builtins/builtin_unset.c \
+			builtins/builtin_cd.c builtins/builtin_echo.c builtins/builtin_env.c \
+			builtins/builtin_exit.c builtins/builtin_export.c builtins/builtin_pwd.c \
+			builtins/builtin_unset.c \
 			executor/executor.c executor/executor_utils.c executor/exec_pipeline.c \
-			executor/apply_redir.c executor/apply_redir_functions.c \
-			executor/pipe_utils.c \
+			executor/apply_redir.c executor/apply_redir_functions.c executor/pipe_utils.c \
 
 OBJS_DIR = obj/
 

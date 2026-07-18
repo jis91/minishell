@@ -6,11 +6,11 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 14:25:33 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/17 09:32:03 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/18 08:36:11 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
 static int	is_n_flag(char *arg)
 {
