@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 21:40:49 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/17 15:02:19 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/20 22:50:32 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	wait_cmds(t_pipe_ctx *ctx)
 
 int	exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 {
+	int	result;
+
 	ctx->count = count_cmds(cmds);
 	ctx->pipes = create_pipes(ctx->count, shell);
 	ctx->pids = malloc(sizeof(pid_t) * ctx->count);
@@ -60,17 +62,21 @@ int	exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 		free_int_tab(ctx->pipes, ctx->count - 1);
 		fatal_error(NULL, "malloc failed", 1);
 	}
+	setup_exec_signals();
 	fork_cmds(cmds, ctx, shell);
 	close_pipes(ctx);
 	free_int_tab(ctx->pipes, ctx->count - 1);
 	free(ctx->pids);
-	return (wait_cmds(ctx));
+	result = wait_cmds(ctx);
+	setup_prompt_signals();
+	return (result);
 }
 
 int	exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell)
 {
 	t_builtin	builtin;
 
+	reset_child_signals();
 	if (i > 0)
 	{
 		if (dup2(ctx->pipes[i - 1][0], 0) == -1)
@@ -89,5 +95,5 @@ int	exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell)
 		exit(exec_builtin(cmds, shell, builtin));
 	else
 		exec_external(cmds, shell);
-	exit(1);
+	return (0);
 }

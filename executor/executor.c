@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/17 15:02:21 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/20 22:49:22 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,10 @@ int	executor(t_cmd *cmds, t_shell *shell)
 		if (pid == -1)
 			return (-1);
 		if (pid == 0)
-			return (exec_external(cmds, shell));
+			exec_external(cmds, shell);
+		setup_exec_signals();
 		waitpid(pid, &status, 0);
+		setup_prompt_signals();
 		return (WEXITSTATUS(status));
 	}
 	init_pipe_ctx(&ctx);
