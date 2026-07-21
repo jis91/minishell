@@ -140,7 +140,8 @@ void		setup_exec_signals(void);
 void		reset_child_signals(void);
 int			collect_heredoc(t_cmd *cmd_list);
 //EXECUTOR
-void			exec_external(t_cmd *cmd, t_shell *shell);
+void		exec_external(t_cmd *cmd, t_shell *shell);
+int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
 int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
 int			executor(t_cmd *cmds, t_shell *shell);
 int			count_cmds(t_cmd *cmds);

@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/20 22:49:22 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/21 22:28:05 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,30 @@ void	exec_external(t_cmd *cmd, t_shell *shell)
 	perror(cmd->args[0]);
 	free (path);
 	exit (127);
+}
+
+int exec_builtin_with_redir(t_cmd *cmds, t_shell *shell, t_builtin builtin)
+{
+	int	saved_stdin;
+	int	saved_stdout;
+	int	result;
+
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	if (saved_stdin == -1 || saved_stdout == -1)
+		return (1);
+	if (apply_redirections(cmds, shell) == -1)
+	{
+		close(saved_stdin);
+		close(saved_stdout);
+		return (1);
+	}
+	result = exec_builtin(cmds, shell, builtin);
+	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdin);
+	close(saved_stdout);
+	return (result);
 }
 
 int	exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin)
@@ -114,7 +138,7 @@ int	executor(t_cmd *cmds, t_shell *shell)
 	{
 		builtin = check_builtin(cmds);
 		if (builtin != NOT_BUILTIN)
-			return (exec_builtin(cmds, shell, builtin));
+			return (exec_builtin_with_redir(cmds, shell, builtin));
 		pid = fork();
 		if (pid == -1)
 			return (-1);
