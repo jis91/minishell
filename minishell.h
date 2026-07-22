@@ -152,6 +152,7 @@ void		init_pipe_ctx(t_pipe_ctx *ctx);
 int			fork_cmds(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell);
 int			wait_cmds(t_pipe_ctx *ctx);
 void		close_pipes(t_pipe_ctx *ctx);
+void		close_child_pipes(t_pipe_ctx *ctx, int i);
 int			exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell);
 int			exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell);
 // APPLY REDIRECTIONS

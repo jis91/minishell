@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 21:40:49 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/22 11:16:10 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/22 11:42:43 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell)
 			exit(1);
 		close(ctx->pipes[i][1]);
 	}
-	close_pipes(ctx);
+	close_child_pipes(ctx, i);
 	if (apply_redirections(cmds, shell) == -1)
 		exit (1);
 	builtin = check_builtin(cmds);
