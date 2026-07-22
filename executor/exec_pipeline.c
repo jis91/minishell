@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 21:40:49 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/22 12:00:14 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/22 12:07:14 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,10 @@ int	exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 	}
 	setup_exec_signals();
 	fork_cmds(cmds, ctx, shell);
-	printf("DEBUG: apres fork_cmds\n");
-	fflush(stdout);
 	close_pipes(ctx);
-	printf("DEBUG: apres close_pipes\n");
-	fflush(stdout);
 	free_int_tab(ctx->pipes, ctx->count - 1);
-	free(ctx->pids);
 	result = wait_cmds(ctx);
-	printf("DEBUG: apres wait_cmds\n");
-	fflush(stdout);
+	free(ctx->pids);
 	setup_prompt_signals();
 	return (result);
 }
