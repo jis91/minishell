@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 14:19:00 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/22 13:35:01 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/23 21:24:47 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,32 @@ int		expander(t_cmd *cmd, t_shell *shell)
 	}
 	return (0);
 }
-char	*assembler(char *arg, t_shell *shell);
-char	*dispatcher(char *arg, int index);
-char	*expand_var(char *arg, int *index, char **env);
-char 	*expand_exit_status(char *arg, int exit_status);
-char	*no_expand(char *arg);
 
+char	*assembler(char *arg, t_shell *shell)
+{
+	int		index;
 
+	index = 0;
+	while(arg[index])
+	{
+		if (arg[index] == '$')
+			dispatch(arg, &index, shell);
+	}
+	
+}
 
+static char	*dispatch(char *arg, int *index, t_shell *shell)
+{
+	if (arg[*index + 1] == '?')
+	{
+		expand_exit_status(arg, shell->exit_status);
+		(*index)++;
+		return (ft_itoa(shell->exit_status));
+	}
+	else if (is_valid_char_name(arg[*index + 1], 0))
+		return (expand_var(arg, *index, shell->env));
+	else
+		return (ft_strdup("$")); 
+}
 
-
-
-
-
-
-
-
-"$HOME"
-
-if $
-if $?
-if $VAR
-if $error 
+int 	*expand_exit_status(char *arg, int exit_status);
