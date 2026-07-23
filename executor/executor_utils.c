@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:22:32 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/17 15:02:20 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/23 16:29:44 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ char	*find_path(t_cmd *cmd, t_shell *shell)
 		i++;
 	}
 	if (!directories)
+	{
+		error(cmd->args[0], "command not found", 127);
 		return (NULL);
+	}
 	path = verify_path(directories, cmd);
 	free_char_tab(directories);
 	if (!path)

@@ -6,38 +6,11 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/21 22:28:05 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/23 16:27:32 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/*int	exec_external(t_cmd *cmd, t_shell *shell)
-{
-	pid_t	pid;
-	char	*path;
-	int		status;
-
-	path = find_path(cmd, shell);
-	if (!path)
-		return (127);
-	pid = fork();
-	if (pid == -1)
-	{
-		free(path);
-		return (-1);
-	}
-	if (pid == 0)
-	{
-		reset_child_signals();
-		execve(path, cmd->args, shell->env);
-		free (path);
-		exit (127);
-	}
-	waitpid(pid, &status, 0);
-	free (path);
-	return (WEXITSTATUS(status));
-}*/
 
 void	exec_external(t_cmd *cmd, t_shell *shell)
 {
@@ -97,31 +70,6 @@ int	exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin)
 		return (builtin_exit(cmd, shell));
 	return (0);
 }
-
-/*int	executor(t_cmd *cmds, t_shell *shell)
-{
-	int			count;
-	t_builtin	builtin;
-	t_pipe_ctx	ctx;
-
-	if (!cmds)
-		return (1);
-	count = count_cmds(cmds);
-	if (count == 1)
-	{
-		builtin = check_builtin(cmds);
-		if (builtin != NOT_BUILTIN)
-			return (exec_builtin(cmds, shell, builtin));
-		else
-			return (exec_external(cmds, shell));
-	}
-	else
-	{
-		init_pipe_ctx(&ctx);
-		return (exec_pipeline(cmds, &ctx, shell));
-	}
-	return (0);
-}*/
 
 int	executor(t_cmd *cmds, t_shell *shell)
 {

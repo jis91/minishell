@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 21:57:12 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/22 11:41:51 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/23 16:27:53 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	close_child_pipes(t_pipe_ctx *ctx, int i)
 		if (!(i > 0 && j == i - 1))
 			close(ctx->pipes[j][0]);
 		if (!(i < ctx->count - 1 && j == i))
-			close(ctx->pipes[j][i]);
+			close(ctx->pipes[j][1]);
 		j++;
 	}
 }
