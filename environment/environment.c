@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 14:24:01 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/17 09:32:14 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/22 13:05:24 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,15 @@ char	*get_env_value(char **env, char *name)
 	int		envindex_length;
 	char	*result;
 	
-	name_length = ft_strlen(name);
-	name_length++;
+	name_length = ft_strlen(name) + 1;
 	index = find_env_index(env, name);
 	if (index == -1)
 		return (NULL);
 	envindex_length = ft_strlen(env[index]);
 	result = ft_substr(env[index], name_length, envindex_length - name_length);
+	if (!result)
+		fatal_error(NULL, "Malloc failed", 1);
 	return (result);
 }
+
+

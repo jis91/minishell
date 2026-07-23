@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 08:58:12 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/14 11:45:36 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/22 12:05:09 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	open_fd(int *fd_write, int *fd_read)
 			close(*fd_write);
 		if (*fd_read != -1)
 			close(*fd_read);
-		return (-1);
+		return (1);
 	}
 	return (0);
 }
@@ -50,7 +50,7 @@ static int	check_heredoc_signal(char *line, int fd_write, int fd_read)
 		g_signal = 0;
 		close(fd_write);
 		close(fd_read);
-		return (-1);
+		return (1);
 	}
 	return (0);
 }
@@ -62,14 +62,14 @@ static int	read_one_heredoc(t_redir *redir)
 	int		fd_read;
 
 	if (open_fd(&fd_write, &fd_read))
-		return (-1);
+		return (1);
 	while (1)
 	{
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			break ;
 		if (check_heredoc_signal(line, fd_write, fd_read))
-			return (-1);
+			return (1);
 		if (compare_line_to_redir(line, redir))
 		{
 			free(line);
@@ -98,7 +98,7 @@ int	collect_heredoc(t_cmd *cmd_list)
 			if (redir->type == TOKEN_HEREDOC)
 			{
 				if (read_one_heredoc(redir) == -1)
-					return (-1);
+					return (1);
 			}
 			redir = redir->next;
 		}

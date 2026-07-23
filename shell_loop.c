@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/17 13:50:09 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/22 11:56:52 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void	shell_loop(t_shell *shell)
 		{
 			shell->exit_status = 130;
 			g_signal = 0;
-			free(line);
-			continue ;
 		}
 		if (!line)
 		{

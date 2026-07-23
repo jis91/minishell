@@ -6,7 +6,6 @@ CFLAGS	= -Wall -Wextra -Werror -MMD -MP
 SRCS	=	main.c shell_loop.c \
 			lexer/lexer.c lexer/lexer_utils.c \
 			parser/parser.c parser/parser_utils.c \
-			expander/expand_env.c \
 			signals/signals.c signals/signals_exec.c \
 			heredoc/heredoc.c \
 			utils/error.c utils/free.c \

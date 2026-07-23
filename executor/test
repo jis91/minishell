@@ -22,3 +22,6 @@ executor/executor.c executor/executor_utils.c executor/exec_pipeline.c \
 			executor/apply_redir.c executor/builtin_cd.c executor/builtin_echo.c \
 			executor/builtin_export.c executor/builtin_pwd.c \ /*
 			
+
+
+&& || 

@@ -20,6 +20,8 @@ t_cmd	*parser(t_token *tokens)
 	t_cmd	*head;
 	t_token	*cursor;
 
+	if (!tokens)
+		return (NULL);
 	i = 0;
 	cursor = tokens;
 	total_token = count_token(tokens);
