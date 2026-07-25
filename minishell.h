@@ -132,8 +132,9 @@ int			parse_token(t_token **tokens,
 				t_cmd **current, int *i, int total_token);
 int			parse_redir(t_token **tokens, t_cmd *current);
 //EXPANDER
-int			is_valid_char_name(char c, int position);
-char		*expand_var(char *arg, int *index, char **env);
+int			expander(t_cmd *cmd, t_shell *shell);
+char		*expand(char *arg, int *index, t_shell *shell);
+char		*no_expand(char *arg, int *index);
 // SIGNALS AND HEREDOC
 void		setup_prompt_signals(void);
 void		setup_heredoc_signals(void);

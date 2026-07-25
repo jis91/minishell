@@ -6,13 +6,13 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/18 08:27:51 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/21 14:28:12 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/25 13:38:01 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		is_valid_char_name(char c, int position)
+static int	is_valid_char_name(char c, int position)
 {
 	if (position == 0)
 	{
@@ -26,3 +26,48 @@ int		is_valid_char_name(char c, int position)
 	}
 	return (1);	
 }
+
+static char	*expand_var(char *arg, int *index, char **env)
+{
+	char	*name;
+	char	*result;
+	int		name_length;
+	int		i;
+
+	i = *index;
+	while (arg[*index])
+	{
+		if (!is_valid_char_name(arg[*index], (*index) - i))
+			break;
+		(*index)++;
+	}
+	name_length = *index - i;
+	name = malloc(sizeof(char) * (name_length + 1));
+	if (!name)
+		return (NULL);
+	ft_strlcpy(name, &arg[i], name_length + 1);
+	result = get_env_value(env, name);
+	if (!result)
+		result = ft_strdup("");
+	free(name);
+	return (result);
+}
+
+char	*expand(char *arg, int *index, t_shell *shell)
+{
+	if (arg[*index] == '?')
+	{
+		(*index) ++;
+		return (expand_exit_status(arg, shell->exit_status));
+	}
+	else if (is_valid_char_name(arg[*index], 0))
+		return (expand_var(arg, index, shell->env));
+	else
+		return (ft_strdup("$"));
+}
+
+char	*no_expand(char *arg, int *index);
+
+
+static char 	*expand_exit_status(char *arg, int exit_status);
+
