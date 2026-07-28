@@ -31,6 +31,7 @@
 
 extern volatile sig_atomic_t	g_signal;
 
+
 //LEXER ENUM AND STRUCT
 typedef enum e_token_type
 {
@@ -66,6 +67,8 @@ typedef struct s_lexer
 	t_token	*head;
 	t_token	*tail;
 }			t_lexer;
+
+# define QUOTE_MARKER 1
 
 //PARSER STRUCT
 typedef struct s_redir

@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 14:19:00 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/25 13:29:44 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/28 12:35:44 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ static char	*assembler(char *arg, t_shell *shell)
 		return (NULL);
 	while(arg[index])
 	{
-		if (arg[index] == '$')
+		if (arg[index] == QUOTE_MARKER)
+		{
+			buffer = ft_strdup("$");
+			index += 2;
+		}
+		else if (arg[index] == '$')
 		{
 			index++;
 			buffer = expand(arg, &index, shell);

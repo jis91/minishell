@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_utils.c                                     :+:      :+:    :+:   */
+/*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/18 08:27:51 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/25 13:38:01 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/28 18:39:25 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*expand(char *arg, int *index, t_shell *shell)
 	if (arg[*index] == '?')
 	{
 		(*index) ++;
-		return (expand_exit_status(arg, shell->exit_status));
+		return (ft_itoa(shell->exit_status));
 	}
 	else if (is_valid_char_name(arg[*index], 0))
 		return (expand_var(arg, index, shell->env));
@@ -66,8 +66,23 @@ char	*expand(char *arg, int *index, t_shell *shell)
 		return (ft_strdup("$"));
 }
 
-char	*no_expand(char *arg, int *index);
+char	*no_expand(char *arg, int *index)
+{
+	char	*result;
+	int		i;
 
+	i = *index;
+	while (arg[*index])
+	{
+		if (arg[*index] == '$' || arg[*index] == QUOTE_MARKER)
+			break;
+		(*index)++;
+	}
+	result = malloc(sizeof(char) * ((*index) - i + 1));
+	if (!result)
+		return (NULL);
+	ft_strlcpy(result, &arg[i], (*index) - i + 1);
+	return (result);
+}
 
-static char 	*expand_exit_status(char *arg, int exit_status);
 

@@ -20,7 +20,7 @@ static int	init_lexer(t_lexer *lexer, char *input)
 	lexer->buffer_index = 0;
 	lexer->head = NULL;
 	lexer->tail = NULL;
-	lexer->buffer = malloc(ft_strlen(input) + 1);
+	lexer->buffer = malloc((ft_strlen(input) * 2) + 1);
 	if (!lexer->buffer)
 		return (0);
 	return (1);

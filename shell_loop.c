@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/22 11:56:52 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/07/28 13:07:19 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	process_line(char *line, t_shell *shell)
 	}
 	if (!collect_heredoc(cmd))
 	{
-		// expander(); TODO, COMMENT IS HERE AS PLACEHOLDER.
+		expander(cmd, shell);
 		executor(cmd, shell);
 	}
 	cleanup_cycle(tokens, cmd);
