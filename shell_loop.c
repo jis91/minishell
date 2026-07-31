@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/31 15:21:33 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/31 16:28:03 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,15 @@ static void	process_line(char *line, t_shell *shell)
 
 	tokens = lexer(line);
 	free(line);
+	if (!tokens)
+	{
+		shell->exit_status = 2;
+		return ;
+	}
 	cmd = parser(tokens);
 	if (!cmd)
 	{
+		shell->exit_status = 2;
 		free_tokens(tokens);
 		return ;
 	}
@@ -75,6 +81,7 @@ void	shell_loop(t_shell *shell)
 		}
 		if (!line)
 		{
+			write(1, "exit\n", 5);
 			free_char_tab(shell->env);
 			exit(shell->exit_status);
 		}

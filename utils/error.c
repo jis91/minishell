@@ -6,11 +6,12 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 13:51:52 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/16 17:50:17 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/31 16:33:51 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 int	syntax_error(void)
 {
 	ft_printf("minishell: syntax error near unexpected token\n");

@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/31 15:19:17 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/31 17:06:56 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	exec_external(t_cmd *cmd, t_shell *shell)
 	exit (127);
 }
 
-int exec_builtin_with_redir(t_cmd *cmds, t_shell *shell, t_builtin builtin)
+int	exec_builtin_with_redir(t_cmd *cmds, t_shell *shell, t_builtin builtin)
 {
 	int	saved_stdin;
 	int	saved_stdout;
@@ -87,8 +87,9 @@ int	executor(t_cmd *cmds, t_shell *shell)
 		builtin = check_builtin(cmds);
 		if (builtin != NOT_BUILTIN)
 		{
-			shell->exit_status = (exec_builtin_with_redir(cmds, shell, builtin));
-			return(shell->exit_status);
+			shell->exit_status
+				= (exec_builtin_with_redir(cmds, shell, builtin));
+			return (shell->exit_status);
 		}
 		pid = fork();
 		if (pid == -1)
@@ -98,6 +99,8 @@ int	executor(t_cmd *cmds, t_shell *shell)
 		setup_exec_signals();
 		waitpid(pid, &status, 0);
 		setup_prompt_signals();
+		if (WIFSIGNALED(status))
+			write(1, "\n", 1);
 		shell->exit_status = (get_exit_status(status));
 		return (shell->exit_status);
 	}
@@ -105,4 +108,3 @@ int	executor(t_cmd *cmds, t_shell *shell)
 	shell->exit_status = (exec_pipeline(cmds, &ctx, shell));
 	return (shell->exit_status);
 }
-

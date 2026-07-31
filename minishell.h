@@ -153,6 +153,7 @@ int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
 int			executor(t_cmd *cmds, t_shell *shell);
 int			count_cmds(t_cmd *cmds);
 char		*verify_path(char **directories, t_cmd *cmd);
+char		*find_in_path(t_cmd *cmd, t_shell *shell);
 char		*find_path(t_cmd *cmd, t_shell *shell);
 int			**create_pipes(int count, t_shell *shell);
 void		init_pipe_ctx(t_pipe_ctx *ctx);

@@ -6,13 +6,50 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 21:57:12 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/23 16:27:53 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/31 17:02:41 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static int	init_pipe(int **pipes, int i)
+{
+	pipes[i] = malloc(sizeof(int) * 2);
+	if (!pipes[i])
+	{
+		free_int_tab(pipes, i);
+		return (-1);
+	}
+	if (pipe(pipes[i]) == -1)
+	{
+		perror("pipe");
+		free(pipes[i]);
+		free_int_tab(pipes, i);
+		return (-1);
+	}
+	return (0);
+}
+
 int	**create_pipes(int count, t_shell *shell)
+{
+	int	**pipes;
+	int	i;
+
+	(void)shell;
+	pipes = malloc(sizeof(int *) * (count - 1));
+	if (!pipes)
+		return (NULL);
+	i = 0;
+	while (i < count - 1)
+	{
+		if (init_pipe(pipes, i) == -1)
+			return (NULL);
+		i++;
+	}
+	return (pipes);
+}
+
+/*int	**create_pipes(int count, t_shell *shell)
 {
 	int	**pipes;
 	int	i;
@@ -40,7 +77,7 @@ int	**create_pipes(int count, t_shell *shell)
 		i++;
 	}
 	return (pipes);
-}
+}*/
 
 void	init_pipe_ctx(t_pipe_ctx *ctx)
 {

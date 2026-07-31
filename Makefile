@@ -9,7 +9,7 @@ SRCS	=	main.c shell_loop.c \
 			expander/expander.c expander/expander_utils.c \
 			signals/signals.c signals/signals_exec.c \
 			heredoc/heredoc.c \
-			utils/error.c utils/free.c \
+			utils/error.c utils/free.c utils/exit_status.c utils/cleanup.c\
 			environment/environment.c \
 			builtins/builtin_cd.c builtins/builtin_echo.c builtins/builtin_env.c \
 			builtins/builtin_exit.c builtins/builtin_export.c builtins/builtin_pwd.c \
