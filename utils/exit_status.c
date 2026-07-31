@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/14 17:50:51 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/14 17:50:51 by aganz            ###   ########.fr       */
+/*   Created: 2026/07/31 14:58:03 by aganz             #+#    #+#             */
+/*   Updated: 2026/07/31 14:58:03 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
-int	builtin_env(t_shell *shell)
+int	get_exit_status(int status)
 {
-	int	i;
-
-	i = 0;
-	while (shell->env[i])
-	{
-		ft_putendl_fd(shell->env[i], STDOUT_FILENO);
-		i++;
-	}
-	return (0);
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
 }

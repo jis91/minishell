@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/23 16:27:32 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/31 15:19:17 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ int	executor(t_cmd *cmds, t_shell *shell)
 	{
 		builtin = check_builtin(cmds);
 		if (builtin != NOT_BUILTIN)
-			return (exec_builtin_with_redir(cmds, shell, builtin));
+		{
+			shell->exit_status = (exec_builtin_with_redir(cmds, shell, builtin));
+			return(shell->exit_status);
+		}
 		pid = fork();
 		if (pid == -1)
 			return (-1);
@@ -95,9 +98,11 @@ int	executor(t_cmd *cmds, t_shell *shell)
 		setup_exec_signals();
 		waitpid(pid, &status, 0);
 		setup_prompt_signals();
-		return (WEXITSTATUS(status));
+		shell->exit_status = (get_exit_status(status));
+		return (shell->exit_status);
 	}
 	init_pipe_ctx(&ctx);
-	return (exec_pipeline(cmds, &ctx, shell));
+	shell->exit_status = (exec_pipeline(cmds, &ctx, shell));
+	return (shell->exit_status);
 }
 

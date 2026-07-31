@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 21:40:49 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/22 12:07:14 by aganz            ###   ########.fr       */
+/*   Updated: 2026/07/31 15:06:54 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	fork_cmds(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 			exit(1);
 		}
 		if (ctx->pids[i] == 0)
+		{
 			exec_pipe_cmd(current, ctx, i, shell);
+			exit(1);
+		}
 		current = current->next;
 		i++;
 	}
@@ -47,7 +50,7 @@ int	wait_cmds(t_pipe_ctx *ctx)
 		waitpid(ctx->pids[i], &status, 0);
 		i++;
 	}
-	return (WEXITSTATUS(status));
+	return (get_exit_status(status));
 }
 
 int	exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)

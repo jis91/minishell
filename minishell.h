@@ -195,5 +195,6 @@ void		cleanup_cycle(t_token *tokens, t_cmd *cmd);
 int			syntax_error(void);
 int			error(char *context, char *msg, int code);
 void		fatal_error(char *context, char *msg, int code);
+int			get_exit_status(int status);
 
 #endif
