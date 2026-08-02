@@ -31,7 +31,6 @@
 
 extern volatile sig_atomic_t	g_signal;
 
-
 //LEXER ENUM AND STRUCT
 typedef enum e_token_type
 {

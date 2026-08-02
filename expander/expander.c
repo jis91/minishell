@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 14:19:00 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/28 12:35:44 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/02 20:52:19 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static char	*build_result(char *result, char *buffer)
 {
-	char *tmp;
-	
+	char	*tmp;
+
 	tmp = result;
 	result = ft_strjoin(tmp, buffer);
 	free(tmp);
@@ -33,7 +33,7 @@ static char	*assembler(char *arg, t_shell *shell)
 	result = ft_strdup("");
 	if (!result)
 		return (NULL);
-	while(arg[index])
+	while (arg[index])
 	{
 		if (arg[index] == QUOTE_MARKER)
 		{
@@ -57,7 +57,7 @@ static char	*assembler(char *arg, t_shell *shell)
 	return (result);
 }
 
-static int		has_dollar(char *string)
+static int	has_dollar(char *string)
 {
 	int		i;
 
@@ -71,10 +71,11 @@ static int		has_dollar(char *string)
 	return (0);
 }
 
-int		expander(t_cmd *cmd, t_shell *shell)
+int	expander(t_cmd *cmd, t_shell *shell)
 {
 	int		i;
 	char	*tmp;
+
 	i = 0;
 	while (cmd->args[i])
 	{
@@ -90,5 +91,3 @@ int		expander(t_cmd *cmd, t_shell *shell)
 	}
 	return (0);
 }
-
-

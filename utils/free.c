@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 19:51:46 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/02 11:55:12 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/02 20:59:33 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	free_cmds(t_cmd *cmd)
 	t_cmd	*tmp;
 	int		i;
 
-	if(!cmd)
+	if (!cmd)
 		return ;
 	while (cmd)
 	{

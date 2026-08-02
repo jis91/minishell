@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 08:56:16 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/22 13:19:45 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/02 21:04:34 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	handle_sigint(int sig)
 	rl_on_new_line();
 	rl_redisplay();
 }
-
 
 static void	handle_heredoc(int sig)
 {

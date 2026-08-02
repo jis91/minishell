@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/18 08:27:51 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/28 18:39:25 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/02 20:57:08 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	is_valid_char_name(char c, int position)
 		if (!ft_isalnum(c) && c != '_')
 			return (0);
 	}
-	return (1);	
+	return (1);
 }
 
 static char	*expand_var(char *arg, int *index, char **env)
@@ -38,7 +38,7 @@ static char	*expand_var(char *arg, int *index, char **env)
 	while (arg[*index])
 	{
 		if (!is_valid_char_name(arg[*index], (*index) - i))
-			break;
+			break ;
 		(*index)++;
 	}
 	name_length = *index - i;
@@ -57,7 +57,7 @@ char	*expand(char *arg, int *index, t_shell *shell)
 {
 	if (arg[*index] == '?')
 	{
-		(*index) ++;
+		(*index)++;
 		return (ft_itoa(shell->exit_status));
 	}
 	else if (is_valid_char_name(arg[*index], 0))
@@ -75,7 +75,7 @@ char	*no_expand(char *arg, int *index)
 	while (arg[*index])
 	{
 		if (arg[*index] == '$' || arg[*index] == QUOTE_MARKER)
-			break;
+			break ;
 		(*index)++;
 	}
 	result = malloc(sizeof(char) * ((*index) - i + 1));
@@ -84,5 +84,3 @@ char	*no_expand(char *arg, int *index)
 	ft_strlcpy(result, &arg[i], (*index) - i + 1);
 	return (result);
 }
-
-

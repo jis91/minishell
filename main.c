@@ -15,7 +15,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	minishell;
-	
+
 	(void)argc;
 	(void)argv;
 	if (init_shell(&minishell, envp))
@@ -23,4 +23,3 @@ int	main(int argc, char **argv, char **envp)
 	shell_loop(&minishell);
 	return (0);
 }
-

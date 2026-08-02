@@ -64,9 +64,9 @@ void	sort_char_tab(char **tab)
 char	**init_char_tab(int length)
 {
 	char	**result;
-	
-	result = ft_calloc(sizeof(char*), (length + 1));
-	if(!result)
+
+	result = ft_calloc(sizeof(char *), (length + 1));
+	if (!result)
 		fatal_error(NULL, "malloc failed", 1);
 	return (result);
 }
