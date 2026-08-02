@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 19:51:46 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/31 16:36:57 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/02 11:55:12 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_char_tab(char **tab)
 {
 	int	i;
 
+	if (!tab)
+		return ;
 	i = 0;
 	while (tab[i])
 	{
@@ -29,6 +31,8 @@ void	free_int_tab(int **tab, int size)
 {
 	int	i;
 
+	if (!tab)
+		return ;
 	i = 0;
 	while (i < size)
 	{
@@ -42,6 +46,8 @@ void	free_tokens(t_token *tokens)
 {
 	t_token	*tmp;
 
+	if (!tokens)
+		return ;
 	while (tokens)
 	{
 		tmp = tokens->next;
@@ -56,6 +62,8 @@ void	free_cmds(t_cmd *cmd)
 	t_cmd	*tmp;
 	int		i;
 
+	if(!cmd)
+		return ;
 	while (cmd)
 	{
 		tmp = cmd->next;
@@ -76,6 +84,8 @@ void	free_redirs(t_redir *redirections)
 {
 	t_redir	*tmp;
 
+	if (!redirections)
+		return ;
 	while (redirections)
 	{
 		tmp = redirections->next;

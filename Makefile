@@ -9,11 +9,11 @@ SRCS	=	main.c shell_loop.c \
 			expander/expander.c expander/expander_utils.c \
 			signals/signals.c signals/signals_exec.c \
 			heredoc/heredoc.c \
-			utils/error.c utils/free.c utils/exit_status.c utils/cleanup.c\
+			utils/error.c utils/free.c utils/utils.c utils/cleanup.c\
 			environment/environment.c \
 			builtins/builtin_cd.c builtins/builtin_echo.c builtins/builtin_env.c \
-			builtins/builtin_exit.c builtins/builtin_export.c builtins/builtin_pwd.c \
-			builtins/builtin_unset.c \
+			builtins/builtin_exit.c builtins/builtin_export.c builtins/builtin_export_utils.c \
+			builtins/builtin_pwd.c builtins/builtin_unset.c \
 			executor/executor.c executor/executor_utils.c executor/exec_pipeline.c \
 			executor/apply_redir.c executor/apply_redir_functions.c executor/pipe_utils.c \
 

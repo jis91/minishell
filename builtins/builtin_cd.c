@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 14:55:10 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/18 08:36:18 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/02 11:58:52 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,25 @@ int	builtin_cd(t_cmd *cmd, t_shell *shell)
 {
 	char	old_pwd[PATH_MAX];
 	char	new_pwd[PATH_MAX];
-	char	*value;
 	char	*target;
 
-	target = cmd->args[1];
-	if (target == NULL)
+	if (cmd->args[1] != NULL && cmd->args[2] != NULL)
 	{
-		value = get_env_value(shell->env, "HOME");
-		if (!value)
-			return (1);
-		target = value;
-	}
-	else
-	{
-		if (cmd->args[2] != NULL)
-		{
-			ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
-			return (1);
-		}
-	}
-	if (update_cd_pwd(shell, old_pwd, new_pwd, target))
+		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
 		return (1);
-	free(value);
+	}
+	target = cmd->args[1];
+	if (!target)
+		target = get_env_value(shell->env, "HOME");
+	if (!target)
+		return (1);
+	if (update_cd_pwd(shell, old_pwd, new_pwd, target))
+	{
+		if (target != cmd->args[1])
+			free(target);
+		return (1);
+	}
+	if (target != cmd->args[1])
+		free (target);
 	return (0);
 }

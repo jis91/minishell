@@ -6,29 +6,13 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 16:19:15 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/18 08:36:30 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/02 11:57:33 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	legit_export_arguments(char *name)
-{
-	int	i;
-
-	i = 1;
-	if (!ft_isalpha(name[0]) && name[0] != '_')
-		return (1);
-	while (name[i])
-	{
-		if (!ft_isalnum(name[i]) && name[i] != '_')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static int	trim_arg_value(char *arg, char **value, char **name)
+void	trim_arg_value(char *arg, char **value, char **name)
 {
 	char	*equals;
 
@@ -47,29 +31,21 @@ static int	trim_arg_value(char *arg, char **value, char **name)
 	{
 		free(*name);
 		free(*value);
-		return (1);
+		fatal_error(NULL, "malloc failed", 1);
 	}
-	return (0);
 }
 
-static int	print_export_no_arg(char **env)
+static int	legit_export_arguments(char *name)
 {
-	int		i;
-	char	*name;
-	char	*value;
+	int	i;
 
-	i = 0;
-	while (env[i])
+	i = 1;
+	if (!ft_isalpha(name[0]) && name[0] != '_')
+		return (1);
+	while (name[i])
 	{
-		if (trim_arg_value(env[i], &value, &name))
+		if (!ft_isalnum(name[i]) && name[i] != '_')
 			return (1);
-		ft_putstr_fd("declare -x ", STDOUT_FILENO);
-		ft_putstr_fd(name, STDOUT_FILENO);
-		ft_putstr_fd("=\"", STDOUT_FILENO);
-		ft_putstr_fd(value, STDOUT_FILENO);
-		ft_putstr_fd("\"\n", STDOUT_FILENO);
-		free(name);
-		free(value);
 		i++;
 	}
 	return (0);
@@ -92,20 +68,19 @@ int	builtin_export(t_cmd *cmd, t_shell *shell)
 	char	*value;
 
 	if (cmd->args[1] == NULL)
-		return (print_export_no_arg(shell->env));
+	{
+		print_export_no_arg(shell->env);
+		return (0);
+	}
 	i = 1;
 	exit_code = 0;
 	while (cmd->args[i])
 	{
-		if (trim_arg_value(cmd->args[i], &value, &name))
-		{
-			exit_code = 1;
-			break ;
-		}
+		trim_arg_value(cmd->args[i], &value, &name);
 		if (legit_export_arguments(name))
 			exit_code = 1;
 		else if (should_apply_export(cmd->args[i], name, shell->env)
-				&& apply_to_env(shell, name, value))
+			&& apply_to_env(shell, name, value))
 			exit_code = 1;
 		free(name);
 		free(value);

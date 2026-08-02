@@ -138,7 +138,6 @@ int			parse_redir(t_token **tokens, t_cmd *current);
 int			expander(t_cmd *cmd, t_shell *shell);
 char		*expand(char *arg, int *index, t_shell *shell);
 char		*no_expand(char *arg, int *index);
-char		*expand_exit_status(char *arg, int exit_status);
 
 // SIGNALS AND HEREDOC
 void		setup_prompt_signals(void);
@@ -177,6 +176,8 @@ int			builtin_echo(t_cmd *cmd);
 int			builtin_env(t_shell *shell);
 int			builtin_exit(t_cmd *cmd, t_shell *shell);
 int			builtin_export(t_cmd *cmd, t_shell *shell);
+void		trim_arg_value(char *arg, char **value, char **name);
+void		print_export_no_arg(char **env);
 int			builtin_pwd(void);
 int			builtin_unset(t_cmd *cmd, t_shell *shell);
 //ENVIRONMENT
@@ -197,5 +198,7 @@ int			syntax_error(void);
 int			error(char *context, char *msg, int code);
 void		fatal_error(char *context, char *msg, int code);
 int			get_exit_status(int status);
+char		**init_char_tab(int length);
+void		sort_char_tab(char **tab);
 
 #endif
