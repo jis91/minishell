@@ -40,28 +40,40 @@ int	parse_token(t_token **tokens, t_cmd **current, int *i, int total_token)
 	return (0);
 }
 
+t_redir	*new_redir_node(t_token **tokens)
+{
+	t_redir	*new_redir;
+
+	new_redir = malloc(sizeof(t_redir));
+	if (!new_redir)
+		return (NULL);
+	new_redir->next = NULL;
+	new_redir->type = (*tokens)->type;
+	new_redir->file = ft_strdup((*tokens)->next->value);
+	if (!new_redir->file)
+	{
+		free(new_redir);
+		return (NULL);
+	}
+	new_redir->heredoc_fd = -1;
+	return (new_redir);
+}
+
 int	parse_redir(t_token **tokens, t_cmd *current)
 {
 	t_redir	*new_redir;
 	t_redir	**tmp;
 
 	tmp = &current->redirections;
-	if ((*tokens)->next && (*tokens)->next->type == TOKEN_WORD)
-	{
-		new_redir = malloc(sizeof(t_redir));
-		if (!new_redir)
-			return (1);
-		new_redir->next = NULL;
-		new_redir->type = (*tokens)->type;
-		new_redir->file = (*tokens)->next->value;
-		new_redir->heredoc_fd = -1;
-		while (*tmp)
-			tmp = &(*tmp)->next;
-		*tmp = new_redir;
-		(*tokens) = (*tokens)->next;
-		(*tokens) = (*tokens)->next;
-	}
-	else
+	if (!(*tokens)->next ||  (*tokens)->next->type != TOKEN_WORD)
 		return (error(NULL, "syntax error near unexpected token", 2));
+	new_redir = new_redir_node(tokens);
+	if (!new_redir)
+		return (1);
+	while (*tmp)
+		tmp = &(*tmp)->next;
+	*tmp = new_redir;
+	(*tokens) = (*tokens)->next;
+	(*tokens) = (*tokens)->next;
 	return (0);
 }

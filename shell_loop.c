@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/07/31 16:28:03 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/02 21:14:38 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static void	process_line(char *line, t_shell *shell)
 	if (!cmd)
 	{
 		shell->exit_status = 2;
-		free_tokens(tokens);
 		return ;
 	}
 	if (!collect_heredoc(cmd))
