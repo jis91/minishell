@@ -196,7 +196,7 @@ void		cleanup_cycle(t_token *tokens, t_cmd *cmd);
 void		cleanup_shell(t_shell *shell);
 int			syntax_error(void);
 int			error(char *context, char *msg, int code);
-void		fatal_error(char *context, char *msg, int code);
+void		fatal_error(t_shell *shell, char *context, char *msg, int code);
 int			get_exit_status(int status);
 char		**init_char_tab(int length);
 void		sort_char_tab(char **tab);

@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 13:51:52 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/03 13:21:52 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/03 23:09:27 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ int	error(char *context, char *msg, int code)
 	return (code);
 }
 
-void	fatal_error(char *context, char *msg, int code)
+/*void	fatal_error(char *context, char *msg, int code)
 {
 	error(context, msg, code);
 	exit(code);
-}
+}*/
 
-/*void	fatal_error(t_shell *shell, char *context, char *msg, int code)
+void	fatal_error(t_shell *shell, char *context, char *msg, int code)
 {
 	error(context, msg, code);
 	if (shell)
 		cleanup_shell(shell);
 	exit(code);
-}*/
+}

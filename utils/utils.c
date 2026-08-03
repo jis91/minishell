@@ -67,6 +67,6 @@ char	**init_char_tab(int length)
 
 	result = ft_calloc(sizeof(char *), (length + 1));
 	if (!result)
-		fatal_error(NULL, "malloc failed", 1);
+		fatal_error(NULL, NULL, "malloc failed", 1);
 	return (result);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 16:19:15 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/02 11:57:33 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/03 23:17:21 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	trim_arg_value(char *arg, char **value, char **name)
 	{
 		free(*name);
 		free(*value);
-		fatal_error(NULL, "malloc failed", 1);
+		fatal_error(NULL, NULL, "malloc failed", 1);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 21:40:49 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/31 15:06:54 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/03 23:18:55 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 	if (!ctx->pids)
 	{
 		free_int_tab(ctx->pipes, ctx->count - 1);
-		fatal_error(NULL, "malloc failed", 1);
+		fatal_error(shell, NULL, "malloc failed", 1);
 	}
 	setup_exec_signals();
 	fork_cmds(cmds, ctx, shell);

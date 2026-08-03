@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:57:55 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/02 11:57:54 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/03 23:18:06 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	build_tmp_env(char **env, char **tmp_env)
 	{
 		tmp_env[i] = ft_strdup(env[i]);
 		if (!tmp_env[i])
-			fatal_error(NULL, "malloc failed", 1);
+			fatal_error(NULL, NULL, "malloc failed", 1);
 		i++;
 	}
 	sort_char_tab(tmp_env);
