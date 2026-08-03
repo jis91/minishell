@@ -54,6 +54,7 @@ int	count_token(t_token *tokens)
 t_cmd	*init_cmd(int total_token)
 {
 	t_cmd	*command;
+	int		i;
 
 	command = malloc(sizeof(t_cmd));
 	if (!command)
@@ -63,6 +64,12 @@ t_cmd	*init_cmd(int total_token)
 	{
 		free(command);
 		return (NULL);
+	}
+	i = 0;
+	while (i <= total_token)
+	{
+		command->args[i] = NULL;
+		i++;
 	}
 	command->redirections = NULL;
 	command->next = NULL;
