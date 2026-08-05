@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:57:55 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/02 11:57:54 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/05 19:19:12 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	build_tmp_env(char **env, char **tmp_env)
 	{
 		tmp_env[i] = ft_strdup(env[i]);
 		if (!tmp_env[i])
-			fatal_error(NULL, "malloc failed", 1);
+			fatal_error(NULL, NULL, "malloc failed", 1);
 		i++;
 	}
 	sort_char_tab(tmp_env);

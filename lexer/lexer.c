@@ -22,7 +22,7 @@ static int	init_lexer(t_lexer *lexer, char *input)
 	lexer->tail = NULL;
 	lexer->buffer = malloc((ft_strlen(input) * 2) + 1);
 	if (!lexer->buffer)
-		return (0);//fatal error
+		fatal_error(NULL, NULL, "malloc failed", 1);
 	return (1);
 }
 
@@ -31,7 +31,7 @@ t_token	*lexer(char *input)
 	t_lexer	lexer;
 
 	if (!init_lexer(&lexer, input))
-		fatal_error(NULL, "malloc failed", 1);
+		fatal_error(NULL, NULL, "malloc failed", 1);
 	while (lexer.input[lexer.i] != '\0')
 	{
 		if (lexer.state == NORMAL)

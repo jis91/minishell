@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 14:24:01 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/02 21:01:22 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/05 19:18:25 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ int	add_env_var(t_shell *shell, char *name, char *value)
 
 	i = 0;
 	env_length = count_env_length(shell->env);
-	new_shell_env = malloc(sizeof(char *) * (env_length + 2));
-	if (!new_shell_env)
-		return (1);
+	new_shell_env = init_char_tab(env_length + 1);
 	while (shell->env[i])
 	{
 		new_shell_env[i] = shell->env[i];
@@ -101,6 +99,6 @@ char	*get_env_value(char **env, char *name)
 	envindex_length = ft_strlen(env[index]);
 	result = ft_substr(env[index], name_length, envindex_length - name_length);
 	if (!result)
-		fatal_error(NULL, "Malloc failed", 1);
+		fatal_error(NULL, NULL, "malloc failed", 1);
 	return (result);
 }

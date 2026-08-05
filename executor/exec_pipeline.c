@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 21:40:49 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/31 15:06:54 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/05 19:19:47 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 	if (!ctx->pids)
 	{
 		free_int_tab(ctx->pipes, ctx->count - 1);
-		fatal_error(NULL, "malloc failed", 1);
+		fatal_error(shell, NULL, "malloc failed", 1);
 	}
 	setup_exec_signals();
 	fork_cmds(cmds, ctx, shell);
