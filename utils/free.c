@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 19:51:46 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/02 20:59:33 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/03 14:51:48 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	free_redirs(t_redir *redirections)
 		tmp = redirections->next;
 		if (redirections->heredoc_fd != -1)
 			close(redirections->heredoc_fd);
+		free(redirections->file);
 		free(redirections);
 		redirections = tmp;
 	}

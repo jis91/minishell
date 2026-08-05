@@ -200,5 +200,6 @@ void		fatal_error(char *context, char *msg, int code);
 int			get_exit_status(int status);
 char		**init_char_tab(int length);
 void		sort_char_tab(char **tab);
+int 		only_whitespace_empty(char *str);
 
 #endif

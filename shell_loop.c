@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/02 21:43:37 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/03 15:18:40 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,13 @@ static void	process_line(char *line, t_shell *shell)
 	t_token	*tokens;
 	t_cmd	*cmd;
 
-	tokens = lexer(line);
+	if (!only_whitespace_empty(line))
+		tokens = lexer(line);
+	else
+	{
+		free(line);
+		return ;
+	}
 	free(line);
 	if (!tokens)
 	{

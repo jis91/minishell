@@ -70,3 +70,19 @@ char	**init_char_tab(int length)
 		fatal_error(NULL, "malloc failed", 1);
 	return (result);
 }
+
+int only_whitespace_empty(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (1);
+	while (str[i])
+	{
+		if (str[i] != ' ' && str[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
+}
