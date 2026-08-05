@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 14:24:01 by jefferson         #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/08/05 19:18:25 by jefferson        ###   ########.fr       */
+=======
+/*   Updated: 2026/08/03 23:16:42 by aganz            ###   ########.fr       */
+>>>>>>> 35b10cd112b3e5d2a005095873c529a88b94a271
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +103,10 @@ char	*get_env_value(char **env, char *name)
 	envindex_length = ft_strlen(env[index]);
 	result = ft_substr(env[index], name_length, envindex_length - name_length);
 	if (!result)
+<<<<<<< HEAD
 		fatal_error(NULL, NULL, "malloc failed", 1);
+=======
+		fatal_error(NULL, NULL, "Malloc failed", 1);
+>>>>>>> 35b10cd112b3e5d2a005095873c529a88b94a271
 	return (result);
 }
