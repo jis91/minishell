@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/06 16:26:12 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/07 10:42:27 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,18 @@ void	exec_external(t_cmd *cmd, t_shell *shell)
 		exit(1);
 	path = find_path(cmd, shell);
 	if (!path)
-		exit (127);
+	{
+		if (errno == EACCES || errno == EISDIR)
+			exit(126);
+		exit(127);
+	}
 	execve(path, cmd->args, shell->env);
+	if (errno == EACCES || errno == EISDIR)
+	{
+		perror(cmd->args[0]);
+		free(path);
+		exit(126);
+	}
 	perror(cmd->args[0]);
 	free (path);
 	exit (127);
@@ -40,6 +50,8 @@ int	exec_builtin_with_redir(t_cmd *cmds, t_shell *shell, t_builtin builtin)
 		return (1);
 	if (apply_redirections(cmds, shell) == -1)
 	{
+		dup2(saved_stdin, STDIN_FILENO);
+		dup2(saved_stdout, STDOUT_FILENO);
 		close(saved_stdin);
 		close(saved_stdout);
 		return (1);
@@ -88,7 +100,10 @@ static int	execute_single(t_cmd *cmds, t_shell *shell)
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
+	{
 		exec_external(cmds, shell);
+		exit(1);
+	}
 	setup_exec_signals();
 	waitpid(pid, &status, 0);
 	setup_prompt_signals();

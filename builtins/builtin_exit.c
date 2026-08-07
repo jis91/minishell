@@ -37,7 +37,7 @@ int	builtin_exit(t_cmd *cmd, t_shell *shell)
 	else if (cmd->args[2] != NULL)
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
-		return (2);
+		return (1);
 	}
 	else if (!is_digit_flag(cmd->args[1]))
 	{

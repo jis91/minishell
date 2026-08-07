@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/03 15:18:40 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/07 11:24:51 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ static void	process_line(char *line, t_shell *shell)
 	if (!collect_heredoc(cmd))
 	{
 		expander(cmd, shell);
+		if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
+		{
+			cleanup_cycle(tokens, cmd);
+			return ;
+		}
 		shell->exit_status = executor(cmd, shell);
 	}
 	cleanup_cycle(tokens, cmd);
