@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 14:55:10 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/03 08:51:46 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/07 15:56:53 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	builtin_cd(t_cmd *cmd, t_shell *shell)
 	{
 		if (target != cmd->args[1])
 			free(target);
-		return (1);
+		return (2);
 	}
 	if (target != cmd->args[1])
 		free (target);

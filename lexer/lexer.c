@@ -43,6 +43,7 @@ t_token	*lexer(char *input)
 	{
 		error(NULL, "unclosed quote", 1);
 		free(lexer.buffer);
+		free_tokens(lexer.head);
 		return (NULL);
 	}
 	if (lexer.buffer_index > 0)

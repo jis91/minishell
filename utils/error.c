@@ -6,17 +6,11 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/05 19:40:01 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/05 19:40:04 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/05 20:37:17 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	syntax_error(void)
-{
-	ft_printf("minishell: syntax error near unexpected token\n");
-	return (1);
-}
 
 int	error(char *context, char *msg, int code)
 {

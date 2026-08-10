@@ -18,6 +18,8 @@ void	handle_quotes(t_lexer *lexer)
 		|| (lexer->input[lexer->i] == '"' && lexer->state == IN_DOUBLE_QUOTE))
 	{
 		lexer->state = NORMAL;
+		lexer->buffer[lexer->buffer_index] = BOUNDARY;
+		lexer->buffer_index++;
 		lexer->i++;
 	}
 	else
@@ -25,6 +27,11 @@ void	handle_quotes(t_lexer *lexer)
 		if (lexer->input[lexer->i] == '$' && lexer->state == IN_SINGLE_QUOTE)
 		{
 			lexer->buffer[lexer->buffer_index] = QUOTE_MARKER;
+			lexer->buffer_index++;
+		}
+		else if (lexer->input[lexer->i] == '$' && lexer->state == IN_DOUBLE_QUOTE)
+		{
+			lexer->buffer[lexer->buffer_index] = DQUOTE_MARKER;
 			lexer->buffer_index++;
 		}
 		lexer->buffer[lexer->buffer_index] = lexer->input[lexer->i];
@@ -41,9 +48,17 @@ void	handle_normal(t_lexer *lexer)
 			flush_buffer(lexer, TOKEN_WORD);
 	}
 	else if (lexer->input[lexer->i] == '\'')
+	{
 		lexer->state = IN_SINGLE_QUOTE;
+		lexer->buffer[lexer->buffer_index] = BOUNDARY;
+		lexer->buffer_index++;
+	}
 	else if (lexer->input[lexer->i] == '"')
+	{
 		lexer->state = IN_DOUBLE_QUOTE;
+		lexer->buffer[lexer->buffer_index] = BOUNDARY;
+		lexer->buffer_index++;
+	}
 	else if (lexer->input[lexer->i] == '|'
 		|| lexer->input[lexer->i] == '<'
 		|| lexer->input[lexer->i] == '>')
@@ -95,9 +110,8 @@ void	add_token(t_lexer *lexer, t_token_type type)
 	token = malloc(sizeof(t_token));
 	if (!token)
 	{
-		fatal_error(NULL, NULL, "malloc failed", 1);
 		free(lexer->buffer);
-		return ;
+		fatal_error(NULL, NULL, "malloc failed", 1);
 	}
 	token->value = NULL;
 	token->type = type;
@@ -121,9 +135,8 @@ void	flush_buffer(t_lexer *lexer, t_token_type type)
 	token = malloc(sizeof(t_token));
 	if (!token)
 	{
-		fatal_error(NULL, NULL, "malloc failed", 1);
 		free(lexer->buffer);
-		return ;
+		fatal_error(NULL, NULL, "malloc failed", 1);
 	}
 	lexer->buffer[lexer->buffer_index] = '\0';
 	token->value = ft_strdup(lexer->buffer);

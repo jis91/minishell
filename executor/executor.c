@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/07/31 17:06:56 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/07 15:41:21 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,18 @@ void	exec_external(t_cmd *cmd, t_shell *shell)
 		exit(1);
 	path = find_path(cmd, shell);
 	if (!path)
-		exit (127);
+	{
+		if (errno == EACCES || errno == EISDIR)
+			exit(126);
+		exit(127);
+	}
 	execve(path, cmd->args, shell->env);
+	if (errno == EACCES || errno == EISDIR)
+	{
+		perror(cmd->args[0]);
+		free(path);
+		exit(126);
+	}
 	perror(cmd->args[0]);
 	free (path);
 	exit (127);
@@ -40,6 +50,8 @@ int	exec_builtin_with_redir(t_cmd *cmds, t_shell *shell, t_builtin builtin)
 		return (1);
 	if (apply_redirections(cmds, shell) == -1)
 	{
+		dup2(saved_stdin, STDIN_FILENO);
+		dup2(saved_stdout, STDOUT_FILENO);
 		close(saved_stdin);
 		close(saved_stdout);
 		return (1);
@@ -71,7 +83,52 @@ int	exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin)
 	return (0);
 }
 
+static int	execute_single(t_cmd *cmds, t_shell *shell)
+{
+	pid_t		pid;
+	t_builtin	builtin;
+	int			status;
+
+	builtin = check_builtin(cmds);
+	if (builtin != NOT_BUILTIN)
+	{
+		shell->exit_status
+			= (exec_builtin_with_redir(cmds, shell, builtin));
+		return (shell->exit_status);
+	}
+	pid = fork();
+	if (pid == -1)
+		return (-1);
+	if (pid == 0)
+	{
+		exec_external(cmds, shell);
+		exit(1);
+	}
+	setup_exec_signals();
+	waitpid(pid, &status, 0);
+	setup_prompt_signals();
+	if (WIFSIGNALED(status))
+		write(1, "\n", 1);
+	return (get_exit_status(status));
+}
+
 int	executor(t_cmd *cmds, t_shell *shell)
+{
+	t_pipe_ctx	ctx;
+
+	if (!cmds)
+		return (1);
+	if (count_cmds(cmds) == 1)
+	{
+		shell->exit_status = execute_single(cmds, shell);
+		return (shell->exit_status);
+	}
+	init_pipe_ctx(&ctx);
+	shell->exit_status = (exec_pipeline(cmds, &ctx, shell));
+	return (shell->exit_status);
+}
+
+/*int	executor(t_cmd *cmds, t_shell *shell)
 {
 	int			count;
 	int			status;
@@ -107,4 +164,4 @@ int	executor(t_cmd *cmds, t_shell *shell)
 	init_pipe_ctx(&ctx);
 	shell->exit_status = (exec_pipeline(cmds, &ctx, shell));
 	return (shell->exit_status);
-}
+}*/

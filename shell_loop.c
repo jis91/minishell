@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/03 15:18:40 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/07 15:47:58 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,14 @@ int	init_shell(t_shell *shell, char **envp)
 
 	env_length = count_env_length(envp);
 	i = 0;
-	shell_env = ft_calloc(sizeof(char *), (env_length + 1));
-	if (!shell_env)
-		return (1);
+	shell_env = init_char_tab(env_length);
 	while (envp[i])
 	{
 		shell_env[i] = ft_strdup(envp[i]);
 		if (!shell_env[i])
 		{
 			free_char_tab(shell_env);
-			return (1);
+			fatal_error(NULL, NULL, "malloc failed", 1);
 		}
 		i++;
 	}
@@ -66,6 +64,11 @@ static void	process_line(char *line, t_shell *shell)
 	if (!collect_heredoc(cmd))
 	{
 		expander(cmd, shell);
+		if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
+		{
+			cleanup_cycle(tokens, cmd);
+			return ;
+		}
 		shell->exit_status = executor(cmd, shell);
 	}
 	cleanup_cycle(tokens, cmd);
@@ -74,11 +77,25 @@ static void	process_line(char *line, t_shell *shell)
 void	shell_loop(t_shell *shell)
 {
 	char	*line;
+	char	*tmp;
+	int		is_interactive;
 
+	is_interactive = isatty(STDIN_FILENO);
 	while (1)
 	{
 		setup_prompt_signals();
-		line = readline("minishell> ");
+		line = NULL;
+		if (is_interactive) 
+			line = readline("minishell> ");
+		else
+		{
+			tmp = get_next_line(STDIN_FILENO);
+			if (tmp)
+			{
+				line = ft_strtrim(tmp, "\n");
+				free(tmp);
+			}
+		}
 		if (g_signal == SIGINT)
 		{
 			shell->exit_status = 130;
@@ -86,7 +103,6 @@ void	shell_loop(t_shell *shell)
 		}
 		if (!line)
 		{
-			write(1, "exit\n", 5);
 			free_char_tab(shell->env);
 			exit(shell->exit_status);
 		}

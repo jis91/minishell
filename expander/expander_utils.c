@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/18 08:27:51 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/02 20:57:08 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/07 14:54:11 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ char	*no_expand(char *arg, int *index)
 	i = *index;
 	while (arg[*index])
 	{
-		if (arg[*index] == '$' || arg[*index] == QUOTE_MARKER)
+		if (arg[*index] == '$' || arg[*index] == QUOTE_MARKER
+			|| arg[*index] == DQUOTE_MARKER || arg[*index] == BOUNDARY)
 			break ;
 		(*index)++;
 	}

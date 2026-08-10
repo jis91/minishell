@@ -68,6 +68,8 @@ typedef struct s_lexer
 }			t_lexer;
 
 # define QUOTE_MARKER 1
+# define DQUOTE_MARKER 2
+# define BOUNDARY 3
 
 //PARSER STRUCT
 typedef struct s_redir
@@ -194,7 +196,6 @@ void		free_cmds(t_cmd *cmd);
 void		free_redirs(t_redir *redirections);
 void		cleanup_cycle(t_token *tokens, t_cmd *cmd);
 void		cleanup_shell(t_shell *shell);
-int			syntax_error(void);
 int			error(char *context, char *msg, int code);
 void		fatal_error(t_shell *shell, char *context, char *msg, int code);
 int			get_exit_status(int status);
