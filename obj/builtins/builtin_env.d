@@ -1,0 +1,12 @@
+obj/builtins/builtin_env.o: builtins/builtin_env.c \
+ builtins/../minishell.h builtins/../libft/libft.h \
+ builtins/../libft/ft_printf/ft_printf.h \
+ builtins/../libft/ft_printf/../libft.h \
+ builtins/../libft/get_next_line/get_next_line_bonus.h \
+ builtins/../libft/get_next_line/../libft.h
+builtins/../minishell.h:
+builtins/../libft/libft.h:
+builtins/../libft/ft_printf/ft_printf.h:
+builtins/../libft/ft_printf/../libft.h:
+builtins/../libft/get_next_line/get_next_line_bonus.h:
+builtins/../libft/get_next_line/../libft.h:
