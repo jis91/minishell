@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 14:55:10 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/10 15:41:34 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/13 12:48:11 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	builtin_cd(t_cmd *cmd, t_shell *shell)
 	{
 		if (target != cmd->args[1])
 			free(target);
-		return (2);
+		return (1);
 	}
 	if (target != cmd->args[1])
 		free (target);

@@ -139,6 +139,7 @@ int			parse_redir(t_token **tokens, t_cmd *current);
 int			expander(t_cmd *cmd, t_shell *shell);
 char		*expand(char *arg, int *index, t_shell *shell);
 char		*no_expand(char *arg, int *index);
+void		remove_empty_args(t_cmd *cmd);
 
 // SIGNALS AND HEREDOC
 void		setup_prompt_signals(void);

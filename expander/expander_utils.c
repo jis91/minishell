@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/18 08:27:51 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/07 14:54:11 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/13 12:54:39 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,21 @@ char	*no_expand(char *arg, int *index)
 		return (NULL);
 	ft_strlcpy(result, &arg[i], (*index) - i + 1);
 	return (result);
+}
+
+void	remove_empty_args(t_cmd *cmd)
+{
+	int	j;
+
+	while (cmd->args[0] && cmd->args[0][0] == '\0')
+	{
+		free(cmd->args[0]);
+		j = 0;
+		while (cmd->args[j])
+		{
+			cmd->args[j] = cmd->args[j + 1];
+			j++;
+		}
+		cmd->args[j] = NULL;
+	}
 }

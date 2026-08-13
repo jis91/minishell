@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/10 15:41:09 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/13 13:14:10 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	process_line(char *line, t_shell *shell)
 {
 	t_token	*tokens;
 	t_cmd	*cmd;
+	t_cmd	*current;
 
 	if (!only_whitespace_empty(line))
 		tokens = lexer(line);
@@ -63,7 +64,13 @@ static void	process_line(char *line, t_shell *shell)
 	}
 	if (!collect_heredoc(cmd))
 	{
-		expander(cmd, shell);
+		current = cmd;
+		while(current)
+		{
+			expander(current, shell);
+			current = current->next;
+		}
+		remove_empty_args(cmd);
 		if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
 		{
 			cleanup_cycle(tokens, cmd);
@@ -85,7 +92,7 @@ void	shell_loop(t_shell *shell)
 	{
 		setup_prompt_signals();
 		line = NULL;
-		if (is_interactive) 
+		if (is_interactive)
 			line = readline("minishell> ");
 		else
 		{
@@ -103,6 +110,7 @@ void	shell_loop(t_shell *shell)
 		}
 		if (!line)
 		{
+			write(1, "exit\n" 5);
 			free_char_tab(shell->env);
 			exit(shell->exit_status);
 		}

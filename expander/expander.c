@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 14:19:00 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/10 15:04:03 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/13 12:33:52 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*build_result(char *result, char *buffer)
 static char	*build_buffer(char *arg, int *index, t_shell *shell)
 {
 	char	*buffer;
-	
+
 	if (arg[*index] == QUOTE_MARKER && arg[(*index) + 1] == '$')
 	{
 		buffer = ft_strdup("$");
@@ -49,7 +49,7 @@ static char	*build_buffer(char *arg, int *index, t_shell *shell)
 	}
 	else
 		buffer = no_expand(arg, index);
-	return (buffer);	
+	return (buffer);
 }
 static char	*assembler(char *arg, t_shell *shell)
 {
@@ -92,6 +92,7 @@ int	expander(t_cmd *cmd, t_shell *shell)
 {
 	int		i;
 	char	*tmp;
+	t_redir	*redir;
 
 	i = 0;
 	while (cmd->args[i])
@@ -105,6 +106,19 @@ int	expander(t_cmd *cmd, t_shell *shell)
 			cmd->args[i] = tmp;
 		}
 		i++;
+	}
+	redir = cmd->redirections;
+	while (redir)
+	{
+		if (redir->file && has_dollar_boundary(redir->file))
+		{
+			tmp = assembler(redir->file, shell);
+			if (!tmp)
+				return (1);
+			free(redir->file);
+			redir->file = tmp;
+		}
+		redir = redir->next;
 	}
 	return (0);
 }
