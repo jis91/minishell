@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/10 15:42:06 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/17 19:10:26 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	exec_external(t_cmd *cmd, t_shell *shell)
 	{
 		if (errno == EACCES || errno == EISDIR)
 			exit(126);
+		if (errno == EINVAL)
+			exit(2);
 		exit(127);
 	}
 	execve(path, cmd->args, shell->env);

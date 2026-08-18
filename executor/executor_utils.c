@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:22:32 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/13 14:03:41 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/17 21:03:19 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,16 +111,22 @@ char	*find_path(t_cmd *cmd, t_shell *shell)
 		errno = saved_errno;
 		return (NULL);
 	}
-	if (ft_strncmp(cmd->args[0], ".", 2) == 0)
+	if (cmd->args[0][0] == '.' && cmd->args[0][1] == '\0')
 	{
 		error(".", "filename argument required", 2);
 		errno = EINVAL;
 		return (NULL);
 	}
-	if (ft_strncmp(cmd->args[0], "..", 3) == 0)
+	if (cmd->args[0][0] == '.' && cmd->args[0][1] == '.' && cmd->args[0][2] == '\0')
 	{
 		error("..", "command not found", 127);
 		errno = ENOENT;
+		return (NULL);
+	}
+	if(cmd->args[0][0] == '~' && cmd->args[0][1] == '\0')
+	{
+		error(cmd->args[0], "Is a directory", 126);
+		errno = EISDIR;
 		return (NULL);
 	}
 	path = find_in_path(cmd, shell);

@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/13 13:21:30 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/18 20:23:44 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ void	shell_loop(t_shell *shell)
 		if (!line)
 		{
 			write(1, "exit\n", 5);
+			//if (is_interactive)
+				//write(1, "\n", 1);
 			free_char_tab(shell->env);
 			exit(shell->exit_status);
 		}
