@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 21:40:49 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/05 19:42:48 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/17 21:11:51 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 
 	ctx->count = count_cmds(cmds);
 	ctx->pipes = create_pipes(ctx->count, shell);
+	if (!ctx->pipes)
+		return (1);
 	ctx->pids = malloc(sizeof(pid_t) * ctx->count);
 	if (!ctx->pids)
 	{

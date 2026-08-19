@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:22:32 by aganz             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/08/18 20:38:59 by jefferson        ###   ########.fr       */
+=======
+/*   Updated: 2026/08/17 21:03:19 by aganz            ###   ########.fr       */
+>>>>>>> origin/Arthur
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,45 +115,27 @@ char	*find_path(t_cmd *cmd, t_shell *shell)
 		errno = saved_errno;
 		return (NULL);
 	}
+	if (cmd->args[0][0] == '.' && cmd->args[0][1] == '\0')
+	{
+		error(".", "filename argument required", 2);
+		errno = EINVAL;
+		return (NULL);
+	}
+	if (cmd->args[0][0] == '.' && cmd->args[0][1]
+			== '.' && cmd->args[0][2] == '\0')
+	{
+		error("..", "command not found", 127);
+		errno = ENOENT;
+		return (NULL);
+	}
+	if (cmd->args[0][0] == '~' && cmd->args[0][1] == '\0')
+	{
+		error(cmd->args[0], "Is a directory", 126);
+		errno = EISDIR;
+		return (NULL);
+	}
 	path = find_in_path(cmd, shell);
 	if (!path)
 		error(cmd->args[0], "command not found", 127);
 	return (path);
 }
-
-/*char	*find_path(t_cmd *cmd, t_shell *shell)
-{
-	int		i;
-	char	**directories;
-	char	*path;
-
-	if (cmd->args[0][0] == '/'
-			|| (cmd->args[0][0] == '.' && cmd->args[0][1] == '/'))
-	{
-		if (access(cmd->args[0], X_OK) == 0)
-			return (ft_strdup(cmd->args[0]));
-		error(cmd->args[0], "command not found", 127);
-		return (NULL);
-	}
-	i = 0;
-	directories = NULL;
-	while (shell->env[i])
-	{
-		if (ft_strncmp(shell->env[i], "PATH=", 5) == 0)
-		{
-			directories = ft_split(shell->env[i] + 5, ':');
-			break ;
-		}
-		i++;
-	}
-	if (!directories)
-	{
-		error(cmd->args[0], "command not found", 127);
-		return (NULL);
-	}
-	path = verify_path(directories, cmd);
-	free_char_tab(directories);
-	if (!path)
-		error(cmd->args[0], "command not found", 127);
-	return (path);
-}*/

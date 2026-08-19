@@ -17,7 +17,8 @@ static int	is_digit_flag(char *arg)
 	int		i;
 
 	i = 0;
-	if ((arg[0] == '-' || arg[0] == '+') && (!ft_isdigit(arg[1]) || arg[1] == '\0'))
+	if ((arg[0] == '-' || arg[0] == '+')
+		&& (!ft_isdigit(arg[1]) || arg[1] == '\0'))
 		return (0);
 	if (arg[0] == '-' || arg[0] == '+')
 		i++;
@@ -39,12 +40,12 @@ int	builtin_exit(t_cmd *cmd, t_shell *shell)
 	else if (cmd->args[2] != NULL)
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
-		return (2);
+		return (1);
 	}
 	else if (!is_digit_flag(cmd->args[1]))
 	{
 		ft_putendl_fd("exit: numeric argument required", 2);
-		return(2);
+		return (2);
 	}
 	else
 		exit(ft_atoi(cmd->args[1]));

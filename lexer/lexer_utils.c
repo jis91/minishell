@@ -23,12 +23,28 @@ void	handle_quotes(t_lexer *lexer)
 	else
 	{
 		if (lexer->input[lexer->i] == '$' && lexer->state == IN_SINGLE_QUOTE)
+<<<<<<< HEAD
 			buffer_push(lexer->buffer, &lexer->buffer_index, QUOTE_MARKER);
 		else if (lexer->input[lexer->i] == '$'
 			&& lexer->state == IN_DOUBLE_QUOTE)
 			buffer_push(lexer->buffer, &lexer->buffer_index, DQUOTE_MARKER);
 		buffer_push(lexer->buffer, &lexer->buffer_index,
 			lexer->input[lexer->i]);
+=======
+		{
+			lexer->buffer[lexer->buffer_index] = QUOTE_MARKER;
+			lexer->buffer_index++;
+		}
+		else if (lexer->input[lexer->i] == '$'
+			&& lexer->state == IN_DOUBLE_QUOTE)
+		{
+			lexer->buffer[lexer->buffer_index] = DQUOTE_MARKER;
+			lexer->buffer_index++;
+		}
+		lexer->buffer[lexer->buffer_index] = lexer->input[lexer->i];
+		lexer->i++;
+		lexer->buffer_index++;
+>>>>>>> origin/Arthur
 	}
 	lexer->i++;
 }

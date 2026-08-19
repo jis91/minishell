@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/05 19:40:01 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/05 20:37:17 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/13 13:48:51 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@ int	error(char *context, char *msg, int code)
 	ft_putendl_fd(msg, STDERR_FILENO);
 	return (code);
 }
-
-/*void	fatal_error(char *context, char *msg, int code)
-{
-	error(context, msg, code);
-	exit(code);
-}*/
 
 void	fatal_error(t_shell *shell, char *context, char *msg, int code)
 {
