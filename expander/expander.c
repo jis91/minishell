@@ -51,6 +51,7 @@ static char	*build_buffer(char *arg, int *index, t_shell *shell)
 		buffer = no_expand(arg, index);
 	return (buffer);
 }
+
 static char	*assembler(char *arg, t_shell *shell)
 {
 	char	*buffer;

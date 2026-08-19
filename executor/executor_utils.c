@@ -117,13 +117,14 @@ char	*find_path(t_cmd *cmd, t_shell *shell)
 		errno = EINVAL;
 		return (NULL);
 	}
-	if (cmd->args[0][0] == '.' && cmd->args[0][1] == '.' && cmd->args[0][2] == '\0')
+	if (cmd->args[0][0] == '.' && cmd->args[0][1]
+			== '.' && cmd->args[0][2] == '\0')
 	{
 		error("..", "command not found", 127);
 		errno = ENOENT;
 		return (NULL);
 	}
-	if(cmd->args[0][0] == '~' && cmd->args[0][1] == '\0')
+	if (cmd->args[0][0] == '~' && cmd->args[0][1] == '\0')
 	{
 		error(cmd->args[0], "Is a directory", 126);
 		errno = EISDIR;

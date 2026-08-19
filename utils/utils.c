@@ -71,7 +71,7 @@ char	**init_char_tab(int length)
 	return (result);
 }
 
-int only_whitespace_empty(char *str)
+int	only_whitespace_empty(char *str)
 {
 	int	i;
 

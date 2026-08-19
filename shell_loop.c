@@ -65,7 +65,7 @@ static void	process_line(char *line, t_shell *shell)
 	if (!collect_heredoc(cmd))
 	{
 		current = cmd;
-		while(current)
+		while (current)
 		{
 			expander(current, shell);
 			current = current->next;
@@ -110,9 +110,9 @@ void	shell_loop(t_shell *shell)
 		}
 		if (!line)
 		{
-			write(1, "exit\n", 5);
-			//if (is_interactive)
-				//write(1, "\n", 1);
+			//write(1, "exit\n", 5);
+			if (is_interactive)
+				write(1, "\n", 1);
 			free_char_tab(shell->env);
 			exit(shell->exit_status);
 		}

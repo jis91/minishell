@@ -29,7 +29,8 @@ void	handle_quotes(t_lexer *lexer)
 			lexer->buffer[lexer->buffer_index] = QUOTE_MARKER;
 			lexer->buffer_index++;
 		}
-		else if (lexer->input[lexer->i] == '$' && lexer->state == IN_DOUBLE_QUOTE)
+		else if (lexer->input[lexer->i] == '$'
+			&& lexer->state == IN_DOUBLE_QUOTE)
 		{
 			lexer->buffer[lexer->buffer_index] = DQUOTE_MARKER;
 			lexer->buffer_index++;

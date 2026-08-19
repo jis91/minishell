@@ -24,7 +24,6 @@ int	error(char *context, char *msg, int code)
 	return (code);
 }
 
-
 void	fatal_error(t_shell *shell, char *context, char *msg, int code)
 {
 	error(context, msg, code);

@@ -60,7 +60,7 @@ int	exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 	ctx->count = count_cmds(cmds);
 	ctx->pipes = create_pipes(ctx->count, shell);
 	if (!ctx->pipes)
-		return(1);
+		return (1);
 	ctx->pids = malloc(sizeof(pid_t) * ctx->count);
 	if (!ctx->pids)
 	{
