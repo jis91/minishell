@@ -6,11 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 14:19:00 by jefferson         #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2026/08/19 14:23:05 by jefferson        ###   ########.fr       */
-=======
 /*   Updated: 2026/08/13 12:33:52 by aganz            ###   ########.fr       */
->>>>>>> origin/Arthur
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +41,7 @@ static char	*build_buffer(char *arg, int *index, t_shell *shell)
 	return (buffer);
 }
 
-<<<<<<< HEAD
 char	*assembler(char *arg, t_shell *shell)
-=======
-static char	*assembler(char *arg, t_shell *shell)
->>>>>>> origin/Arthur
 {
 	char	*buffer;
 	char	*tmp;
@@ -103,15 +95,10 @@ static void	merge_args(char **new_args, char ***tmp)
 void	expand_one_cmd(t_cmd *cmd, t_shell *shell)
 {
 	int		i;
-<<<<<<< HEAD
 	int		total;
 	char	***tmp;
 	char	**new_args;
 	char	*assembled;
-=======
-	char	*tmp;
-	t_redir	*redir;
->>>>>>> origin/Arthur
 
 	i = 0;
 	total = 0;
@@ -140,7 +127,6 @@ void	expand_one_cmd(t_cmd *cmd, t_shell *shell)
 		total += count_env_length(tmp[i]);
 		i++;
 	}
-<<<<<<< HEAD
 	new_args = init_char_tab(total);
 	merge_args(new_args, tmp);
 	free_char_tab(cmd->args);
@@ -157,20 +143,4 @@ void	expander(t_cmd *cmd, t_shell *shell)
 		expand_one_cmd(current, shell);
 		current = current->next;
 	}
-=======
-	redir = cmd->redirections;
-	while (redir)
-	{
-		if (redir->file && has_dollar_boundary(redir->file))
-		{
-			tmp = assembler(redir->file, shell);
-			if (!tmp)
-				return (1);
-			free(redir->file);
-			redir->file = tmp;
-		}
-		redir = redir->next;
-	}
-	return (0);
->>>>>>> origin/Arthur
 }

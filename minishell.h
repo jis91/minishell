@@ -144,11 +144,7 @@ void		expand_one_cmd(t_cmd *cmd, t_shell *shell);
 char		*assembler(char *arg, t_shell *shell);
 char		*expand(char *arg, int *index, t_shell *shell);
 char		*no_expand(char *arg, int *index);
-<<<<<<< HEAD
-void		replace_whitespace(char *value, int *i, char *result, int *j);
-=======
 void		remove_empty_args(t_cmd *cmd);
->>>>>>> origin/Arthur
 
 // SIGNALS AND HEREDOC
 void		setup_prompt_signals(void);
@@ -214,18 +210,15 @@ void		fatal_error(t_shell *shell, char *context, char *msg, int code);
 int			get_exit_status(int status);
 char		**init_char_tab(int length);
 void		sort_char_tab(char **tab);
-<<<<<<< HEAD
-int 		only_whitespace_empty(char *str);
-int			is_whitespace(char c);
-void		buffer_push(char *string, int *index, char c);
-int			quote_state(char c);
-char		*strip_quote_markers(char *arg);
-char		*mark_splits(char *value);
-int			contains_marker(char *str);
-int			is_special_char(char c);
-int			has_dollar_boundary(char *string);
-=======
 int			only_whitespace_empty(char *str);
->>>>>>> origin/Arthur
+int			is_whitespace(char c);
+void	replace_whitespace(char *value, int *i, char *result, int *j);
+char	*mark_splits(char *value);
+int	is_special_char(char c);
+int	has_dollar_boundary(char *string);
+void	buffer_push(char *string, int *index, char c);
+int	quote_state(char c);
+char	*strip_quote_markers(char *arg);
+int	contains_marker(char *str);
 
 #endif
