@@ -173,12 +173,12 @@ void		close_child_pipes(t_pipe_ctx *ctx, int i);
 int			exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell);
 int			exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell);
 // APPLY REDIRECTIONS
-int			apply_redir_in(t_redir *redir, t_shell *shell);
-int			apply_redir_out(t_redir *redir, t_shell *shell);
-int			apply_redir_append(t_redir *redir, t_shell *shell);
-int			apply_redir_heredoc(t_redir *redir, t_shell *shell);
-int			apply_single_redir(t_redir *redir, t_shell *shell);
-int			apply_redirections(t_cmd *cmd, t_shell *shell);
+int			apply_redir_in(t_redir *redir);
+int			apply_redir_out(t_redir *redir);
+int			apply_redir_append(t_redir *redir);
+int			apply_redir_heredoc(t_redir *redir);
+int			apply_single_redir(t_redir *redir);
+int			apply_redirections(t_cmd *cmd);
 //BUILTINS
 t_builtin	check_builtin(t_cmd *cmd);
 int			builtin_cd(t_cmd *cmd, t_shell *shell);

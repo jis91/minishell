@@ -44,3 +44,56 @@ HOW DOES MINISHELL WORK ?
 
 LEXER TAKES INPUT AND GIVES A FLAT TOKEN LIST.
 PARSER TAKES THE TOKEN LIST AND GIVES A LINKED LIST OF T_CMD STRUCTS. EACH NODE IS A CMD THAT TAKES ARGS AND REDIRECTIONS.
+
+
+right after fork(), in the child, before execve(), you need to reset SIGINT/SIGQUIT back to SIG_DFL.
+
+Approach Chosenn : read loop in the parent (no fork just one pipe)
+
+SIG_ATOMIC_T :
+
+It's about what happens if a handler fires while the main code is mid-write to that variable. 
+Concretely: without an atomicity guarantee, on some architectures, writing a multi-byte value 
+could theoretically be interrupted after only some of the bytes have changed — so a handler 
+reading it right then would see a half-old, half-new garbage value. sig_atomic_t guarantees that 
+can't happen for that one variable.
+
+VOLATILE :
+
+without volatile (int instead for example) the variable wouldn't be read again at each iteration 
+of the loop but only after the loop. but we want a fresh read memory.
+If not volatile this loop would be infinite. handler() changes the value of signal_g.
+
+volatile sig_atomic_t signal_g = 0;
+
+while (signal_g == 0)
+	handler();
+
+Ctrl-C : Generates SIGINT
+Ctrl-\ : Generates SIGQUIT
+Ctrl-D : Signals end-of-file on the input stream — no signal at all
+
+ both signals reset to default in the child (symmetric), and at the prompt, 
+ SIGQUIT is ignored while SIGINT gets a real handler (asymmetric)
+
+SIGQUIT :
+Ctrl - /
+signal(SIGQUIT, SIG_DFL)
+
+Once a foreground child is running — you've launched cat, sleep 100, whatever — SIGQUIT needs 
+to go back to its real, default, terminate-and-dump behavior for that child, which is exactly 
+why the child resets it with signal(SIGQUIT, SIG_DFL) right after fork(), before execve(). 
+Try Ctrl-\ on cat sometime: it dies immediately and prints Quit (core dumped) — that message 
+comes from your shell detecting the child died via that specific signal and reporting it, not 
+from the child itself printing anything (a killed process doesn't get to print a farewell message).
+
+SIGINT :
+Ctrl - C
+sigaction(SIGINT, &sa, NULL);
+
+
+After waitpid(), before setting shell->exit_status: check WIFSIGNALED(status). If true, exit_status
+should be 128 + WTERMSIG(status) instead of WEXITSTATUS(status). Also, if the signal is SIGQUIT, 
+print Quit (core dumped) to stderr — matches bash's behavior for Ctrl-\ during a foreground command.
+SIGINT should print nothing extra.
+

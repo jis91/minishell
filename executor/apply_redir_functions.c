@@ -12,11 +12,10 @@
 
 #include "../minishell.h"
 
-int	apply_redir_in(t_redir *redir, t_shell *shell)
+int	apply_redir_in(t_redir *redir)
 {
 	int	fd;
 
-	(void)shell;
 	fd = open(redir->file, O_RDONLY);
 	if (fd == -1)
 	{
@@ -32,11 +31,10 @@ int	apply_redir_in(t_redir *redir, t_shell *shell)
 	return (0);
 }
 
-int	apply_redir_out(t_redir *redir, t_shell *shell)
+int	apply_redir_out(t_redir *redir)
 {
 	int	fd;
 
-	(void)shell;
 	fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
@@ -52,11 +50,10 @@ int	apply_redir_out(t_redir *redir, t_shell *shell)
 	return (0);
 }
 
-int	apply_redir_append(t_redir *redir, t_shell *shell)
+int	apply_redir_append(t_redir *redir)
 {
 	int	fd;
 
-	(void)shell;
 	fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
@@ -72,9 +69,8 @@ int	apply_redir_append(t_redir *redir, t_shell *shell)
 	return (0);
 }
 
-int	apply_redir_heredoc(t_redir *redir, t_shell *shell)
+int	apply_redir_heredoc(t_redir *redir)
 {
-	(void)shell;
 	if (dup2(redir->heredoc_fd, 0) == -1)
 	{
 		close(redir->heredoc_fd);

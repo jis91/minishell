@@ -95,7 +95,7 @@ int	exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell)
 		close(ctx->pipes[i][1]);
 	}
 	close_child_pipes(ctx, i);
-	if (apply_redirections(cmds, shell) == -1)
+	if (apply_redirections(cmds) == -1)
 		exit (1);
 	builtin = check_builtin(cmds);
 	if (builtin != NOT_BUILTIN)
