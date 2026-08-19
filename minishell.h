@@ -151,6 +151,9 @@ void		setup_prompt_signals(void);
 void		setup_heredoc_signals(void);
 void		setup_exec_signals(void);
 void		reset_child_signals(void);
+int			check_heredoc_signal(char *line, int fd_write, int fd_read);
+int			prepare_delimiter(t_redir *redir);
+void		write_heredoc_line(char *line, t_redir *redir, t_shell *shell, int fd_write);
 int			collect_heredoc(t_cmd *cmd_list, t_shell *shell);
 //EXECUTOR
 void		exec_external(t_cmd *cmd, t_shell *shell);

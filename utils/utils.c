@@ -71,7 +71,7 @@ char	**init_char_tab(int length)
 	return (result);
 }
 
-int only_whitespace_empty(char *str)
+int	only_whitespace_empty(char *str)
 {
 	int	i;
 
@@ -85,12 +85,4 @@ int only_whitespace_empty(char *str)
 		i++;
 	}
 	return (1);
-}
-
-int is_whitespace(char c)
-{
-	if (c == ' ' || c == '\t')
-		return (1);
-	else 
-		return (0);
 }

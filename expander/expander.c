@@ -91,7 +91,7 @@ static void	merge_args(char **new_args, char ***tmp)
 	free(tmp);
 }
 
-static void fill_tmp(t_cmd *cmd, t_shell *shell, char ***tmp, int i);
+// static void fill_tmp(t_cmd *cmd, t_shell *shell, char ***tmp, int i);
 void	expand_one_cmd(t_cmd *cmd, t_shell *shell)
 {
 	int		i;

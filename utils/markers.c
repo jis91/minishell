@@ -12,11 +12,11 @@
 
 #include "../minishell.h"
 
-int is_whitespace(char c)
+int	is_whitespace(char c)
 {
 	if (c == ' ' || c == '\t')
 		return (1);
-	else 
+	else
 		return (0);
 }
 
@@ -54,7 +54,7 @@ char	*mark_splits(char *value)
 	return (result);
 }
 
-int		is_special_char(char c)
+int	is_special_char(char c)
 {
 	if (c == QUOTE_MARKER)
 		return (c);
@@ -109,7 +109,7 @@ void	buffer_push(char *string, int *index, char c)
 	(*index)++;
 }
 
-int		quote_state(char c)
+int	quote_state(char c)
 {
 	if (c == '\'')
 		return (IN_SINGLE_QUOTE);
