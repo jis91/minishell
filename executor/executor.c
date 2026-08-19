@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/10 15:42:06 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/18 13:38:30 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	exec_external(t_cmd *cmd, t_shell *shell)
 	reset_child_signals();
 	if (apply_redirections(cmd, shell) == -1)
 		exit(1);
+	if (!cmd->args[0])
+		exit(0);
 	path = find_path(cmd, shell);
 	if (!path)
 	{

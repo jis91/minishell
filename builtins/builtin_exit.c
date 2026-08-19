@@ -21,6 +21,8 @@ static int	is_digit_flag(char *arg)
 		return (0);
 	if (arg[0] == '-' || arg[0] == '+')
 		i++;
+	if (arg[0] == '\0')
+		return (0);
 	while (arg[i])
 	{
 		if (!ft_isdigit(arg[i]))

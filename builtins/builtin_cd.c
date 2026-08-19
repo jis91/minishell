@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 14:55:10 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/10 15:41:34 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/18 11:12:27 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	builtin_cd(t_cmd *cmd, t_shell *shell)
 	if (cmd->args[1] != NULL && cmd->args[2] != NULL)
 	{
 		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
-		return (1);
+		return (2);
 	}
 	target = cmd->args[1];
 	if (!target)
@@ -59,7 +59,7 @@ int	builtin_cd(t_cmd *cmd, t_shell *shell)
 	{
 		if (target != cmd->args[1])
 			free(target);
-		return (2);
+		return (1);
 	}
 	if (target != cmd->args[1])
 		free (target);

@@ -49,6 +49,12 @@ typedef enum e_state
 	IN_DOUBLE_QUOTE,
 }			t_state;
 
+# define QUOTE_MARKER 1
+# define DQUOTE_MARKER 2
+# define BOUNDARY_MARKER 3
+# define SPLIT_MARKER 4
+# define DOLLAR_SIGN 5
+
 typedef struct s_token
 {
 	t_token_type	type;
@@ -67,16 +73,13 @@ typedef struct s_lexer
 	t_token	*tail;
 }			t_lexer;
 
-# define QUOTE_MARKER 1
-# define DQUOTE_MARKER 2
-# define BOUNDARY 3
-
 //PARSER STRUCT
 typedef struct s_redir
 {
 	t_token_type	type;
 	char			*file;
 	int				heredoc_fd;
+	int				should_expand;
 	struct s_redir	*next;
 }			t_redir;
 
@@ -136,16 +139,19 @@ int			parse_token(t_token **tokens,
 				t_cmd **current, int *i, int total_token);
 int			parse_redir(t_token **tokens, t_cmd *current);
 //EXPANDER
-int			expander(t_cmd *cmd, t_shell *shell);
+void		expander(t_cmd *cmd, t_shell *shell);
+void		expand_one_cmd(t_cmd *cmd, t_shell *shell);
+char		*assembler(char *arg, t_shell *shell);
 char		*expand(char *arg, int *index, t_shell *shell);
 char		*no_expand(char *arg, int *index);
+void		replace_whitespace(char *value, int *i, char *result, int *j);
 
 // SIGNALS AND HEREDOC
 void		setup_prompt_signals(void);
 void		setup_heredoc_signals(void);
 void		setup_exec_signals(void);
 void		reset_child_signals(void);
-int			collect_heredoc(t_cmd *cmd_list);
+int			collect_heredoc(t_cmd *cmd_list, t_shell *shell);
 //EXECUTOR
 void		exec_external(t_cmd *cmd, t_shell *shell);
 int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
@@ -202,5 +208,13 @@ int			get_exit_status(int status);
 char		**init_char_tab(int length);
 void		sort_char_tab(char **tab);
 int 		only_whitespace_empty(char *str);
+int			is_whitespace(char c);
+void		buffer_push(char *string, int *index, char c);
+int			quote_state(char c);
+char		*strip_quote_markers(char *arg);
+char		*mark_splits(char *value);
+int			contains_marker(char *str);
+int			is_special_char(char c);
+int			has_dollar_boundary(char *string);
 
 #endif

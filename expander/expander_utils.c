@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/18 08:27:51 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/07 14:54:11 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/19 14:13:46 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*expand_var(char *arg, int *index, char **env)
 	name_length = *index - i;
 	name = malloc(sizeof(char) * (name_length + 1));
 	if (!name)
-		return (NULL);
+		fatal_error(NULL, NULL, "malloc failed", 1);
 	ft_strlcpy(name, &arg[i], name_length + 1);
 	result = get_env_value(env, name);
 	if (!result)
@@ -75,13 +75,13 @@ char	*no_expand(char *arg, int *index)
 	while (arg[*index])
 	{
 		if (arg[*index] == '$' || arg[*index] == QUOTE_MARKER
-			|| arg[*index] == DQUOTE_MARKER || arg[*index] == BOUNDARY)
+			|| arg[*index] == DQUOTE_MARKER || arg[*index] == BOUNDARY_MARKER)
 			break ;
 		(*index)++;
 	}
 	result = malloc(sizeof(char) * ((*index) - i + 1));
 	if (!result)
-		return (NULL);
+		fatal_error(NULL, NULL, "malloc failed", 1);
 	ft_strlcpy(result, &arg[i], (*index) - i + 1);
 	return (result);
 }

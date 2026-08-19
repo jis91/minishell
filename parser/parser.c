@@ -33,7 +33,7 @@ t_cmd	*parser(t_token *tokens)
 			return (cleanup_parser(head, tokens));
 	}
 	current->args[i] = NULL;
-	if (validate_cmd(current) == 1)
+	if (validate_cmd(current) != 0)
 		return (cleanup_parser(head, tokens));
 	return (head);
 }
@@ -78,7 +78,7 @@ t_cmd	*init_cmd(int total_token)
 
 int	validate_cmd(t_cmd *current)
 {
-	if (current->args[0] == NULL)
+	if (current->args[0] == NULL && current->redirections == NULL)
 		return (error(NULL, "syntax error near unexpected token", 2));
 	return (0);
 }

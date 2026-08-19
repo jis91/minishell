@@ -6,27 +6,16 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 14:19:00 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/10 15:04:03 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/19 14:23:05 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*build_result(char *result, char *buffer)
-{
-	char	*tmp;
-
-	tmp = result;
-	result = ft_strjoin(tmp, buffer);
-	free(tmp);
-	free(buffer);
-	return (result);
-}
-
 static char	*build_buffer(char *arg, int *index, t_shell *shell)
 {
 	char	*buffer;
-	
+
 	if (arg[*index] == QUOTE_MARKER && arg[(*index) + 1] == '$')
 	{
 		buffer = ft_strdup("$");
@@ -40,71 +29,118 @@ static char	*build_buffer(char *arg, int *index, t_shell *shell)
 	else if (arg[*index] == '$')
 	{
 		(*index)++;
-		buffer = expand(arg, index, shell);
+		buffer = mark_splits(expand(arg, index, shell));
 	}
-	else if (arg[*index] == BOUNDARY)
+	else if (arg[*index] == BOUNDARY_MARKER)
 	{
 		(*index)++;
 		buffer = no_expand(arg, index);
 	}
 	else
 		buffer = no_expand(arg, index);
-	return (buffer);	
+	return (buffer);
 }
-static char	*assembler(char *arg, t_shell *shell)
+
+char	*assembler(char *arg, t_shell *shell)
 {
 	char	*buffer;
+	char	*tmp;
 	char	*result;
 	int		index;
 
 	index = 0;
 	result = ft_strdup("");
 	if (!result)
-		return (NULL);
+		fatal_error(shell, NULL, "malloc failed", 1);
 	while (arg[index])
 	{
 		buffer = build_buffer(arg, &index, shell);
 		if (!buffer)
 		{
 			free(result);
-			return (NULL);
+			fatal_error(shell, NULL, "malloc failed", 1);
 		}
-		result = build_result(result, buffer);
+		tmp = result;
+		result = ft_strjoin(tmp, buffer);
+		free(tmp);
+		free(buffer);
 	}
 	return (result);
 }
 
-static int	has_dollar_boundary(char *string)
+static void	merge_args(char **new_args, char ***tmp)
 {
-	int		i;
+	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
-	while (string[i])
+	k = 0;
+	while (tmp[i])
 	{
-		if (string[i] == '$' || string[i] == BOUNDARY)
-			return (1);
+		j = 0;
+		while (tmp[i][j])
+		{
+			new_args[k] = tmp[i][j];
+			k++;
+			j++;
+		}
+		free(tmp[i]);
 		i++;
 	}
-	return (0);
+	free(tmp);
 }
 
-int	expander(t_cmd *cmd, t_shell *shell)
+static void fill_tmp(t_cmd *cmd, t_shell *shell, char ***tmp, int i);
+void	expand_one_cmd(t_cmd *cmd, t_shell *shell)
 {
 	int		i;
-	char	*tmp;
+	int		total;
+	char	***tmp;
+	char	**new_args;
+	char	*assembled;
 
 	i = 0;
+	total = 0;
+	tmp = ft_calloc(sizeof(char **), (count_env_length(cmd->args) + 1));
 	while (cmd->args[i])
 	{
 		if (has_dollar_boundary(cmd->args[i]))
 		{
-			tmp = assembler(cmd->args[i], shell);
-			if (!tmp)
-				return (1);
-			free(cmd->args[i]);
-			cmd->args[i] = tmp;
+			assembled = assembler(cmd->args[i], shell);
+			tmp[i] = ft_split(assembled, SPLIT_MARKER);
+			if (!tmp[i])
+				fatal_error(shell, NULL, "malloc failed", 1);
+			if (!tmp[i][0])
+			{
+				free_char_tab(tmp[i]);
+				tmp[i] = init_char_tab(1);
+				tmp[i][0] = ft_strdup("");
+			}
+			free(assembled);
 		}
+		else
+		{
+			tmp[i] = init_char_tab(1);
+			tmp[i][0] = ft_strdup(cmd->args[i]);
+		}
+		total += count_env_length(tmp[i]);
 		i++;
 	}
-	return (0);
+	new_args = init_char_tab(total);
+	merge_args(new_args, tmp);
+	free_char_tab(cmd->args);
+	cmd->args = new_args;
+}
+
+void	expander(t_cmd *cmd, t_shell *shell)
+{
+	t_cmd	*current;
+
+	current = cmd;
+	while (current)
+	{
+		expand_one_cmd(current, shell);
+		current = current->next;
+	}
 }

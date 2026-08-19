@@ -18,26 +18,19 @@ void	handle_quotes(t_lexer *lexer)
 		|| (lexer->input[lexer->i] == '"' && lexer->state == IN_DOUBLE_QUOTE))
 	{
 		lexer->state = NORMAL;
-		lexer->buffer[lexer->buffer_index] = BOUNDARY;
-		lexer->buffer_index++;
-		lexer->i++;
+		buffer_push(lexer->buffer, &lexer->buffer_index, BOUNDARY_MARKER);
 	}
 	else
 	{
 		if (lexer->input[lexer->i] == '$' && lexer->state == IN_SINGLE_QUOTE)
-		{
-			lexer->buffer[lexer->buffer_index] = QUOTE_MARKER;
-			lexer->buffer_index++;
-		}
-		else if (lexer->input[lexer->i] == '$' && lexer->state == IN_DOUBLE_QUOTE)
-		{
-			lexer->buffer[lexer->buffer_index] = DQUOTE_MARKER;
-			lexer->buffer_index++;
-		}
-		lexer->buffer[lexer->buffer_index] = lexer->input[lexer->i];
-		lexer->i++;
-		lexer->buffer_index++;
+			buffer_push(lexer->buffer, &lexer->buffer_index, QUOTE_MARKER);
+		else if (lexer->input[lexer->i] == '$'
+			&& lexer->state == IN_DOUBLE_QUOTE)
+			buffer_push(lexer->buffer, &lexer->buffer_index, DQUOTE_MARKER);
+		buffer_push(lexer->buffer, &lexer->buffer_index,
+			lexer->input[lexer->i]);
 	}
+	lexer->i++;
 }
 
 void	handle_normal(t_lexer *lexer)
@@ -47,17 +40,11 @@ void	handle_normal(t_lexer *lexer)
 		if (lexer->buffer_index > 0)
 			flush_buffer(lexer, TOKEN_WORD);
 	}
-	else if (lexer->input[lexer->i] == '\'')
+	else if (lexer->input[lexer->i] == '\''
+		|| lexer->input[lexer->i] == '"')
 	{
-		lexer->state = IN_SINGLE_QUOTE;
-		lexer->buffer[lexer->buffer_index] = BOUNDARY;
-		lexer->buffer_index++;
-	}
-	else if (lexer->input[lexer->i] == '"')
-	{
-		lexer->state = IN_DOUBLE_QUOTE;
-		lexer->buffer[lexer->buffer_index] = BOUNDARY;
-		lexer->buffer_index++;
+		lexer->state = quote_state(lexer->input[lexer->i]);
+		buffer_push(lexer->buffer, &lexer->buffer_index, BOUNDARY_MARKER);
 	}
 	else if (lexer->input[lexer->i] == '|'
 		|| lexer->input[lexer->i] == '<'
@@ -69,10 +56,8 @@ void	handle_normal(t_lexer *lexer)
 		return ;
 	}
 	else
-	{
-		lexer->buffer[lexer->buffer_index] = lexer->input[lexer->i];
-		lexer->buffer_index++;
-	}
+		buffer_push(lexer->buffer, &lexer->buffer_index,
+			lexer->input[lexer->i]);
 	lexer->i++;
 }
 

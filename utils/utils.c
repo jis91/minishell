@@ -80,9 +80,17 @@ int only_whitespace_empty(char *str)
 		return (1);
 	while (str[i])
 	{
-		if (str[i] != ' ' && str[i] != '\t')
+		if (!is_whitespace(str[i]))
 			return (0);
 		i++;
 	}
 	return (1);
+}
+
+int is_whitespace(char c)
+{
+	if (c == ' ' || c == '\t')
+		return (1);
+	else 
+		return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 08:58:12 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/05 19:00:43 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/19 14:07:28 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,14 @@ static int	compare_line_to_redir(char *line, t_redir *redir)
 	return (0);
 }
 
-static int	check_heredoc_signal(char *line, int fd_write, int fd_read)
-{
-	if (g_signal == SIGINT)
-	{
-		free(line);
-		g_signal = 0;
-		close(fd_write);
-		close(fd_read);
-		return (1);
-	}
-	return (0);
-}
-
-static int	read_one_heredoc(t_redir *redir)
+static int	read_one_heredoc(t_redir *redir, t_shell *shell)
 {
 	char	*line;
 	int		fd_write;
 	int		fd_read;
 
+	if (prepare_delimiter(redir))
+		return (1);
 	if (open_fd(&fd_write, &fd_read))
 		return (1);
 	while (1)
@@ -75,7 +64,7 @@ static int	read_one_heredoc(t_redir *redir)
 			free(line);
 			break ;
 		}
-		write(fd_write, line, ft_strlen(line));
+		write_heredoc_line(line, redir, shell, fd_write);
 		free(line);
 	}
 	close(fd_write);
@@ -83,7 +72,7 @@ static int	read_one_heredoc(t_redir *redir)
 	return (0);
 }
 
-int	collect_heredoc(t_cmd *cmd_list)
+int	collect_heredoc(t_cmd *cmd_list, t_shell *shell)
 {
 	t_cmd	*cmd;
 	t_redir	*redir;
@@ -97,7 +86,7 @@ int	collect_heredoc(t_cmd *cmd_list)
 		{
 			if (redir->type == TOKEN_HEREDOC)
 			{
-				if (read_one_heredoc(redir) == 1)
+				if (read_one_heredoc(redir, shell) == 1)
 					return (1);
 			}
 			redir = redir->next;

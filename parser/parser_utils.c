@@ -49,12 +49,14 @@ t_redir	*new_redir_node(t_token **tokens)
 		return (NULL);
 	new_redir->next = NULL;
 	new_redir->type = (*tokens)->type;
+	new_redir->should_expand = !contains_marker((*tokens)->next->value);
 	new_redir->file = ft_strdup((*tokens)->next->value);
 	if (!new_redir->file)
 	{
 		free(new_redir);
 		return (NULL);
 	}
+	
 	new_redir->heredoc_fd = -1;
 	return (new_redir);
 }
