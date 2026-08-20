@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 16:19:15 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/05 19:41:08 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/20 20:26:44 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ int	builtin_export(t_cmd *cmd, t_shell *shell)
 	exit_code = 0;
 	while (cmd->args[i])
 	{
+		if (cmd->args[i][0] == '-')
+		{
+			error("export", "invalid option", 2);
+			return (2);
+		}
 		trim_arg_value(cmd->args[i], &value, &name);
 		if (legit_export_arguments(name))
 			exit_code = 1;
