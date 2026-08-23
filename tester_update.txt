@@ -14,11 +14,11 @@
   8:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:20
   9:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:22
   10:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:24
-  11:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:26
-  12:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:28
+  11:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  12:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
   13:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:30
-  14:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:32
-  15:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:34
+  14:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  15:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
   16:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:36
   17:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:38
   18:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:40
@@ -27,13 +27,13 @@
   21:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:46
   22:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:48
   23:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:50
-  24:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:52
-  25:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:54
-  26:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:56
-  27:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:58
-  28:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:60
-  29:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:62
-  30:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:64
+  24:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope (\)
+  25:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope (\)
+  26:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope (\)
+  27:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope (\)
+  28:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope (\)
+  29:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope (\)
+  30:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope (\)
   31:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:66
   32:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:68
   33:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/0_compare_parsing.sh:70
@@ -99,7 +99,7 @@
   1:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:5
   2:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:7
   3:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:10
-  4:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:14
+  4:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ✅  = minishell ignore la redir sans commande. bash essaie d'ouvrir le fichier
   5:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:18
   6:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:20
   7:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:22
@@ -111,10 +111,10 @@
   13:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:37
   14:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:40
   15:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:45
-  16:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ❌ [ minishell(0)  bash(1) ]  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:52
-  17:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:54
-  18:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:58
-  19:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:62
+  16:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ❌  = minishell ignore la redir sans commande. bash essaie d'ouvrir le fichier
+  17:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ✅  = minishell ignore la redir sans commande. bash essaie d'ouvrir le fichier
+  18:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ✅  = minishell ignore la redir sans commande. bash essaie d'ouvrir le fichier
+  19:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ✅  = minishell ignore la redir sans commande. bash essaie d'ouvrir le fichier
   20:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:66
   21:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:69
   22:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:72
@@ -196,7 +196,7 @@
   98:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:266
   99:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:268
   100:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:270
-  101:	STD_OUT: ❌  STD_ERR: ❌  EXIT_CODE: ❌ [ minishell(0)  bash(127) ]  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:272
+  101:	STD_OUT: ❌  STD_ERR: ❌  EXIT_CODE: ❌  minishell interprete les quotes comme strings vides et pas comme une commande manquante
   102:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:274
   103:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:276
   104:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:278
@@ -207,9 +207,9 @@
   109:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:288
   110:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:290
   111:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:293
-  112:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:297
-  113:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:299
-  114:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:301
+  112:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope, mais à discuter avec Jeff
+  113:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope, mais à discuter avec Jeff
+  114:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope, mais à discuter avec Jeff
   115:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:303
   116:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:305
   117:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:307
@@ -218,8 +218,8 @@
   120:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:313
   121:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:315
   122:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:317
-  123:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ❌ [ minishell(2)  bash(127) ]  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:319
-  124:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ❌ [ minishell(1)  bash(0) ]  /home/arthur/42_minishell_tester/cmds/mand/10_parsing_hell.sh:321
+  123:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ❌  = >| redirection hors scope, minishell voit redir out (>) puis | comme nom de fichier
+  124:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ❌  = hors scope (cd --)
   # **************************************************************************** #
   #                                   BUILTINS                                   #
   # **************************************************************************** #
@@ -526,7 +526,7 @@
   #                                  PIPELINES                                   #
   # **************************************************************************** #
   1:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:4
-  2:	STD_OUT: ❌  STD_ERR: ❌  EXIT_CODE: ❌ [ minishell(1)  bash(0) ]  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:6
+  2:	STD_OUT: ❌  STD_ERR: ❌  EXIT_CODE: ❌  = limite systeme des fd. pour la commande (1000 * ls), il faut 999 pipes * 2, soit 1998 fds, limite systeme 1024
   3:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:8
   4:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:10
   5:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:12
@@ -539,8 +539,8 @@
   12:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:26
   13:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:28
   14:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:30
-  15:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:32
-  16:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:34
+  15:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = variable _ différente dans minishell vs bash (dans bash, la variable prend la dernière commande)
+  16:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = faux positif du test, meme std_out dans minishell et bash
   17:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:36
   18:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:38
   19:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:40
@@ -550,11 +550,11 @@
   23:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:49
   24:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:53
   25:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:55
-  26:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ❌ [ minishell(1)  bash(0) ]  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:59
-  27:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ❌ [ minishell(1)  bash(0) ]  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:68
-  28:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:84
-  29:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ❌ [ minishell(0)  bash(2) ]  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:96
-  30:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:110
+  26:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ❌  = pipe + heredoc en mode non interactif. GNL lit depuis le pipe plutot que du terminal
+  27:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ❌  = pipe + heredoc en mode non interactif. GNL lit depuis le pipe plutot que du terminal
+  28:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = pipe + heredoc en mode non interactif. GNL lit depuis le pipe plutot que du terminal
+  29:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ❌  = pipe + heredoc en mode non interactif. GNL lit depuis le pipe plutot que du terminal
+  30:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = pipe + heredoc en mode non interactif. GNL lit depuis le pipe plutot que du terminal
   31:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:126
   32:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:132
   33:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_pipelines.sh:138
@@ -660,7 +660,7 @@
   87:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_redirs.sh:235
   88:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_redirs.sh:241
   89:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_redirs.sh:247
-  90:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_redirs.sh:250
+  90:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ✅  = minishell ignore la redir sans commande. bash essaie d'ouvrir le fichier
   91:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_redirs.sh:253
   # **************************************************************************** #
   #                                     SCMD                                     #
