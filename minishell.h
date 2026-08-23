@@ -212,13 +212,13 @@ char		**init_char_tab(int length);
 void		sort_char_tab(char **tab);
 int			only_whitespace_empty(char *str);
 int			is_whitespace(char c);
-void	replace_whitespace(char *value, int *i, char *result, int *j);
-char	*mark_splits(char *value);
-int	is_special_char(char c);
-int	has_dollar_boundary(char *string);
-void	buffer_push(char *string, int *index, char c);
-int	quote_state(char c);
-char	*strip_quote_markers(char *arg);
-int	contains_marker(char *str);
+void		replace_whitespace(char *value, int *i, char *result, int *j);
+char		*mark_splits(char *value);
+int			is_special_char(char c);
+int			has_dollar_boundary(char *string);
+void		buffer_push(char *string, int *index, char c);
+int			quote_state(char c);
+char		*strip_quote_markers(char *arg);
+int			contains_marker(char *str);
 
 #endif

@@ -37,16 +37,15 @@ int	builtin_exit(t_cmd *cmd, t_shell *shell)
 {
 	if (cmd->args[1] == NULL)
 		exit(shell->exit_status);
-	else if (cmd->args[2] != NULL)
+	if (!is_digit_flag(cmd->args[1]))
+	{
+		ft_putendl_fd("exit: numeric argument required", 2);
+		exit (2);
+	}
+	if (cmd->args[2] != NULL)
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
 		return (1);
 	}
-	else if (!is_digit_flag(cmd->args[1]))
-	{
-		ft_putendl_fd("exit: numeric argument required", 2);
-		return (2);
-	}
-	else
-		exit(ft_atoi(cmd->args[1]));
+	exit(ft_atoi(cmd->args[1]));
 }

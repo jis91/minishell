@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 14:19:00 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/13 12:33:52 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/23 15:36:32 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,26 @@ void	expand_one_cmd(t_cmd *cmd, t_shell *shell)
 void	expander(t_cmd *cmd, t_shell *shell)
 {
 	t_cmd	*current;
+	t_redir	*redir;
+	char	*tmp;
 
 	current = cmd;
 	while (current)
 	{
 		expand_one_cmd(current, shell);
+		redir = current->redirections;
+		while (redir)
+		{
+			if (redir->file && has_dollar_boundary(redir->file))
+			{
+				tmp = assembler(redir->file, shell);
+				if (!tmp)
+					fatal_error(shell, NULL, "malloc failed", 1);
+				free(redir->file);
+				redir->file = tmp;
+			}
+			redir = redir->next;
+		}
 		current = current->next;
 	}
 }

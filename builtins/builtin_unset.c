@@ -19,6 +19,11 @@ int	builtin_unset(t_cmd *cmd, t_shell *shell)
 
 	if (cmd->args[1] == NULL)
 		return (0);
+	if (cmd->args[1][0] == '-')
+	{
+		error("unset", "invalid option", 2);
+		return (2);
+	}
 	i = 1;
 	while (cmd->args[i])
 	{

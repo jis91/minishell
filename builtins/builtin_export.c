@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 16:19:15 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/20 20:26:44 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/23 13:43:47 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ int	builtin_export(t_cmd *cmd, t_shell *shell)
 		}
 		trim_arg_value(cmd->args[i], &value, &name);
 		if (legit_export_arguments(name))
+		{
+			error(cmd->args[i], "not a valid identifier", 1);
 			exit_code = 1;
+		}
 		else if (should_apply_export(cmd->args[i], name, shell->env)
 			&& apply_to_env(shell, name, value))
 			exit_code = 1;
