@@ -727,20 +727,20 @@
   12:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:32
   13:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:35
   14:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:38
-  15:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:40
-  16:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:42
-  17:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:44
-  18:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:46
-  19:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:48
-  20:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:50
+  15:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  16:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  17:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  18:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ('')
+  19:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  20:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ('')
   21:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:52
   22:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:54
   23:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:56
   24:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:58
-  25:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:60
-  26:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:62
+  25:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  26:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
   27:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:64
-  28:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:66
+  28:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ('')
   29:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:68
   30:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:70
   31:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/1_variables.sh:72
@@ -776,7 +776,7 @@
   #                                  CORRECTION                                  #
   # **************************************************************************** #
   1:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:5
-  2:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ❌ [ minishell(0)  bash(127) ]  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:9
+  2:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ❌  = remove_empty_string interprete argument vide, bash interprete commande
   3:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:11
   4:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:13
   5:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:15
@@ -834,25 +834,25 @@
   57:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:123
   58:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:125
   59:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:127
-  60:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:129
-  61:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:131
+  60:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = faux positif, meme sortie entre minishell et bash
+  61:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = faux positif, meme sortie entre minishell et bash
   62:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:133
   63:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:135
   64:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:137
-  65:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:139
-  66:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:141
-  67:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:143
-  68:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:145
-  69:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:147
-  70:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:149
+  65:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  66:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  67:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  68:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  69:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  70:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
   71:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:151
   72:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:153
   73:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:155
   74:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:157
-  75:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:159
-  76:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:161
+  75:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
+  76:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ("")
   77:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:163
-  78:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:165
+  78:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope ('')
   79:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:167
   80:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:169
   81:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:171
@@ -884,10 +884,10 @@
   107:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:254
   108:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:256
   109:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:258
-  110:	STD_OUT: ❌  STD_ERR: ❌  EXIT_CODE: ❌ [ minishell(127)  bash(0) ]  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:261
-  111:	STD_OUT: ❌  STD_ERR: ❌  EXIT_CODE: ❌ [ minishell(127)  bash(0) ]  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:265
-  112:	STD_OUT: ❌  STD_ERR: ❌  EXIT_CODE: ❌ [ minishell(127)  bash(0) ]  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:269
-  113:	STD_OUT: ✅  STD_ERR: ❌  EXIT_CODE: ❌ [ minishell(127)  bash(0) ]  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:273
+  110:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:261
+  111:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:265
+  112:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:269
+  113:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:273
   114:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/2_correction.sh:277
   # **************************************************************************** #
   #                                  PATH FAILS                                  #
@@ -965,18 +965,18 @@
   1:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:5
   2:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:7
   3:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:9
-  4:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:11
+  4:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = faux positif a cause de la sortie ls...
   5:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:16
-  6:	STD_OUT: ❌  STD_ERR: ❌  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:18
+  6:	STD_OUT: ❌  STD_ERR: ❌  EXIT_CODE: ✅  = redirection sans commande
   7:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:22
   8:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:26
   9:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:28
   10:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:30
   11:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:37
   12:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:40
-  13:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:46
-  14:	STD_OUT: ❌  STD_ERR: ❌  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:49
-  15:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:52
+  13:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope (env -i)
+  14:	STD_OUT: ❌  STD_ERR: ❌  EXIT_CODE: ✅  = hors scope (env -i)
+  15:	STD_OUT: ❌  STD_ERR: ✅  EXIT_CODE: ✅  = hors scope (env -i)
   16:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:55
   17:	STD_OUT: ✅  STD_ERR: ✅  EXIT_CODE: ✅  /home/arthur/42_minishell_tester/cmds/mand/9_go_wild.sh:57
 🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁
