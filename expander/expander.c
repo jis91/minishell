@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 14:19:00 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/23 15:36:32 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/25 22:00:19 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,39 +91,44 @@ static void	merge_args(char **new_args, char ***tmp)
 	free(tmp);
 }
 
-// static void fill_tmp(t_cmd *cmd, t_shell *shell, char ***tmp, int i);
+static char	**expand_arg(char *arg, t_shell *shell)
+{
+	char	**result;
+	char	*assembled;
+
+	if (!has_dollar_boundary(arg))
+	{
+		result = init_char_tab(1);
+		result[0] = ft_strdup(arg);
+		return (result);
+	}
+	assembled = assembler(arg, shell);
+	result = ft_split(assembled, SPLIT_MARKER);
+	free(assembled);
+	if (!result)
+		fatal_error(shell, NULL, "malloc failed", 1);
+	if (!result[0])
+	{
+		free_char_tab(result);
+		result = init_char_tab(1);
+		result[0] = ft_strdup("");
+	}
+	return (result);
+}
+
 void	expand_one_cmd(t_cmd *cmd, t_shell *shell)
 {
 	int		i;
 	int		total;
 	char	***tmp;
 	char	**new_args;
-	char	*assembled;
 
 	i = 0;
 	total = 0;
 	tmp = ft_calloc(sizeof(char **), (count_env_length(cmd->args) + 1));
 	while (cmd->args[i])
 	{
-		if (has_dollar_boundary(cmd->args[i]))
-		{
-			assembled = assembler(cmd->args[i], shell);
-			tmp[i] = ft_split(assembled, SPLIT_MARKER);
-			if (!tmp[i])
-				fatal_error(shell, NULL, "malloc failed", 1);
-			if (!tmp[i][0])
-			{
-				free_char_tab(tmp[i]);
-				tmp[i] = init_char_tab(1);
-				tmp[i][0] = ft_strdup("");
-			}
-			free(assembled);
-		}
-		else
-		{
-			tmp[i] = init_char_tab(1);
-			tmp[i][0] = ft_strdup(cmd->args[i]);
-		}
+		tmp[i] = expand_arg(cmd->args[i], shell);
 		total += count_env_length(tmp[i]);
 		i++;
 	}

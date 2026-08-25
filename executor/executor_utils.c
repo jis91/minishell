@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:22:32 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/24 21:49:52 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/25 22:28:30 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,40 +98,17 @@ char	*find_in_path(t_cmd *cmd, t_shell *shell)
 char	*find_path(t_cmd *cmd, t_shell *shell)
 {
 	char	*path;
-	int		saved_errno;
 
 	if (cmd->args[0][0] == '/'
 			|| (cmd->args[0][0] == '.' && cmd->args[0][1] == '/'))
-	{
-		if (access(cmd->args[0], X_OK) == 0)
-			return (ft_strdup(cmd->args[0]));
-		saved_errno = errno;
-		if (saved_errno == EACCES || saved_errno == EISDIR)
-			error(cmd->args[0], "Permission denied", 126);
-		else
-			error(cmd->args[0], "command not found", 127);
-		errno = saved_errno;
-		return (NULL);
-	}
+		return (handle_absolute_path(cmd));
 	if (cmd->args[0][0] == '.' && cmd->args[0][1] == '\0')
-	{
-		error(".", "filename argument required", 2);
-		errno = EINVAL;
-		return (NULL);
-	}
+		return (handle_dot());
 	if (cmd->args[0][0] == '.' && cmd->args[0][1]
 			== '.' && cmd->args[0][2] == '\0')
-	{
-		error("..", "command not found", 127);
-		errno = ENOENT;
-		return (NULL);
-	}
+		return (handle_dot_dot());
 	if (cmd->args[0][0] == '~' && cmd->args[0][1] == '\0')
-	{
-		error(cmd->args[0], "Is a directory", 126);
-		errno = EISDIR;
-		return (NULL);
-	}
+		return (handle_tilde(cmd));
 	path = find_in_path(cmd, shell);
 	if (!path)
 		error(cmd->args[0], "command not found", 127);

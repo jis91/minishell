@@ -16,6 +16,7 @@ SRCS	=	main.c shell_loop.c \
 			builtins/builtin_pwd.c builtins/builtin_unset.c \
 			executor/executor.c executor/executor_utils.c executor/exec_pipeline.c \
 			executor/apply_redir.c executor/apply_redir_functions.c executor/pipe_utils.c \
+			executor/special_paths.c executor/executor_external.c\
 
 OBJS_DIR = obj/
 

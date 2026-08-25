@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 16:19:15 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/23 13:43:47 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/25 20:14:23 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,36 @@ static int	should_apply_export(char *arg, char *name, char **env)
 	return (0);
 }
 
+static int	process_export_args(t_cmd *cmd, t_shell *shell, int i)
+{
+	char	*name;
+	char	*value;
+	int		result;
+
+	if (cmd->args[i][0] == '-')
+	{
+		error("export", "invalid option", 2);
+		return (2);
+	}
+	trim_arg_value(cmd->args[i], &value, &name);
+	result = 0;
+	if (legit_export_arguments(name))
+	{
+		error(cmd->args[i], "not a valid identifier", 1);
+		result = 1;
+	}
+	else if (should_apply_export(cmd->args[i], name, shell->env)
+		&& apply_to_env(shell, name, value))
+		result = 1;
+	free(name);
+	free(value);
+	return (result);
+}
+
 int	builtin_export(t_cmd *cmd, t_shell *shell)
 {
 	int		i;
 	int		exit_code;
-	char	*name;
-	char	*value;
 
 	if (cmd->args[1] == NULL)
 	{
@@ -76,22 +100,9 @@ int	builtin_export(t_cmd *cmd, t_shell *shell)
 	exit_code = 0;
 	while (cmd->args[i])
 	{
-		if (cmd->args[i][0] == '-')
-		{
-			error("export", "invalid option", 2);
+		exit_code = process_export_args(cmd, shell, i);
+		if (exit_code == 2)
 			return (2);
-		}
-		trim_arg_value(cmd->args[i], &value, &name);
-		if (legit_export_arguments(name))
-		{
-			error(cmd->args[i], "not a valid identifier", 1);
-			exit_code = 1;
-		}
-		else if (should_apply_export(cmd->args[i], name, shell->env)
-			&& apply_to_env(shell, name, value))
-			exit_code = 1;
-		free(name);
-		free(value);
 		i++;
 	}
 	return (exit_code);

@@ -56,7 +56,6 @@ t_redir	*new_redir_node(t_token **tokens)
 		free(new_redir);
 		return (NULL);
 	}
-	
 	new_redir->heredoc_fd = -1;
 	return (new_redir);
 }

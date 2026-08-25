@@ -6,41 +6,11 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/17 19:10:26 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/25 22:27:01 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	exec_external(t_cmd *cmd, t_shell *shell)
-{
-	char	*path;
-
-	reset_child_signals();
-	if (apply_redirections(cmd) == -1)
-		exit(1);
-	if (!cmd->args[0])
-		exit(0);
-	path = find_path(cmd, shell);
-	if (!path)
-	{
-		if (errno == EACCES || errno == EISDIR)
-			exit(126);
-		if (errno == EINVAL)
-			exit(2);
-		exit(127);
-	}
-	execve(path, cmd->args, shell->env);
-	if (errno == EACCES || errno == EISDIR)
-	{
-		perror(cmd->args[0]);
-		free(path);
-		exit(126);
-	}
-	perror(cmd->args[0]);
-	free (path);
-	exit (127);
-}
 
 int	exec_builtin_with_redir(t_cmd *cmds, t_shell *shell, t_builtin builtin)
 {

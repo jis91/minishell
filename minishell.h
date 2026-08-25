@@ -172,6 +172,10 @@ void		close_pipes(t_pipe_ctx *ctx);
 void		close_child_pipes(t_pipe_ctx *ctx, int i);
 int			exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell);
 int			exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell);
+char		*handle_absolute_path(t_cmd *cmd);
+char		*handle_dot(void);
+char		*handle_dot_dot(void);
+char		*handle_tilde(t_cmd *cmd);
 // APPLY REDIRECTIONS
 int			apply_redir_in(t_redir *redir);
 int			apply_redir_out(t_redir *redir);
