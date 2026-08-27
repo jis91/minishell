@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/18 20:23:44 by aganz            ###   ########.fr       */
+/*   Updated: 2026/08/27 20:52:46 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	init_shell(t_shell *shell, char **envp)
 	shell_env[i] = NULL;
 	shell->env = shell_env;
 	shell->exit_status = 0;
+	shell->should_exit = 0;
 	return (0);
 }
 
@@ -104,7 +105,6 @@ void	shell_loop(t_shell *shell)
 		}
 		if (!line)
 		{
-			//write(1, "exit\n", 5);
 			if (is_interactive)
 				write(1, "\n", 1);
 			free_char_tab(shell->env);
@@ -113,5 +113,10 @@ void	shell_loop(t_shell *shell)
 		if (ft_strlen(line) > 0)
 			add_history(line);
 		process_line(line, shell);
+		if (shell->should_exit)
+		{
+			cleanup_shell(shell);
+			exit(shell->exit_status);
+		}
 	}
 }
