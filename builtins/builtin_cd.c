@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 14:55:10 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/13 12:48:11 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/01 22:32:33 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ int	builtin_cd(t_cmd *cmd, t_shell *shell)
 	if (!target)
 		target = get_env_value(shell->env, "HOME");
 	if (!target)
+	{
+		ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
 		return (1);
+	}
 	if (update_cd_pwd(shell, old_pwd, new_pwd, target))
 	{
 		if (target != cmd->args[1])

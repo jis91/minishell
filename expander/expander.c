@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 14:19:00 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/26 14:27:33 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/01 22:09:27 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,13 @@ static char	**expand_arg(char *arg, t_shell *shell)
 	if (!result[0])
 	{
 		free_char_tab(result);
-		result = init_char_tab(1);
-		result[0] = ft_strdup("");
+		if(contains_marker(arg))
+		{
+			result = init_char_tab(1);
+			result[0] = ft_strdup("");
+		}
+		else
+			result = init_char_tab(0);
 	}
 	return (result);
 }

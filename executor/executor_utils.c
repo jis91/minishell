@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:22:32 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/25 22:28:30 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/01 22:01:43 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ char	*find_in_path(t_cmd *cmd, t_shell *shell)
 		}
 		i++;
 	}
-	if (!directories)
-		directories = ft_split ("/usr/local/bin:/usr/bin:/bin", ':');
+	//if (!directories)
+		//directories = ft_split ("/usr/local/bin:/usr/bin:/bin", ':');
 	if (!directories)
 	{
-		error(cmd->args[0], "command not found", 127);
+		//error(cmd->args[0], "command not found", 127);
 		return (NULL);
 	}
 	path = verify_path(directories, cmd);

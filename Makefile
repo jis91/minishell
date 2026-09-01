@@ -24,7 +24,6 @@ OBJS	= $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 
 DEPS	= $(OBJS:.o=.d)
 
--include $(DEPS)
 
 LIBFT_DIR	= libft
 
@@ -34,6 +33,8 @@ INCLUDES	= -I. -I$(LIBFT_DIR)
 
 
 all: $(NAME)
+
+-include $(DEPS)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
@@ -55,4 +56,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re $(LIBFT)
+.PHONY: all clean fclean re

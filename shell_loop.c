@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/27 20:52:46 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/01 22:02:54 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	shell_loop(t_shell *shell)
 		{
 			if (is_interactive)
 				write(1, "\n", 1);
+			rl_clear_history();
 			free_char_tab(shell->env);
 			exit(shell->exit_status);
 		}
@@ -115,6 +116,7 @@ void	shell_loop(t_shell *shell)
 		process_line(line, shell);
 		if (shell->should_exit)
 		{
+			rl_clear_history();
 			cleanup_shell(shell);
 			exit(shell->exit_status);
 		}
