@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	fork_cmds(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 {

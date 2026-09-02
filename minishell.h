@@ -122,6 +122,7 @@ typedef struct s_shell
 
 //SHELL
 int			init_shell(t_shell *shell, char **envp);
+void		process_line(char *line, t_shell *shell);
 void		shell_loop(t_shell *shell);
 //LEXER
 t_token		*lexer(char *input);

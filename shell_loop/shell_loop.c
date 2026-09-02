@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	init_shell(t_shell *shell, char **envp)
 {
@@ -38,45 +38,60 @@ int	init_shell(t_shell *shell, char **envp)
 	return (0);
 }
 
-static void	process_line(char *line, t_shell *shell)
+static void	read_input(char **line, int is_interactive)
 {
-	t_token	*tokens;
-	t_cmd	*cmd;
+	char	*tmp;
 
-	if (!only_whitespace_empty(line))
-		tokens = lexer(line);
+	*line = NULL;
+	if (is_interactive)
+		*line = readline("minishell> ");
 	else
 	{
-		free(line);
-		return ;
-	}
-	free(line);
-	if (!tokens)
-	{
-		shell->exit_status = 2;
-		return ;
-	}
-	cmd = parser(tokens);
-	if (!cmd)
-	{
-		shell->exit_status = 2;
-		return ;
-	}
-	if (!collect_heredoc(cmd, shell))
-	{
-		expander(cmd, shell);
-		remove_empty_args(cmd);
-		if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
+		tmp = get_next_line(STDIN_FILENO);
+		if (tmp)
 		{
-			cleanup_cycle(tokens, cmd);
-			return ;
+			*line = ft_strtrim(tmp, "\n");
+			free(tmp);
 		}
-		shell->exit_status = executor(cmd, shell);
 	}
-	cleanup_cycle(tokens, cmd);
 }
 
 void	shell_loop(t_shell *shell)
+{
+	char	*line;
+	int		is_interactive;
+
+	is_interactive = isatty(STDIN_FILENO);
+	while (1)
+	{
+		setup_prompt_signals();
+		read_input(&line, is_interactive);
+		if (g_signal == SIGINT)
+		{
+			shell->exit_status = 130;
+			g_signal = 0;
+		}
+		if (!line)
+		{
+			if (is_interactive)
+				write(1, "\n", 1);
+			rl_clear_history();
+			free_char_tab(shell->env);
+			exit(shell->exit_status);
+		}
+		if (ft_strlen(line) > 0)
+			add_history(line);
+		process_line(line, shell);
+		if (shell->should_exit)
+		{
+			rl_clear_history();
+			cleanup_shell(shell);
+			exit(shell->exit_status);
+		}
+	}
+}
+
+/*void	shell_loop(t_shell *shell)
 {
 	char	*line;
 	char	*tmp;
@@ -121,4 +136,4 @@ void	shell_loop(t_shell *shell)
 			exit(shell->exit_status);
 		}
 	}
-}
+}*/
