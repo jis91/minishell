@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 14:19:00 by jefferson         #+#    #+#             */
-/*   Updated: 2026/09/01 22:09:27 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/02 10:46:26 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ static void	merge_args(char **new_args, char ***tmp)
 	free(tmp);
 }
 
+static char	**handle_empty_result(char *arg)
+{
+	char	**result;
+
+	result = init_char_tab(1);
+	if (contains_marker(arg))
+		result[0] = ft_strdup("");
+	else
+		result = init_char_tab(0);
+	return (result);
+}
+
 static char	**expand_arg(char *arg, t_shell *shell)
 {
 	char	**result;
@@ -54,7 +66,31 @@ static char	**expand_arg(char *arg, t_shell *shell)
 	if (!result[0])
 	{
 		free_char_tab(result);
-		if(contains_marker(arg))
+		result = handle_empty_result(arg);
+	}
+	return (result);
+}
+
+/*static char	**expand_arg(char *arg, t_shell *shell)
+{
+	char	**result;
+	char	*assembled;
+
+	if (!has_dollar_boundary(arg))
+	{
+		result = init_char_tab(1);
+		result[0] = ft_strdup(arg);
+		return (result);
+	}
+	assembled = assembler(arg, shell);
+	result = ft_split(assembled, SPLIT_MARKER);
+	free(assembled);
+	if (!result)
+		fatal_error(shell, NULL, "malloc failed", 1);
+	if (!result[0])
+	{
+		free_char_tab(result);
+		if (contains_marker(arg))
 		{
 			result = init_char_tab(1);
 			result[0] = ft_strdup("");
@@ -63,7 +99,7 @@ static char	**expand_arg(char *arg, t_shell *shell)
 			result = init_char_tab(0);
 	}
 	return (result);
-}
+}*/
 
 void	expand_one_cmd(t_cmd *cmd, t_shell *shell)
 {

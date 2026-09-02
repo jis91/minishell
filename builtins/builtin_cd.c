@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 14:55:10 by jefferson         #+#    #+#             */
-/*   Updated: 2026/09/01 22:32:33 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/02 11:02:55 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,47 @@ static int	update_cd_pwd(t_shell *shell, char *prev, char *curr, char *target)
 	return (0);
 }
 
+static char	*get_cd_target(t_cmd *cmd, t_shell *shell)
+{
+	char	*target;
+
+	if (cmd->args[1] != NULL && cmd->args[2] != NULL)
+	{
+		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
+		return (NULL);
+	}
+	target = cmd->args[1];
+	if (!target)
+		target = get_env_value(shell->env, "HOME");
+	if (!target)
+	{
+		ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
+		return (NULL);
+	}
+	return (target);
+}
+
 int	builtin_cd(t_cmd *cmd, t_shell *shell)
+{
+	char	old_pwd[PATH_MAX];
+	char	new_pwd[PATH_MAX];
+	char	*target;
+
+	target = get_cd_target(cmd, shell);
+	if (!target)
+		return (1);
+	if (update_cd_pwd(shell, old_pwd, new_pwd, target))
+	{
+		if (target != cmd->args[1])
+			free(target);
+		return (1);
+	}
+	if (target != cmd->args[1])
+		free (target);
+	return (0);
+}
+
+/*int	builtin_cd(t_cmd *cmd, t_shell *shell)
 {
 	char	old_pwd[PATH_MAX];
 	char	new_pwd[PATH_MAX];
@@ -67,4 +107,4 @@ int	builtin_cd(t_cmd *cmd, t_shell *shell)
 	if (target != cmd->args[1])
 		free (target);
 	return (0);
-}
+}*/

@@ -160,7 +160,6 @@ int			collect_heredoc(t_cmd *cmd_list, t_shell *shell);
 //EXECUTOR
 void		exec_external(t_cmd *cmd, t_shell *shell);
 int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
-int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
 int			executor(t_cmd *cmds, t_shell *shell);
 int			count_cmds(t_cmd *cmds);
 char		*verify_path(char **directories, t_cmd *cmd);
