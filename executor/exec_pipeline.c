@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 21:40:49 by aganz             #+#    #+#             */
-/*   Updated: 2026/09/02 10:50:21 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/02 16:22:14 by jstrasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,33 +111,3 @@ int	exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell)
 		exec_external(cmds, shell);
 	return (0);
 }
-
-/*int	exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell)
-{
-	t_builtin	builtin;
-
-	reset_child_signals();
-	if (i > 0)
-	{
-		if (dup2(ctx->pipes[i - 1][0], 0) == -1)
-			exit(1);
-		close(ctx->pipes[i - 1][0]);
-	}
-	if (i < ctx->count - 1)
-	{
-		if (dup2(ctx->pipes[i][1], 1) == -1)
-			exit(1);
-		close(ctx->pipes[i][1]);
-	}
-	close_child_pipes(ctx, i);
-	builtin = check_builtin(cmds);
-	if (builtin != NOT_BUILTIN)
-	{
-		if (apply_redirections(cmds) == -1)
-			exit (1);
-		exit(exec_builtin(cmds, shell, builtin));
-	}
-	else
-		exec_external(cmds, shell);
-	return (0);
-}*/

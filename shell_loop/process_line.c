@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   process_line.c                                      :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: aganz <aganz@student.42lausanne.ch>           +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2026/09/02 11:50:07 by aganz          #+#    #+#                */
-/*   Updated: 2026/09/02 11:50:29 by aganz          ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   process_line.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/02 11:50:07 by aganz             #+#    #+#             */
+/*   Updated: 2026/09/02 16:25:10 by jstrasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,41 +59,3 @@ void	process_line(char *line, t_shell *shell)
 	run_cmd(cmd, shell);
 	free_cmds(cmd);
 }
-
-/*static void	process_line(char *line, t_shell *shell)
-{
-	t_token	*tokens;
-	t_cmd	*cmd;
-
-	if (!only_whitespace_empty(line))
-		tokens = lexer(line);
-	else
-	{
-		free(line);
-		return ;
-	}
-	free(line);
-	if (!tokens)
-	{
-		shell->exit_status = 2;
-		return ;
-	}
-	cmd = parser(tokens);
-	if (!cmd)
-	{
-		shell->exit_status = 2;
-		return ;
-	}
-	if (!collect_heredoc(cmd, shell))
-	{
-		expander(cmd, shell);
-		remove_empty_args(cmd);
-		if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
-		{
-			cleanup_cycle(tokens, cmd);
-			return ;
-		}
-		shell->exit_status = executor(cmd, shell);
-	}
-	cleanup_cycle(tokens, cmd);
-}*/

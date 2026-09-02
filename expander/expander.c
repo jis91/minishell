@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 14:19:00 by jefferson         #+#    #+#             */
-/*   Updated: 2026/09/02 10:46:26 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/02 16:24:42 by jstrasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,36 +70,6 @@ static char	**expand_arg(char *arg, t_shell *shell)
 	}
 	return (result);
 }
-
-/*static char	**expand_arg(char *arg, t_shell *shell)
-{
-	char	**result;
-	char	*assembled;
-
-	if (!has_dollar_boundary(arg))
-	{
-		result = init_char_tab(1);
-		result[0] = ft_strdup(arg);
-		return (result);
-	}
-	assembled = assembler(arg, shell);
-	result = ft_split(assembled, SPLIT_MARKER);
-	free(assembled);
-	if (!result)
-		fatal_error(shell, NULL, "malloc failed", 1);
-	if (!result[0])
-	{
-		free_char_tab(result);
-		if (contains_marker(arg))
-		{
-			result = init_char_tab(1);
-			result[0] = ft_strdup("");
-		}
-		else
-			result = init_char_tab(0);
-	}
-	return (result);
-}*/
 
 void	expand_one_cmd(t_cmd *cmd, t_shell *shell)
 {

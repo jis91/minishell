@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/09/02 12:17:40 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/02 16:25:20 by jstrasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,85 +100,3 @@ void	shell_loop(t_shell *shell)
 		handle_should_exit(shell);
 	}
 }
-
-/*void	shell_loop(t_shell *shell)
-{
-	char	*line;
-	int		is_interactive;
-
-	is_interactive = isatty(STDIN_FILENO);
-	while (1)
-	{
-		setup_prompt_signals();
-		read_input(&line, is_interactive);
-		if (g_signal == SIGINT)
-		{
-			shell->exit_status = 130;
-			g_signal = 0;
-		}
-		if (!line)
-		{
-			if (is_interactive)
-				write(1, "\n", 1);
-			rl_clear_history();
-			free_char_tab(shell->env);
-			exit(shell->exit_status);
-		}
-		if (ft_strlen(line) > 0)
-			add_history(line);
-		process_line(line, shell);
-		if (shell->should_exit)
-		{
-			rl_clear_history();
-			cleanup_shell(shell);
-			exit(shell->exit_status);
-		}
-	}
-}*/
-
-/*void	shell_loop(t_shell *shell)
-{
-	char	*line;
-	char	*tmp;
-	int		is_interactive;
-
-	is_interactive = isatty(STDIN_FILENO);
-	while (1)
-	{
-		setup_prompt_signals();
-		line = NULL;
-		if (is_interactive)
-			line = readline("minishell> ");
-		else
-		{
-			tmp = get_next_line(STDIN_FILENO);
-			if (tmp)
-			{
-				line = ft_strtrim(tmp, "\n");
-				free(tmp);
-			}
-		}
-		if (g_signal == SIGINT)
-		{
-			shell->exit_status = 130;
-			g_signal = 0;
-		}
-		if (!line)
-		{
-			if (is_interactive)
-				write(1, "\n", 1);
-			rl_clear_history();
-			free_char_tab(shell->env);
-			exit(shell->exit_status);
-		}
-		if (ft_strlen(line) > 0)
-			add_history(line);
-		process_line(line, shell);
-		if (shell->should_exit)
-		{
-			rl_clear_history();
-			cleanup_shell(shell);
-			exit(shell->exit_status);
-		}
-	}
-}*/
