@@ -6,7 +6,7 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/09/01 22:02:54 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/02 12:17:40 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,52 @@ static void	read_input(char **line, int is_interactive)
 	}
 }
 
+static void	handle_ctrl_d(t_shell *shell, char *line, int is_interactive)
+{
+	if (!line)
+	{
+		if (is_interactive)
+			write(1, "\n", 1);
+		rl_clear_history();
+		free_char_tab(shell->env);
+		exit(shell->exit_status);
+	}
+}
+
+static void	handle_should_exit(t_shell *shell)
+{
+	if (shell->should_exit)
+	{
+		rl_clear_history();
+		cleanup_shell(shell);
+		exit(shell->exit_status);
+	}
+}
+
 void	shell_loop(t_shell *shell)
+{
+	char	*line;
+	int		is_interactive;
+
+	is_interactive = isatty(STDIN_FILENO);
+	while (1)
+	{
+		setup_prompt_signals();
+		read_input(&line, is_interactive);
+		if (g_signal == SIGINT)
+		{
+			shell->exit_status = 130;
+			g_signal = 0;
+		}
+		handle_ctrl_d(shell, line, is_interactive);
+		if (ft_strlen(line) > 0)
+			add_history(line);
+		process_line(line, shell);
+		handle_should_exit(shell);
+	}
+}
+
+/*void	shell_loop(t_shell *shell)
 {
 	char	*line;
 	int		is_interactive;
@@ -89,7 +134,7 @@ void	shell_loop(t_shell *shell)
 			exit(shell->exit_status);
 		}
 	}
-}
+}*/
 
 /*void	shell_loop(t_shell *shell)
 {
