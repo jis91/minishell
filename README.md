@@ -1,3 +1,47 @@
+*This project has been created as part of the 42 curriculum by jstrasse, aganz*
+
+# Minishell
+
+## Description
+Minishell is the first group project in the 42 curriculum. The goal is to create a basic shell program in C based on Bash. It implements redirections and pipes, as well as envirionment variable expansions and the cd, echo, env, exit, export, pwd and unset builtin commands.
+
+### How does Minishell work?
+Minishell has XX different steps:
+
+1. Lexer
+- separates the input into tokens
+
+2. Parser
+- count total tokens
+- allocate arguments array based on count
+- create first command
+
+3. Heredoc
+
+4. Expander
+
+5. Executor
+
+
+## Instructions
+### Compilation
+```bash
+make        # compiles minishell
+make clean  # cleans object files
+make fclean # cleans object files and executables
+make re     # full recompilation
+```
+
+### Execution
+Run the program as you would run commands in any shell.
+```bash
+minishell>
+```
+
+## Resources
+
+
+
 README.MD
 ¨
 https://github.com/42school/norminette/blob/master/pdf/fr.norm.pdf
