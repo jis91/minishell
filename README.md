@@ -1,46 +1,86 @@
-README.MD
-¨
-https://github.com/42school/norminette/blob/master/pdf/fr.norm.pdf
+*This project has been created as part of the 42 curriculum by jstrasse, aganz*
 
-https://www.youtube.com/watch?v=xCySbqj9BKI&list=PL2POs8ZJ4I2JJK3lICRW0b-L2y9mLiDmU&index=1
+# Minishell
 
+## Description
+Minishell is the first group project in the 42 curriculum. The goal is to create a basic shell program in C based on Bash. It implements redirections and pipes, as well as envirionment variable expansions and the cd, echo, env, exit, export, pwd and unset builtin commands.
 
+### How does Minishell work?
+Minishell has 5 different steps:
 
-LEXER :
-PLAIN ENGLISH EXPLANATION : Separates the input into tokens :
+1. **Lexer**
+- reads the input line character by character
+- separates the input into tokens (words, operations, redirections)
+- handles single quotes, double quotes and special characters
 
-TOKEN_WORD, TOKEN_PIPE '|' , TOKEN_REDIR_IN '<' , TOKEN_REDIR_OUT '>', TOKEN_REDIR_APP '>>', TOKEN_HEREDOC '<<'
+Tokens: TOKEN_WORD, TOKEN_PIPE, TOKEN_REDIR_IN, TOKEN_REDIR_OUT, TOKEN_REDIR_APP, TOKEN_HEREDOC
 
-lexer()           → main function, walks input string, returns token list
-init_lexer()      → initializes the t_lexer struct (buffer, state, indexes)
-handle_normal()   → handles current char when state is NORMAL
-handle_quotes()   → handles current char when state is IN_SINGLE or IN_DOUBLE quote
-handle_operator() → detects |, <, >, <<, >> and emits the right token
-flush_buffer()    → turns accumulated buffer content into a TOKEN_WORD and appends it
-add_token()       → creates a token of given type with NULL value and appends it
-free_tokens()     → frees the entire token list
+2. **Parser**
+- organize tokens into command structures (t_cmd)
+- each command contains its arguments and redirections
+- builds a linked list of commands for pipelines
 
+3. **Heredoc**
+- reads heredoc input before execution
+- handles variable extension inside heredocs (unless delimiter is between quotes)
 
-PARSER : 
-PLAIN ENGLISH EXPLANATION : count total tokens, allocate arguments array based on count, create first command (t_cmd).
-walk token list:
-    TOKEN_WORD   → add to current t_cmd's char **args
-    TOKEN_REDIR  → validate next token, create t_redir, attach to current cmd
-    TOKEN_PIPE   → validate (not first, not last, not double)
-                   finalize current cmd, create new one
-end of list      → finalize last cmd
+4. **Expander**
+- expands environment varibles ($VAR, $?)
+- removes quote markers left by the lexer
+- handles word splitting for unquoted expansions
 
-return cmd list head
+5. **Executor**
+- handles single commands and pipelines
+- applies redirections (stdin, stdout, append, heredoc)
+- forks child processes for pipelines
+- executes builtins directly in the parent process
 
-parser()          → main function, walks token list, returns cmd list
-parse_cmd()       → builds one t_cmd until PIPE or end of list
-parse_args()      → collects WORD tokens into args array
-parse_redir()     → consumes REDIR + next WORD into a t_redir node
-syntax_error()    → prints error, returns NULL
-free_cmds()       → frees the entire command list
+**Signals
+- Handles ctr-C, ctrl-D and ctrl-/
+- Ctrl-C : Generates SIGINT
+- Ctrl-\ : Generates SIGQUIT
+- Ctrl-D : Signals end-of-file on the input stream — no signal at all
 
+**Features**
+- **builtins**: echo (with option -n), cd, pwd, export, unset, env, exit
+- **redirections**: <, >, <<, >>
+- **pipes**: |
+- **environment variables**: $VAR, $?
+- **quotes**: single ('') and double ("")
+- **signals**: ctrl-C, ctrl-D, ctrl-\
 
-HOW DOES MINISHELL WORK ?
+## Instructions
+### Compilation
+```bash
+make        # compiles minishell
+make clean  # cleans object files
+make fclean # cleans object files and executables
+make re     # full recompilation
+```
 
-LEXER TAKES INPUT AND GIVES A FLAT TOKEN LIST.
-PARSER TAKES THE TOKEN LIST AND GIVES A LINKED LIST OF T_CMD STRUCTS. EACH NODE IS A CMD THAT TAKES ARGS AND REDIRECTIONS.
+### Execution
+Run the program as you would run commands in any shell.
+```bash
+./minishell
+minishell>
+```
+
+## Resources
+- [CS 134 OS—4.1 Shell](https://www.youtube.com/watch?v=xCySbqj9BKI&list=PL2POs8ZJ4I2JJK3lICRW0b-L2y9mLiDmU&index=1)
+- [Tutorial - Write a Shell in C](https://brennan.io/2015/01/16/write-a-shell-in-c/)
+- [Building a Shell](https://healeycodes.com/building-a-shell)
+- [Bash Tutorial](https://www.w3schools.com/bash/)
+- [Minishell: Building a mini-bash (a @42 project)](https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218)
+- [Shell Command Language](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
+- [Chapter 5. Writing Your Own Shell](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
+- [A Beginner’s Guide To Unix Shell Scripting](https://www.testmuai.com/blog/unix-shell-scripting/)
+- [Introduction To Unix Signals Programming](https://www.cs.kent.edu/~ruttan/sysprog/lectures/signals.html)
+- [Unix Processes in C](https://www.youtube.com/watch?v=cex9XrZCU14&list=PLfqABt5AS4FkW5mOn2Tn9ZZLLDwA3kZUY)
+- [Understanding Unix Signals](https://www.youtube.com/watch?v=WxCwzcbZrJw&pp=ygUMdW5peCBzaWduYWxz)
+- [minishell_tester](https://github.com/LucasKuhn/minishell_tester)
+- [42_minishell_tester] (https://github.com/zstenger93/42_minishell_tester)
+
+### AI Usage
+AI tools were used as a learning and support tool during the project. They were used to rephrase and understand concepts such as lexer, heredoc, expander, executor and signals.
+At the end, AI was used to help generate edge case tests. No code was generated by AI.
+

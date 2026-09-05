@@ -3,19 +3,22 @@ NAME	= minishell
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -MMD -MP
 
-SRCS	=	main.c shell_loop.c \
+SRCS	=	main.c \
+			shell_loop/shell_loop.c shell_loop/process_line.c\
 			lexer/lexer.c lexer/lexer_utils.c \
 			parser/parser.c parser/parser_utils.c \
-			expander/expander.c expander/expander_utils.c \
+			expander/expander.c expander/expander_utils.c expander/assembler.c\
 			signals/signals.c signals/signals_exec.c \
-			heredoc/heredoc.c \
-			utils/error.c utils/free.c utils/utils.c utils/cleanup.c\
+			heredoc/heredoc.c heredoc/heredoc_utils.c\
+			utils/error.c utils/free.c utils/utils.c utils/cleanup.c utils/markers.c\
+			utils/more_utils.c\
 			environment/environment.c \
 			builtins/builtin_cd.c builtins/builtin_echo.c builtins/builtin_env.c \
 			builtins/builtin_exit.c builtins/builtin_export.c builtins/builtin_export_utils.c \
 			builtins/builtin_pwd.c builtins/builtin_unset.c \
 			executor/executor.c executor/executor_utils.c executor/exec_pipeline.c \
 			executor/apply_redir.c executor/apply_redir_functions.c executor/pipe_utils.c \
+			executor/special_paths.c executor/executor_external.c\
 
 OBJS_DIR = obj/
 
@@ -23,7 +26,6 @@ OBJS	= $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 
 DEPS	= $(OBJS:.o=.d)
 
--include $(DEPS)
 
 LIBFT_DIR	= libft
 
@@ -33,6 +35,8 @@ INCLUDES	= -I. -I$(LIBFT_DIR)
 
 
 all: $(NAME)
+
+-include $(DEPS)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
@@ -54,4 +58,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re $(LIBFT)
+.PHONY: all clean fclean re

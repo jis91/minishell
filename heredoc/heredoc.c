@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 08:58:12 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/19 14:07:28 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/08/26 15:23:54 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,11 @@ static int	compare_line_to_redir(char *line, t_redir *redir)
 	return (0);
 }
 
-static int	read_one_heredoc(t_redir *redir, t_shell *shell)
+static int	read_heredoc_lines(t_redir *redir, t_shell *shell,
+		int fd_write, int fd_read)
 {
 	char	*line;
-	int		fd_write;
-	int		fd_read;
 
-	if (prepare_delimiter(redir))
-		return (1);
-	if (open_fd(&fd_write, &fd_read))
-		return (1);
 	while (1)
 	{
 		line = get_next_line(STDIN_FILENO);
@@ -67,6 +62,20 @@ static int	read_one_heredoc(t_redir *redir, t_shell *shell)
 		write_heredoc_line(line, redir, shell, fd_write);
 		free(line);
 	}
+	return (0);
+}
+
+static int	read_one_heredoc(t_redir *redir, t_shell *shell)
+{
+	int		fd_write;
+	int		fd_read;
+
+	if (prepare_delimiter(redir))
+		return (1);
+	if (open_fd(&fd_write, &fd_read))
+		return (1);
+	if (read_heredoc_lines(redir, shell, fd_write, fd_read))
+		return (1);
 	close(fd_write);
 	redir->heredoc_fd = fd_read;
 	return (0);

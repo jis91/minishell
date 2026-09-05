@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:22:32 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/18 20:38:59 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/09/02 16:22:03 by jstrasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	count_cmds(t_cmd *cmds)
 {
@@ -84,10 +84,7 @@ char	*find_in_path(t_cmd *cmd, t_shell *shell)
 		i++;
 	}
 	if (!directories)
-	{
-		error(cmd->args[0], "command not found", 127);
 		return (NULL);
-	}
 	path = verify_path(directories, cmd);
 	free_char_tab(directories);
 	return (path);
@@ -96,60 +93,19 @@ char	*find_in_path(t_cmd *cmd, t_shell *shell)
 char	*find_path(t_cmd *cmd, t_shell *shell)
 {
 	char	*path;
-	int		saved_errno;
 
 	if (cmd->args[0][0] == '/'
 			|| (cmd->args[0][0] == '.' && cmd->args[0][1] == '/'))
-	{
-		if (access(cmd->args[0], X_OK) == 0)
-			return (ft_strdup(cmd->args[0]));
-		saved_errno = errno;
-		if (saved_errno == EACCES || saved_errno == EISDIR)
-			error(cmd->args[0], "Permission denied", 126);
-		else
-			error(cmd->args[0], "command not found", 127);
-		errno = saved_errno;
-		return (NULL);
-	}
+		return (handle_absolute_path(cmd));
+	if (cmd->args[0][0] == '.' && cmd->args[0][1] == '\0')
+		return (handle_dot());
+	if (cmd->args[0][0] == '.' && cmd->args[0][1]
+			== '.' && cmd->args[0][2] == '\0')
+		return (handle_dot_dot());
+	if (cmd->args[0][0] == '~' && cmd->args[0][1] == '\0')
+		return (handle_tilde(cmd));
 	path = find_in_path(cmd, shell);
 	if (!path)
 		error(cmd->args[0], "command not found", 127);
 	return (path);
 }
-
-/*char	*find_path(t_cmd *cmd, t_shell *shell)
-{
-	int		i;
-	char	**directories;
-	char	*path;
-
-	if (cmd->args[0][0] == '/'
-			|| (cmd->args[0][0] == '.' && cmd->args[0][1] == '/'))
-	{
-		if (access(cmd->args[0], X_OK) == 0)
-			return (ft_strdup(cmd->args[0]));
-		error(cmd->args[0], "command not found", 127);
-		return (NULL);
-	}
-	i = 0;
-	directories = NULL;
-	while (shell->env[i])
-	{
-		if (ft_strncmp(shell->env[i], "PATH=", 5) == 0)
-		{
-			directories = ft_split(shell->env[i] + 5, ':');
-			break ;
-		}
-		i++;
-	}
-	if (!directories)
-	{
-		error(cmd->args[0], "command not found", 127);
-		return (NULL);
-	}
-	path = verify_path(directories, cmd);
-	free_char_tab(directories);
-	if (!path)
-		error(cmd->args[0], "command not found", 127);
-	return (path);
-}*/

@@ -56,7 +56,6 @@ t_redir	*new_redir_node(t_token **tokens)
 		free(new_redir);
 		return (NULL);
 	}
-	
 	new_redir->heredoc_fd = -1;
 	return (new_redir);
 }
@@ -67,7 +66,7 @@ int	parse_redir(t_token **tokens, t_cmd *current)
 	t_redir	**tmp;
 
 	tmp = &current->redirections;
-	if (!(*tokens)->next ||  (*tokens)->next->type != TOKEN_WORD)
+	if (!(*tokens)->next || (*tokens)->next->type != TOKEN_WORD)
 		return (error(NULL, "syntax error near unexpected token", 2));
 	new_redir = new_redir_node(tokens);
 	if (!new_redir)

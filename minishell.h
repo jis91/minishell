@@ -117,10 +117,12 @@ typedef struct s_shell
 {
 	char	**env;
 	int		exit_status;
+	int		should_exit;
 }	t_shell;
 
 //SHELL
 int			init_shell(t_shell *shell, char **envp);
+void		process_line(char *line, t_shell *shell);
 void		shell_loop(t_shell *shell);
 //LEXER
 t_token		*lexer(char *input);
@@ -144,17 +146,20 @@ void		expand_one_cmd(t_cmd *cmd, t_shell *shell);
 char		*assembler(char *arg, t_shell *shell);
 char		*expand(char *arg, int *index, t_shell *shell);
 char		*no_expand(char *arg, int *index);
-void		replace_whitespace(char *value, int *i, char *result, int *j);
+void		remove_empty_args(t_cmd *cmd);
 
 // SIGNALS AND HEREDOC
 void		setup_prompt_signals(void);
 void		setup_heredoc_signals(void);
 void		setup_exec_signals(void);
 void		reset_child_signals(void);
+int			check_heredoc_signal(char *line, int fd_write, int fd_read);
+int			prepare_delimiter(t_redir *redir);
+void		write_heredoc_line(char *line, t_redir *redir, t_shell *shell,
+				int fd_write);
 int			collect_heredoc(t_cmd *cmd_list, t_shell *shell);
 //EXECUTOR
 void		exec_external(t_cmd *cmd, t_shell *shell);
-int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
 int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
 int			executor(t_cmd *cmds, t_shell *shell);
 int			count_cmds(t_cmd *cmds);
@@ -169,13 +174,17 @@ void		close_pipes(t_pipe_ctx *ctx);
 void		close_child_pipes(t_pipe_ctx *ctx, int i);
 int			exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell);
 int			exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell);
+char		*handle_absolute_path(t_cmd *cmd);
+char		*handle_dot(void);
+char		*handle_dot_dot(void);
+char		*handle_tilde(t_cmd *cmd);
 // APPLY REDIRECTIONS
-int			apply_redir_in(t_redir *redir, t_shell *shell);
-int			apply_redir_out(t_redir *redir, t_shell *shell);
-int			apply_redir_append(t_redir *redir, t_shell *shell);
-int			apply_redir_heredoc(t_redir *redir, t_shell *shell);
-int			apply_single_redir(t_redir *redir, t_shell *shell);
-int			apply_redirections(t_cmd *cmd, t_shell *shell);
+int			apply_redir_in(t_redir *redir);
+int			apply_redir_out(t_redir *redir);
+int			apply_redir_append(t_redir *redir);
+int			apply_redir_heredoc(t_redir *redir);
+int			apply_single_redir(t_redir *redir);
+int			apply_redirections(t_cmd *cmd);
 //BUILTINS
 t_builtin	check_builtin(t_cmd *cmd);
 int			builtin_cd(t_cmd *cmd, t_shell *shell);
@@ -207,14 +216,15 @@ void		fatal_error(t_shell *shell, char *context, char *msg, int code);
 int			get_exit_status(int status);
 char		**init_char_tab(int length);
 void		sort_char_tab(char **tab);
-int 		only_whitespace_empty(char *str);
+int			only_whitespace_empty(char *str);
 int			is_whitespace(char c);
+void		replace_whitespace(char *value, int *i, char *result, int *j);
+char		*mark_splits(char *value);
+int			is_special_char(char c);
+int			has_dollar_boundary(char *string);
 void		buffer_push(char *string, int *index, char c);
 int			quote_state(char c);
 char		*strip_quote_markers(char *arg);
-char		*mark_splits(char *value);
 int			contains_marker(char *str);
-int			is_special_char(char c);
-int			has_dollar_boundary(char *string);
 
 #endif

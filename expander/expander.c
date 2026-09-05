@@ -3,70 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 14:19:00 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/19 14:23:05 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/09/02 16:24:42 by jstrasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static char	*build_buffer(char *arg, int *index, t_shell *shell)
-{
-	char	*buffer;
-
-	if (arg[*index] == QUOTE_MARKER && arg[(*index) + 1] == '$')
-	{
-		buffer = ft_strdup("$");
-		(*index) += 2;
-	}
-	else if (arg[*index] == DQUOTE_MARKER && arg[(*index) + 1] == '$')
-	{
-		(*index) += 2;
-		buffer = expand(arg, index, shell);
-	}
-	else if (arg[*index] == '$')
-	{
-		(*index)++;
-		buffer = mark_splits(expand(arg, index, shell));
-	}
-	else if (arg[*index] == BOUNDARY_MARKER)
-	{
-		(*index)++;
-		buffer = no_expand(arg, index);
-	}
-	else
-		buffer = no_expand(arg, index);
-	return (buffer);
-}
-
-char	*assembler(char *arg, t_shell *shell)
-{
-	char	*buffer;
-	char	*tmp;
-	char	*result;
-	int		index;
-
-	index = 0;
-	result = ft_strdup("");
-	if (!result)
-		fatal_error(shell, NULL, "malloc failed", 1);
-	while (arg[index])
-	{
-		buffer = build_buffer(arg, &index, shell);
-		if (!buffer)
-		{
-			free(result);
-			fatal_error(shell, NULL, "malloc failed", 1);
-		}
-		tmp = result;
-		result = ft_strjoin(tmp, buffer);
-		free(tmp);
-		free(buffer);
-	}
-	return (result);
-}
 
 static void	merge_args(char **new_args, char ***tmp)
 {
@@ -91,39 +35,55 @@ static void	merge_args(char **new_args, char ***tmp)
 	free(tmp);
 }
 
-static void fill_tmp(t_cmd *cmd, t_shell *shell, char ***tmp, int i);
+static char	**handle_empty_result(char *arg)
+{
+	char	**result;
+
+	result = init_char_tab(1);
+	if (contains_marker(arg))
+		result[0] = ft_strdup("");
+	else
+		result = init_char_tab(0);
+	return (result);
+}
+
+static char	**expand_arg(char *arg, t_shell *shell)
+{
+	char	**result;
+	char	*assembled;
+
+	if (!has_dollar_boundary(arg))
+	{
+		result = init_char_tab(1);
+		result[0] = ft_strdup(arg);
+		return (result);
+	}
+	assembled = assembler(arg, shell);
+	result = ft_split(assembled, SPLIT_MARKER);
+	free(assembled);
+	if (!result)
+		fatal_error(shell, NULL, "malloc failed", 1);
+	if (!result[0])
+	{
+		free_char_tab(result);
+		result = handle_empty_result(arg);
+	}
+	return (result);
+}
+
 void	expand_one_cmd(t_cmd *cmd, t_shell *shell)
 {
 	int		i;
 	int		total;
 	char	***tmp;
 	char	**new_args;
-	char	*assembled;
 
 	i = 0;
 	total = 0;
 	tmp = ft_calloc(sizeof(char **), (count_env_length(cmd->args) + 1));
 	while (cmd->args[i])
 	{
-		if (has_dollar_boundary(cmd->args[i]))
-		{
-			assembled = assembler(cmd->args[i], shell);
-			tmp[i] = ft_split(assembled, SPLIT_MARKER);
-			if (!tmp[i])
-				fatal_error(shell, NULL, "malloc failed", 1);
-			if (!tmp[i][0])
-			{
-				free_char_tab(tmp[i]);
-				tmp[i] = init_char_tab(1);
-				tmp[i][0] = ft_strdup("");
-			}
-			free(assembled);
-		}
-		else
-		{
-			tmp[i] = init_char_tab(1);
-			tmp[i][0] = ft_strdup(cmd->args[i]);
-		}
+		tmp[i] = expand_arg(cmd->args[i], shell);
 		total += count_env_length(tmp[i]);
 		i++;
 	}
@@ -136,11 +96,26 @@ void	expand_one_cmd(t_cmd *cmd, t_shell *shell)
 void	expander(t_cmd *cmd, t_shell *shell)
 {
 	t_cmd	*current;
+	t_redir	*redir;
+	char	*tmp;
 
 	current = cmd;
 	while (current)
 	{
 		expand_one_cmd(current, shell);
+		redir = current->redirections;
+		while (redir)
+		{
+			if (redir->file && has_dollar_boundary(redir->file))
+			{
+				tmp = assembler(redir->file, shell);
+				if (!tmp)
+					fatal_error(shell, NULL, "malloc failed", 1);
+				free(redir->file);
+				redir->file = tmp;
+			}
+			redir = redir->next;
+		}
 		current = current->next;
 	}
 }

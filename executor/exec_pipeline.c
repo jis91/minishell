@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 21:40:49 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/05 19:42:48 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/09/02 16:22:14 by jstrasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	fork_cmds(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 {
@@ -59,6 +59,8 @@ int	exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 
 	ctx->count = count_cmds(cmds);
 	ctx->pipes = create_pipes(ctx->count, shell);
+	if (!ctx->pipes)
+		return (1);
 	ctx->pids = malloc(sizeof(pid_t) * ctx->count);
 	if (!ctx->pids)
 	{
@@ -75,11 +77,8 @@ int	exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 	return (result);
 }
 
-int	exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell)
+static void	setup_pipe_fds(t_pipe_ctx *ctx, int i)
 {
-	t_builtin	builtin;
-
-	reset_child_signals();
 	if (i > 0)
 	{
 		if (dup2(ctx->pipes[i - 1][0], 0) == -1)
@@ -92,12 +91,22 @@ int	exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell)
 			exit(1);
 		close(ctx->pipes[i][1]);
 	}
+}
+
+int	exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell)
+{
+	t_builtin	builtin;
+
+	reset_child_signals();
+	setup_pipe_fds(ctx, i);
 	close_child_pipes(ctx, i);
-	if (apply_redirections(cmds, shell) == -1)
-		exit (1);
 	builtin = check_builtin(cmds);
 	if (builtin != NOT_BUILTIN)
+	{
+		if (apply_redirections(cmds) == -1)
+			exit (1);
 		exit(exec_builtin(cmds, shell, builtin));
+	}
 	else
 		exec_external(cmds, shell);
 	return (0);
