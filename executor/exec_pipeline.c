@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 21:40:49 by aganz             #+#    #+#             */
-/*   Updated: 2026/09/02 16:22:14 by jstrasse         ###   ########.fr       */
+/*   Updated: 2026/09/06 21:01:17 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell)
 		free_int_tab(ctx->pipes, ctx->count - 1);
 		fatal_error(shell, NULL, "malloc failed", 1);
 	}
+	ctx->head = cmds;
 	setup_exec_signals();
 	fork_cmds(cmds, ctx, shell);
 	close_pipes(ctx);
@@ -96,6 +97,7 @@ static void	setup_pipe_fds(t_pipe_ctx *ctx, int i)
 int	exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell)
 {
 	t_builtin	builtin;
+	int			status;
 
 	reset_child_signals();
 	setup_pipe_fds(ctx, i);
@@ -104,10 +106,11 @@ int	exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell)
 	if (builtin != NOT_BUILTIN)
 	{
 		if (apply_redirections(cmds) == -1)
-			exit (1);
-		exit(exec_builtin(cmds, shell, builtin));
+			cleanup_and_exit(ctx, cmds, shell, 1);
+		status = exec_builtin(cmds, shell, builtin);
+		cleanup_and_exit(ctx, cmds, shell, status);
 	}
 	else
-		exec_external(cmds, shell);
+		exec_external(cmds, shell, ctx);
 	return (0);
 }

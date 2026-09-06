@@ -97,6 +97,7 @@ typedef struct s_pipe_ctx
 	pid_t	*pids;
 	int		count;
 	int		index;
+	t_cmd	*head;
 }	t_pipe_ctx;
 
 /*Executor*/
@@ -159,7 +160,7 @@ void		write_heredoc_line(char *line, t_redir *redir, t_shell *shell,
 				int fd_write);
 int			collect_heredoc(t_cmd *cmd_list, t_shell *shell);
 //EXECUTOR
-void		exec_external(t_cmd *cmd, t_shell *shell);
+void		exec_external(t_cmd *cmd, t_shell *shell, t_pipe_ctx *ctx);
 int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
 int			executor(t_cmd *cmds, t_shell *shell);
 int			count_cmds(t_cmd *cmds);
@@ -211,6 +212,8 @@ void		free_cmds(t_cmd *cmd);
 void		free_redirs(t_redir *redirections);
 void		cleanup_cycle(t_token *tokens, t_cmd *cmd);
 void		cleanup_shell(t_shell *shell);
+void		cleanup_and_exit(t_pipe_ctx *ctx, t_cmd *cmd, t_shell *shell,
+				int status);
 int			error(char *context, char *msg, int code);
 void		fatal_error(t_shell *shell, char *context, char *msg, int code);
 int			get_exit_status(int status);

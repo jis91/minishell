@@ -6,43 +6,62 @@
 /*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 22:21:32 by aganz             #+#    #+#             */
-/*   Updated: 2026/08/25 22:27:09 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/06 21:09:42 by aganz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	handle_execve_error(t_cmd *cmd, char *path)
+void	cleanup_and_exit(t_pipe_ctx *ctx, t_cmd *cmd, t_shell *shell,
+			int status)
 {
-	if (errno == EACCES || errno == EISDIR)
+	if (ctx)
 	{
-		perror(cmd->args[0]);
-		free(path);
-		exit(126);
+		free_int_tab(ctx->pipes, ctx->count - 1);
+		free(ctx->pids);
+		free_cmds(ctx->head);
 	}
-	perror(cmd->args[0]);
-	free (path);
-	exit (127);
+	else
+		free_cmds(cmd);
+	free_char_tab(shell->env);
+	exit(status);
 }
 
-void	exec_external(t_cmd *cmd, t_shell *shell)
+static void	handle_execve_error(t_cmd *cmd, char *path, t_pipe_ctx *ctx,
+			t_shell *shell)
+{
+	int	code;
+
+	if (errno == EACCES || errno == EISDIR)
+		code = 126;
+	else
+		code = 127;
+	perror(cmd->args[0]);
+	free (path);
+	cleanup_and_exit(ctx, cmd, shell, code);
+}
+
+void	exec_external(t_cmd *cmd, t_shell *shell, t_pipe_ctx *ctx)
 {
 	char	*path;
+	int		code;
 
 	reset_child_signals();
 	if (apply_redirections(cmd) == -1)
-		exit(1);
+		cleanup_and_exit(ctx, cmd, shell, 1);
 	if (!cmd->args[0])
-		exit(0);
+		cleanup_and_exit(ctx, cmd, shell, 0);
 	path = find_path(cmd, shell);
 	if (!path)
 	{
 		if (errno == EACCES || errno == EISDIR)
-			exit(126);
-		if (errno == EINVAL)
-			exit(2);
-		exit(127);
+			code = 126;
+		else if (errno == EINVAL)
+			code = 2;
+		else
+			code = 127;
+		cleanup_and_exit(ctx, cmd, shell, code);
 	}
 	execve(path, cmd->args, shell->env);
-	handle_execve_error(cmd, path);
+	handle_execve_error(cmd, path, ctx, shell);
 }
