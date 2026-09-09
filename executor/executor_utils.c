@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:22:32 by aganz             #+#    #+#             */
-/*   Updated: 2026/09/02 16:22:03 by jstrasse         ###   ########.fr       */
+/*   Updated: 2026/09/09 08:54:08 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,24 @@ char	*verify_path(char **directories, t_cmd *cmd)
 {
 	char	*tmp;
 	char	*path;
+	char	*fallback;
 	int		i;
 
 	i = 0;
+	fallback = NULL;
 	while (directories[i])
 	{
 		tmp = ft_strjoin(directories[i], "/");
 		path = ft_strjoin(tmp, cmd->args[0]);
 		free(tmp);
-		if (access(path, X_OK) == 0)
+		if (handle_access(path, &fallback))
+			i++;
+		else
 			return (path);
-		free(path);
-		i++;
 	}
-	return (NULL);
+	if (fallback == NULL)
+		errno = ENOENT;
+	return (fallback);
 }
 
 char	*find_in_path(t_cmd *cmd, t_shell *shell)
@@ -84,7 +88,10 @@ char	*find_in_path(t_cmd *cmd, t_shell *shell)
 		i++;
 	}
 	if (!directories)
+	{
+		errno = ENOENT;
 		return (NULL);
+	}
 	path = verify_path(directories, cmd);
 	free_char_tab(directories);
 	return (path);

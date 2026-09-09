@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 22:20:26 by aganz             #+#    #+#             */
-/*   Updated: 2026/09/01 22:29:50 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/07 11:37:43 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	execute_single(t_cmd *cmds, t_shell *shell)
 		return (-1);
 	if (pid == 0)
 	{
-		exec_external(cmds, shell);
+		exec_external(cmds, shell, NULL);
 		exit(1);
 	}
 	setup_exec_signals();

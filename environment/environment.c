@@ -6,20 +6,29 @@
 /*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/05 19:40:50 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/05 19:42:13 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/09/07 15:14:25 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	count_env_length(char **envp)
+void	handle_shlvl(t_shell *shell)
 {
-	int		i;
+	int		shlvl;
+	char	*tmp;
 
-	i = 0;
-	while (envp[i])
-		i++;
-	return (i);
+	tmp = get_env_value(shell->env, "SHLVL");
+	if (!tmp)
+		shlvl = 0;
+	else
+	{
+		shlvl = ft_atoi(tmp);
+		free(tmp);
+	}
+	shlvl++;
+	tmp = ft_itoa(shlvl);
+	apply_to_env(shell, "SHLVL", tmp);
+	free(tmp);
 }
 
 int	find_env_index(char **env, char *name)

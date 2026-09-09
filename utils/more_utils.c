@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   more_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 17:11:59 by jstrasse          #+#    #+#             */
-/*   Updated: 2026/08/19 17:13:51 by jstrasse         ###   ########.fr       */
+/*   Updated: 2026/09/06 19:52:28 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,6 @@ void	replace_whitespace(char *value, int *i, char *result, int *j)
 	(*j)++;
 }
 
-int	is_special_char(char c)
-{
-	if (c == QUOTE_MARKER)
-		return (c);
-	else if (c == DQUOTE_MARKER)
-		return (c);
-	else if (c == BOUNDARY_MARKER)
-		return (c);
-	else if (c == SPLIT_MARKER)
-		return (c);
-	else if (c == '$')
-		return (DOLLAR_SIGN);
-	else
-		return (0);
-}
-
 void	buffer_push(char *string, int *index, char c)
 {
 	string[*index] = c;
@@ -55,4 +39,14 @@ int	quote_state(char c)
 	if (c == '\'')
 		return (IN_SINGLE_QUOTE);
 	return (IN_DOUBLE_QUOTE);
+}
+
+int	count_env_length(char **envp)
+{
+	int		i;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	return (i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   markers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 13:32:07 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/19 17:13:43 by jstrasse         ###   ########.fr       */
+/*   Updated: 2026/09/07 15:16:11 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,20 @@ char	*strip_quote_markers(char *arg)
 	}
 	result[j] = '\0';
 	return (result);
+}
+
+int	is_special_char(char c)
+{
+	if (c == QUOTE_MARKER)
+		return (c);
+	else if (c == DQUOTE_MARKER)
+		return (c);
+	else if (c == BOUNDARY_MARKER)
+		return (c);
+	else if (c == SPLIT_MARKER)
+		return (c);
+	else if (c == '$')
+		return (DOLLAR_SIGN);
+	else
+		return (0);
 }

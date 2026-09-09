@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/09/02 16:25:20 by jstrasse         ###   ########.fr       */
+/*   Updated: 2026/09/07 09:05:25 by jefferson        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	init_shell(t_shell *shell, char **envp)
 	}
 	shell_env[i] = NULL;
 	shell->env = shell_env;
+	handle_shlvl(shell);
 	shell->exit_status = 0;
 	shell->should_exit = 0;
 	return (0);

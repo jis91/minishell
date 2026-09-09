@@ -97,6 +97,7 @@ typedef struct s_pipe_ctx
 	pid_t	*pids;
 	int		count;
 	int		index;
+	t_cmd	*head;
 }	t_pipe_ctx;
 
 /*Executor*/
@@ -159,7 +160,7 @@ void		write_heredoc_line(char *line, t_redir *redir, t_shell *shell,
 				int fd_write);
 int			collect_heredoc(t_cmd *cmd_list, t_shell *shell);
 //EXECUTOR
-void		exec_external(t_cmd *cmd, t_shell *shell);
+void		exec_external(t_cmd *cmd, t_shell *shell, t_pipe_ctx *ctx);
 int			exec_builtin(t_cmd *cmd, t_shell *shell, t_builtin builtin);
 int			executor(t_cmd *cmds, t_shell *shell);
 int			count_cmds(t_cmd *cmds);
@@ -169,15 +170,18 @@ char		*find_path(t_cmd *cmd, t_shell *shell);
 int			**create_pipes(int count, t_shell *shell);
 void		init_pipe_ctx(t_pipe_ctx *ctx);
 int			fork_cmds(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell);
-int			wait_cmds(t_pipe_ctx *ctx);
+int			wait_cmds(t_pipe_ctx *ctx, int forked_successful);
 void		close_pipes(t_pipe_ctx *ctx);
 void		close_child_pipes(t_pipe_ctx *ctx, int i);
 int			exec_pipeline(t_cmd *cmds, t_pipe_ctx *ctx, t_shell *shell);
-int			exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell);
+void		exec_pipe_cmd(t_cmd *cmds, t_pipe_ctx *ctx, int i, t_shell *shell);
 char		*handle_absolute_path(t_cmd *cmd);
 char		*handle_dot(void);
 char		*handle_dot_dot(void);
 char		*handle_tilde(t_cmd *cmd);
+int			handle_access(char *path, char **fallback);
+void		cleanup_and_exit(t_pipe_ctx *ctx, t_cmd *cmd, t_shell *shell,
+				int status);
 // APPLY REDIRECTIONS
 int			apply_redir_in(t_redir *redir);
 int			apply_redir_out(t_redir *redir);
@@ -198,6 +202,7 @@ int			builtin_pwd(void);
 int			builtin_unset(t_cmd *cmd, t_shell *shell);
 //ENVIRONMENT
 int			count_env_length(char **envp);
+void		handle_shlvl(t_shell *shell);
 int			find_env_index(char **env, char *name);
 int			add_env_var(t_shell *shell, char *name, char *value);
 int			apply_to_env(t_shell *shell, char *name, char *value);
