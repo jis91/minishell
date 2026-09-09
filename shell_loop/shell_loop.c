@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jefferson <jefferson@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 09:54:47 by jefferson         #+#    #+#             */
-/*   Updated: 2026/09/07 09:05:25 by jefferson        ###   ########.fr       */
+/*   Updated: 2026/09/09 12:19:27 by jstrasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	handle_ctrl_d(t_shell *shell, char *line, int is_interactive)
 		if (is_interactive)
 			write(1, "\n", 1);
 		rl_clear_history();
+		gnl_cleanup();
 		free_char_tab(shell->env);
 		exit(shell->exit_status);
 	}
@@ -74,6 +75,7 @@ static void	handle_should_exit(t_shell *shell)
 	if (shell->should_exit)
 	{
 		rl_clear_history();
+		gnl_cleanup();
 		cleanup_shell(shell);
 		exit(shell->exit_status);
 	}

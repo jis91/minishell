@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aganz <aganz@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 08:58:12 by jefferson         #+#    #+#             */
-/*   Updated: 2026/08/26 15:23:54 by aganz            ###   ########.fr       */
+/*   Updated: 2026/09/09 11:38:21 by jstrasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,15 @@ static int	read_heredoc_lines(t_redir *redir, t_shell *shell,
 	{
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
+		{
+			free(line);
 			break ;
+		}
 		if (check_heredoc_signal(line, fd_write, fd_read))
+		{
+			free(line);
 			return (1);
+		}
 		if (compare_line_to_redir(line, redir))
 		{
 			free(line);

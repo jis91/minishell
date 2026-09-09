@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*   gnl_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/28 15:21:49 by jstrasse          #+#    #+#             */
-/*   Updated: 2026/09/09 12:07:17 by jstrasse         ###   ########.fr       */
+/*   Created: 2026/09/09 11:50:11 by jstrasse          #+#    #+#             */
+/*   Updated: 2026/09/09 12:21:48 by jstrasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#include "get_next_line_bonus.h"
 
-# include <stdlib.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include "../libft.h" 
+void	gnl_cleanup(void)
+{
+	int		i;
+	char	**read_content;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000000
-# endif
+	i = 0;
+	while (i < MAX_FD)
+	{
+		read_content = get_content_slot(i);
+		if ((*read_content))
+		{
+			free((*read_content));
+			(*read_content) = NULL;
+		}
+		i++;
+	}
+}
 
-# ifndef MAX_FD
-#  define MAX_FD 1024
-# endif
+char	**get_content_slot(int fd)
+{
+	static char	*read_content[MAX_FD];
 
-char	*get_next_line(int fd);
-void	gnl_cleanup(void);
-char	**get_content_slot(int fd);
-
-#endif
+	return (&read_content[fd]);
+}

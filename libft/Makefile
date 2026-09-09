@@ -23,7 +23,7 @@ BONUS :=	ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c \
 
 # ─── get_next_line ────────────────────────────────────────────────────────────
 GNL_DIR  := get_next_line
-GNL_SRCS := $(GNL_DIR)/get_next_line_bonus.c
+GNL_SRCS := $(GNL_DIR)/get_next_line_bonus.c $(GNL_DIR)/gnl_utils.c
 
 # ─── ft_printf ────────────────────────────────────────────────────────────────
 PRINTF_DIR  := ft_printf

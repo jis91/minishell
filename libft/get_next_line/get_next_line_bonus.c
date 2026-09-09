@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeff <jeff@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jstrasse <jstrasse@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:22:45 by jstrasse          #+#    #+#             */
-/*   Updated: 2025/10/29 18:18:56 by jeff             ###   ########.fr       */
+/*   Updated: 2026/09/09 12:21:09 by jstrasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,29 +104,30 @@ static char	*get_remaining_content(char *read_content)
 
 char	*get_next_line(int fd)
 {
-	static char	*read_content[MAX_FD];
 	char		*line;
+	char		**read_content;
 
 	if (fd < 0 || fd >= MAX_FD || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!read_content[fd])
+	read_content = get_content_slot(fd);
+	if (!(*read_content))
 	{
-		read_content[fd] = malloc(sizeof(char *));
-		if (!read_content[fd])
+		(*read_content) = malloc(sizeof(char *));
+		if (!(*read_content))
 			return (NULL);
-		read_content[fd][0] = '\0';
+		(*read_content)[0] = '\0';
 	}
-	read_content[fd] = read_and_fill(fd, read_content[fd]);
-	if (!read_content[fd])
+	(*read_content) = read_and_fill(fd, (*read_content));
+	if (!(*read_content))
 		return (NULL);
-	line = ft_get_line(read_content[fd]);
+	line = ft_get_line((*read_content));
 	if (!line)
 	{
-		free(read_content[fd]);
-		read_content[fd] = NULL;
+		free((*read_content));
+		(*read_content) = NULL;
 		return (NULL);
 	}
-	read_content[fd] = get_remaining_content(read_content[fd]);
+	(*read_content) = get_remaining_content((*read_content));
 	return (line);
 }
 /*
